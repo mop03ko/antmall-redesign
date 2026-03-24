@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AntMall.mn — Ирэхдэнг хямдал!</title>
+  <meta name="description" content="AntMall.mn — Монголын тэргүүлэх цахилгаан барааны дэлгүүр. Apple, Samsung, Dyson, Cuckoo болон бусад брэндүүд." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ═══ TOPBAR ═══ -->
+<div class="topbar">
+  <div class="container topbar__inner">
+    <span class="topbar__msg">🐜 AntMall.mn-д тавтай морилно уу! Хүргэлт бүх дүүрэгт хийгдэнэ.</span>
+    <div class="topbar__right">
+      <a href="tel:72005588" class="topbar__link">📞 7200-5588</a>
+      <a href="mailto:info@antmall.mn" class="topbar__link">✉ info@antmall.mn</a>
+      <a href="https://www.facebook.com/AntMall.mn" target="_blank" class="topbar__social">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.887v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/antmall_official/" target="_blank" class="topbar__social">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="/" class="header__logo">
+      <img src="https://antmall.mn/antmall.svg" alt="AntMall" />
+    </a>
+    <form class="search-bar" id="searchForm" onsubmit="return false;">
+      <svg class="search-bar__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="search" placeholder="Бүтээгдэхүүн, брэнд хайх..." class="search-bar__input" id="searchInput" />
+      <button type="submit" class="search-bar__btn">Хайх</button>
+    </form>
+    <div class="header__actions">
+      <a href="/account/wishlists" class="hbtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span>Хадгалсан</span>
+      </a>
+      <a href="/account" class="hbtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Нэвтрэх</span>
+      </a>
+      <a href="/cart" class="hbtn hbtn--cart" id="cartBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span>Сагс</span>
+        <span class="cart-badge" id="cartCount">0</span>
+      </a>
+    </div>
+    <button class="burger" id="burger" aria-label="Цэс">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ═══ MAIN NAV ═══ -->
+<nav class="main-nav" id="mainNav">
+  <div class="container main-nav__inner">
+    <button class="cat-btn" id="catBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      Ангилал
+    </button>
+    <ul class="nav-links">
+      <li><a href="https://antmall.mn/products?new" class="nav-link">Шинэ</a></li>
+      <li><a href="https://antmall.mn/products?sale" class="nav-link nav-link--sale">🔥 Хямдрал</a></li>
+      <li><a href="#tradein" class="nav-link nav-link--tradein">🔄 Trade-In</a></li>
+      <li><a href="#openbox" class="nav-link nav-link--openbox">📦 Лац задарсан</a></li>
+      <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSffoQ2lsSwEwpXqkVCq2rVzPJdl4Imlt9eHZBdeTb1bOzNmUQ/viewform" target="_blank" class="nav-link nav-link--leasing">💳 Лизинг</a></li>
+      <li><a href="https://antmall.mn/brands" class="nav-link">Брэнд</a></li>
+      <li><a href="https://antmall.mn/blog" class="nav-link">Мэдээ</a></li>
+    </ul>
+  </div>
+  <!-- Category Dropdown -->
+  <div class="cat-dropdown" id="catDropdown">
+    <div class="container cat-dropdown__inner">
+      <a href="https://antmall.mn/products?category=phones" class="cat-item">
+        <div class="cat-item__icon">📱</div><span>Гар утас</span>
+      </a>
+      <a href="https://antmall.mn/products?category=wearables" class="cat-item">
+        <div class="cat-item__icon">🎧</div><span>Ухаалаг цаг / Чихэвч</span>
+      </a>
+      <a href="https://antmall.mn/products?category=computers" class="cat-item">
+        <div class="cat-item__icon">💻</div><span>Компьютер, принтер</span>
+      </a>
+      <a href="https://antmall.mn/products?category=appliances" class="cat-item">
+        <div class="cat-item__icon">🏠</div><span>Гэр ахуйн цахилгаан</span>
+      </a>
+      <a href="https://antmall.mn/products?category=drones" class="cat-item">
+        <div class="cat-item__icon">🚁</div><span>Дрон</span>
+      </a>
+      <a href="https://antmall.mn/products?category=ebikes" class="cat-item">
+        <div class="cat-item__icon">⚡</div><span>Цахилгаан дугуй</span>
+      </a>
+      <a href="https://antmall.mn/products?category=camera" class="cat-item">
+        <div class="cat-item__icon">📷</div><span>Камер</span>
+      </a>
+      <a href="https://antmall.mn/products?category=accessories" class="cat-item">
+        <div class="cat-item__icon">🔌</div><span>Дагалдах хэрэгсэл</span>
+      </a>
+      <a href="https://antmall.mn/products?category=beauty" class="cat-item">
+        <div class="cat-item__icon">✨</div><span>Гоо сайхан</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ MOBILE MENU ═══ -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu__header">
+    <img src="https://antmall.mn/antmall.svg" alt="AntMall" height="36" />
+    <button class="mobile-menu__close" id="mobileClose">✕</button>
+  </div>
+  <form class="mobile-menu__search" onsubmit="return false;">
+    <input type="search" placeholder="Хайх..." />
+    <button type="submit">→</button>
+  </form>
+  <nav class="mobile-menu__nav">
+    <a href="https://antmall.mn/products?new">🆕 Шинэ бараа</a>
+    <a href="https://antmall.mn/products?sale" class="mm-sale">🔥 Хямдрал</a>
+    <a href="#tradein">🔄 Trade-In</a>
+    <a href="#openbox">📦 Лац задарсан</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSffoQ2lsSwEwpXqkVCq2rVzPJdl4Imlt9eHZBdeTb1bOzNmUQ/viewform" target="_blank">💳 Лизинг</a>
+    <a href="https://antmall.mn/brands">🏷 Брэнд</a>
+    <a href="https://antmall.mn/blog">📰 Мэдээ</a>
+    <hr/>
+    <a href="tel:72005588">📞 7200-5588</a>
+    <a href="mailto:info@antmall.mn">✉ info@antmall.mn</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="hero">
+  <div class="hero__slider" id="heroSlider">
+    <div class="hero__slide active">
+      <img src="https://admins-odoo.antmall.mn/api/webgrid/banner/1/image?size=1024" alt="iPhone 17 Series" loading="eager" />
+    </div>
+    <div class="hero__slide">
+      <img src="https://admins-odoo.antmall.mn/api/webgrid/banner/8/image?size=1024" alt="Banner" loading="lazy" />
+    </div>
+    <div class="hero__slide">
+      <img src="https://admins-odoo.antmall.mn/api/webgrid/banner/3/image?size=1024" alt="Banner" loading="lazy" />
+    </div>
+    <div class="hero__slide">
+      <img src="https://admins-odoo.antmall.mn/api/webgrid/banner/4/image?size=1024" alt="Banner" loading="lazy" />
+    </div>
+    <div class="hero__slide">
+      <img src="https://admins-odoo.antmall.mn/api/webgrid/banner/6/image?size=1024" alt="Banner" loading="lazy" />
+    </div>
+    <div class="hero__slide">
+      <img src="https://admins-odoo.antmall.mn/api/webgrid/banner/2/image?size=1024" alt="Banner" loading="lazy" />
+    </div>
+    <div class="hero__slide">
+      <img src="https://admins-odoo.antmall.mn/api/webgrid/banner/7/image?size=1024" alt="Banner" loading="lazy" />
+    </div>
+  </div>
+  <button class="hero__arrow hero__arrow--prev" id="heroPrev">‹</button>
+  <button class="hero__arrow hero__arrow--next" id="heroNext">›</button>
+  <div class="hero__dots" id="heroDots"></div>
+</section>
+
+<!-- ═══ FEATURE STRIP ═══ -->
+<section class="features">
+  <div class="container features__grid">
+    <div class="feature">
+      <div class="feature__icon">🚚</div>
+      <div class="feature__text">
+        <strong>Хүргэлт</strong>
+        <span>Улаанбаатар хотоор хүргэнэ</span>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature__icon">💳</div>
+      <div class="feature__text">
+        <strong>Хувааж төлөх</strong>
+        <span>8 банк, зээлийн апп-аар</span>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature__icon">🔄</div>
+      <div class="feature__text">
+        <strong>Trade-In</strong>
+        <span>Хуучинтайгаа солих боломжтой</span>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature__icon">✅</div>
+      <div class="feature__text">
+        <strong>1 жилийн баталгаа</strong>
+        <span>Бүх бараанд баталгаа өгнө</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CATEGORY ICONS ═══ -->
+<section class="cat-section">
+  <div class="container">
+    <div class="cat-section__grid">
+      <a href="https://antmall.mn/products?category=54" class="cat-card">
+        <div class="cat-card__img">
+          <svg viewBox="0 0 48 48" fill="none"><rect x="10" y="4" width="28" height="40" rx="4" stroke="currentColor" stroke-width="2.5"/><circle cx="24" cy="38" r="2" fill="currentColor"/><rect x="16" y="10" width="16" height="20" rx="2" fill="currentColor" opacity=".15"/></svg>
+        </div>
+        <span>Гар утас</span>
+      </a>
+      <a href="https://antmall.mn/products?category=55" class="cat-card">
+        <div class="cat-card__img">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M8 30C8 22 13 16 24 16s16 6 16 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><rect x="4" y="28" width="8" height="10" rx="2" stroke="currentColor" stroke-width="2.5"/><rect x="36" y="28" width="8" height="10" rx="2" stroke="currentColor" stroke-width="2.5"/></svg>
+        </div>
+        <span>Чихэвч</span>
+      </a>
+      <a href="https://antmall.mn/products?category=57" class="cat-card">
+        <div class="cat-card__img">
+          <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="10" width="40" height="26" rx="3" stroke="currentColor" stroke-width="2.5"/><path d="M16 36v4m16-4v4M10 40h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><rect x="8" y="14" width="32" height="18" rx="1" fill="currentColor" opacity=".12"/></svg>
+        </div>
+        <span>Компьютер</span>
+      </a>
+      <a href="https://antmall.mn/products?category=9" class="cat-card">
+        <div class="cat-card__img">
+          <svg viewBox="0 0 48 48" fill="none"><rect x="10" y="6" width="28" height="36" rx="3" stroke="currentColor" stroke-width="2.5"/><path d="M18 14h12M18 20h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="34" r="3" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <span>Гэр ахуй</span>
+      </a>
+      <a href="https://antmall.mn/products?category=drones" class="cat-card">
+        <div class="cat-card__img">
+          <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="2.5"/><circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2"/><circle cx="38" cy="10" r="4" stroke="currentColor" stroke-width="2"/><circle cx="10" cy="38" r="4" stroke="currentColor" stroke-width="2"/><circle cx="38" cy="38" r="4" stroke="currentColor" stroke-width="2"/><path d="M14 14L20 20M34 14L28 20M14 34L20 28M34 34L28 28" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <span>Дрон</span>
+      </a>
+      <a href="https://antmall.mn/products?category=ebikes" class="cat-card">
+        <div class="cat-card__img">
+          <svg viewBox="0 0 48 48" fill="none"><circle cx="12" cy="34" r="8" stroke="currentColor" stroke-width="2.5"/><circle cx="36" cy="34" r="8" stroke="currentColor" stroke-width="2.5"/><path d="M12 34L24 14L36 34" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 14h8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="24" cy="14" r="2" fill="currentColor"/></svg>
+        </div>
+        <span>Цахилгаан дугуй</span>
+      </a>
+      <a href="https://antmall.mn/products?category=camera" class="cat-card">
+        <div class="cat-card__img">
+          <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="14" width="40" height="28" rx="4" stroke="currentColor" stroke-width="2.5"/><circle cx="24" cy="28" r="8" stroke="currentColor" stroke-width="2.5"/><path d="M16 14l3-6h10l3 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="36" cy="20" r="2" fill="currentColor"/></svg>
+        </div>
+        <span>Камер</span>
+      </a>
+      <a href="https://antmall.mn/products?category=accessories" class="cat-card">
+        <div class="cat-card__img">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M20 8v4M28 8v4M8 20h4M36 20h4M8 28h4M36 28h4M20 36v4M28 36v4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><rect x="14" y="14" width="20" height="20" rx="4" stroke="currentColor" stroke-width="2.5"/></svg>
+        </div>
+        <span>Дагалдах хэрэгсэл</span>
+      </a>
+      <a href="https://antmall.mn/products?category=beauty" class="cat-card">
+        <div class="cat-card__img">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M24 4L26.5 14H37L28.3 20.5L31 31L24 25L17 31L19.7 20.5L11 14H21.5Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M14 36c0 4 4 8 10 8s10-4 10-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <span>Гоо сайхан</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PAYMENT STRIP ═══ -->
+<section class="payments">
+  <div class="container payments__inner">
+    <span class="payments__label">Төлбөрийн нөхцөл:</span>
+    <div class="payments__logos">
+      <span class="pay-badge" style="background:#00B2E3;color:#fff">QPay</span>
+      <span class="pay-badge" style="background:#1BC47D;color:#fff">SocialPay</span>
+      <span class="pay-badge" style="background:#FF6B00;color:#fff">Monpay</span>
+      <span class="pay-badge" style="background:#6C3BC1;color:#fff">StorePay</span>
+      <span class="pay-badge" style="background:#E8002D;color:#fff">ArdCredit</span>
+      <span class="pay-badge" style="background:#004A97;color:#fff">Khan Bank</span>
+      <span class="pay-badge" style="background:#FF4F00;color:#fff">LendMN</span>
+      <span class="pay-badge" style="background:#00C2A8;color:#fff">Toki</span>
+      <span class="pay-badge" style="background:#1E4DB7;color:#fff">Pocket</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FLASH DEALS ═══ -->
+<section class="flash-section">
+  <div class="container">
+    <div class="flash-header">
+      <div class="flash-title">
+        <span class="flash-fire">⚡</span>
+        <h2>Онцгой хямдрал</h2>
+      </div>
+      <div class="flash-timer" id="flashTimer">
+        <span class="timer-label">Дуусах хугацаа:</span>
+        <div class="timer-block"><span id="timerH">23</span><small>цаг</small></div>
+        <span class="timer-sep">:</span>
+        <div class="timer-block"><span id="timerM">59</span><small>мин</small></div>
+        <span class="timer-sep">:</span>
+        <div class="timer-block"><span id="timerS">59</span><small>сек</small></div>
+      </div>
+      <a href="https://antmall.mn/products?sale" class="btn-see-all">Бүгдийг үзэх →</a>
+    </div>
+    <div class="flash-grid" id="flashGrid"></div>
+  </div>
+</section>
+
+<!-- ═══ PHONES ═══ -->
+<section class="ps" id="phonesSection">
+  <div class="container">
+    <div class="ps__header">
+      <div class="ps__title-wrap">
+        <h2 class="ps__title">Гар утас</h2>
+        <div class="ps__brands" id="phoneBrands"></div>
+      </div>
+      <a href="https://antmall.mn/products?category=54" class="btn-see-all">Бүгдийг үзэх →</a>
+    </div>
+    <div class="ps__scroll-wrap">
+      <button class="ps__arrow ps__arrow--left" id="phonesLeft">‹</button>
+      <div class="ps__grid" id="phonesGrid"></div>
+      <button class="ps__arrow ps__arrow--right" id="phonesRight">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ APPLE BANNER ═══ -->
+<section class="brand-banner brand-banner--apple">
+  <a href="https://antmall.mn/products?brands=2" class="brand-banner__link" target="_blank">
+    <div class="brand-banner__content">
+      <div class="brand-banner__logo">
+        <img src="https://admins-odoo.antmall.mn/api/webgrid/product_brand/2/image" alt="Apple" />
+      </div>
+      <div class="brand-banner__text">
+        <h3>Apple бүтээгдэхүүнүүд</h3>
+        <p>iPhone, MacBook, AirPods, Apple Watch — бүгдийг нэг дороос</p>
+        <span class="brand-banner__cta">Дэлгэрэнгүй харах →</span>
+      </div>
+    </div>
+  </a>
+</section>
+
+<!-- ═══ WEARABLES ═══ -->
+<section class="ps" id="wearablesSection">
+  <div class="container">
+    <div class="ps__header">
+      <div class="ps__title-wrap">
+        <h2 class="ps__title">Ухаалаг цаг / Чихэвч</h2>
+      </div>
+      <a href="https://antmall.mn/products?category=55" class="btn-see-all">Бүгдийг үзэх →</a>
+    </div>
+    <div class="ps__scroll-wrap">
+      <button class="ps__arrow ps__arrow--left" id="wearablesLeft">‹</button>
+      <div class="ps__grid" id="wearablesGrid"></div>
+      <button class="ps__arrow ps__arrow--right" id="wearablesRight">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SAMSUNG BANNER ═══ -->
+<section class="brand-banner brand-banner--samsung">
+  <a href="https://antmall.mn/products?brands=8" class="brand-banner__link" target="_blank">
+    <div class="brand-banner__content">
+      <div class="brand-banner__logo">
+        <img src="https://admins-odoo.antmall.mn/api/webgrid/product_brand/8/image" alt="Samsung" />
+      </div>
+      <div class="brand-banner__text">
+        <h3>Samsung Galaxy Series</h3>
+        <p>Galaxy S25 Ultra, Fold 7, Flip 7 — дэвшилтэт технологи</p>
+        <span class="brand-banner__cta">Дэлгэрэнгүй харах →</span>
+      </div>
+    </div>
+  </a>
+</section>
+
+<!-- ═══ APPLIANCES ═══ -->
+<section class="ps" id="appliancesSection">
+  <div class="container">
+    <div class="ps__header">
+      <div class="ps__title-wrap">
+        <h2 class="ps__title">Гэр ахуйн цахилгаан бараа</h2>
+      </div>
+      <a href="https://antmall.mn/products?category=9" class="btn-see-all">Бүгдийг үзэх →</a>
+    </div>
+    <div class="ps__scroll-wrap">
+      <button class="ps__arrow ps__arrow--left" id="appliancesLeft">‹</button>
+      <div class="ps__grid" id="appliancesGrid"></div>
+      <button class="ps__arrow ps__arrow--right" id="appliancesRight">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ COMPUTERS ═══ -->
+<section class="ps" id="computersSection">
+  <div class="container">
+    <div class="ps__header">
+      <div class="ps__title-wrap">
+        <h2 class="ps__title">Компьютер &amp; Принтер</h2>
+      </div>
+      <a href="https://antmall.mn/products?category=57" class="btn-see-all">Бүгдийг үзэх →</a>
+    </div>
+    <div class="ps__scroll-wrap">
+      <button class="ps__arrow ps__arrow--left" id="computersLeft">‹</button>
+      <div class="ps__grid" id="computersGrid"></div>
+      <button class="ps__arrow ps__arrow--right" id="computersRight">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OPEN BOX (NEW FEATURE) ═══ -->
+<section class="openbox-section" id="openbox">
+  <div class="container">
+    <div class="ps__header">
+      <div class="ps__title-wrap">
+        <h2 class="ps__title">📦 Лац задарсан</h2>
+        <p class="ps__subtitle">Лаць нь нээгдсэн боловч бүрэн бүтэн — нэмэлт хямдралтай</p>
+      </div>
+      <a href="https://antmall.mn/products?openbox" class="btn-see-all btn-see-all--amber">Бүгдийг үзэх →</a>
+    </div>
+    <div class="openbox-grid" id="openboxGrid"></div>
+  </div>
+</section>
+
+<!-- ═══ TRADE-IN BANNER (NEW FEATURE) ═══ -->
+<section class="tradein-section" id="tradein">
+  <div class="container tradein__inner">
+    <div class="tradein__text">
+      <div class="tradein__tag">🔄 Trade-In хөтөлбөр</div>
+      <h2>Хуучин төхөөрөмжөө<br/>шинэтгэцгээе!</h2>
+      <p>Хуучин утас, таблет, компьютерийнхаа үнэлгээг авч, шинэ бараа худалдан авахдаа хэрэглэнэ үү.</p>
+      <div class="tradein__steps">
+        <div class="tradein__step">
+          <span class="tradein__step-num">1</span>
+          <span>Мэдэгдэл илгээх</span>
+        </div>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <div class="tradein__step">
+          <span class="tradein__step-num">2</span>
+          <span>Үнэлгээ авах</span>
+        </div>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <div class="tradein__step">
+          <span class="tradein__step-num">3</span>
+          <span>Шинэ бараа авах</span>
+        </div>
+      </div>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSffoQ2lsSwEwpXqkVCq2rVzPJdl4Imlt9eHZBdeTb1bOzNmUQ/viewform" target="_blank" class="btn-tradein">Trade-In хүсэлт илгээх →</a>
+    </div>
+    <div class="tradein__visual">
+      <div class="tradein__phones">
+        <div class="tradein__phone tradein__phone--old">
+          <div class="tradein__phone-screen">📱 Хуучин</div>
+        </div>
+        <div class="tradein__arrow-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="tradein__phone tradein__phone--new">
+          <div class="tradein__phone-screen">✨ Шинэ</div>
+        </div>
+      </div>
+      <div class="tradein__badge-wrap">
+        <div class="tradein__badge">+ Мөнгө хэмнэнэ!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ APP DOWNLOAD ═══ -->
+<section class="app-section">
+  <div class="container app-section__inner">
+    <div class="app-section__text">
+      <div class="app-section__tag">📲 Мобайл апп</div>
+      <h2>AntMall апп татаж авах</h2>
+      <p>Хаанаас ч захиалга өгч, хүргэлтийн явцыг хянаарай. Апп-ын онцгой хямдрал танд хүрнэ!</p>
+      <div class="app-btns">
+        <a href="https://apps.apple.com/us/app/antmall-mn/id6741709406" target="_blank" class="app-btn app-btn--ios">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div><small>App Store-с татах</small><strong>iOS App</strong></div>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.amall.shopping" target="_blank" class="app-btn app-btn--android">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.35.2.74.24 1.12.14l.08-.04L13 15.2l-3.12-3.12L3.18 23.76zm17.02-11.64c.47-.27.8-.78.8-1.38 0-.59-.32-1.1-.79-1.37L17.8 8.15l-3.42 3.42 3.42 3.42 2.4-1.41v-.06zM3.06.27C2.68.39 2.4.74 2.4 1.2v21.58c0 .46.28.81.66.93l.1.03L13.8 12 3.06.27zM14.22 12l3.58-3.57-9.42-5.4L14.22 12z"/></svg>
+          <div><small>Google Play-с татах</small><strong>Android App</strong></div>
+        </a>
+      </div>
+    </div>
+    <div class="app-section__img">
+      <div class="app-mockup">
+        <div class="app-mockup__phone">
+          <div class="app-mockup__screen">
+            <img src="https://antmall.mn/antmall.svg" alt="AntMall App" />
+            <p>AntMall App</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <img src="https://antmall.mn/antmall.svg" alt="AntMall" class="footer__logo" />
+      <p>Монголын тэргүүлэх цахилгаан барааны дэлгүүр. Хөдөлмөрч, зогсошгүй, бүтээлч хамт олон.</p>
+      <div class="footer__socials">
+        <a href="https://www.facebook.com/AntMall.mn" target="_blank" class="footer__social">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.887v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/antmall_official/" target="_blank" class="footer__social">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer__col">
+      <h4>Бидний тухай</h4>
+      <ul>
+        <li><a href="/about">Танилцуулга</a></li>
+        <li><a href="https://antmall.mn/blog">Мэдээ мэдээлэл</a></li>
+        <li><a href="https://antmall.mn/contents/terms-and-conditions-of-service">Үйлчилгээний нөхцөл</a></li>
+        <li><a href="https://antmall.mn/contents/privacy-policy">Нууцлалын бодлого</a></li>
+        <li><a href="https://antmall.mn/contents/frequently-asked-questions">Түгээмэл асуултууд</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Бүтээгдэхүүн</h4>
+      <ul>
+        <li><a href="https://antmall.mn/products?category=54">Гар утас</a></li>
+        <li><a href="https://antmall.mn/products?category=55">Ухаалаг цаг/Чихэвч</a></li>
+        <li><a href="https://antmall.mn/products?category=57">Компьютер</a></li>
+        <li><a href="https://antmall.mn/products?category=9">Гэр ахуйн бараа</a></li>
+        <li><a href="https://antmall.mn/products?new">Шинэ бараанууд</a></li>
+        <li><a href="https://antmall.mn/brands">Брэндүүд</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Холбоо барих</h4>
+      <ul class="footer__contact">
+        <li>📞 <a href="tel:72005588">7200-5588</a></li>
+        <li>✉ <a href="mailto:info@antmall.mn">info@antmall.mn</a></li>
+        <li>🕐 Өдөр бүр 10:00 – 19:00</li>
+      </ul>
+      <h4 class="footer__branches-title">Салбарууд</h4>
+      <ul class="footer__branches">
+        <li>📍 Олимпик Галлериа, 1 давхар</li>
+        <li>📍 Түмэн Молл, 5 давхар</li>
+        <li>📍 Go.To Market, 2 давхар</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="container footer__bottom-inner">
+      <p>© 2026 AntMall.mn — Бүх эрх хуулиар хамгаалагдсан.</p>
+      <div class="footer__apps">
+        <a href="https://apps.apple.com/us/app/antmall-mn/id6741709406" target="_blank" class="footer__app-badge">App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=com.amall.shopping" target="_blank" class="footer__app-badge">Google Play</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Floating contact button -->
+<div class="fab-wrap">
+  <a href="tel:72005588" class="fab fab--phone" title="Залгах">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+  </a>
+  <a href="https://m.me/AntMall.mn" target="_blank" class="fab fab--msg" title="Мессеж">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 4.975 0 11.111c0 3.497 1.745 6.616 4.472 8.652V24l4.086-2.242c1.09.301 2.246.464 3.442.464 6.627 0 12-4.975 12-11.111S18.627 0 12 0zm1.193 14.963l-3.056-3.259-5.963 3.259 6.559-6.963 3.13 3.259 5.889-3.259-6.559 6.963z"/></svg>
+  </a>
+</div>
+
+<!-- Cart toast -->
+<div class="cart-toast" id="cartToast">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+  <span id="cartToastMsg">Сагсанд нэмэгдлээ!</span>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
