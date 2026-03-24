@@ -233,7 +233,6 @@ input { font-family: inherit; }
 .nav-link:hover { color: var(--orange); background: var(--orange-light); }
 .nav-link--sale { color: var(--red); font-weight: 600; }
 .nav-link--sale:hover { background: #fef2f2; }
-.nav-link--tradein { color: var(--navy); font-weight: 600; }
 .nav-link--openbox { color: var(--amber); font-weight: 600; }
 .nav-link--leasing { color: var(--navy-light); font-weight: 600; }
 
@@ -872,136 +871,6 @@ input { font-family: inherit; }
 }
 .openbox-grid .pc__media { background: var(--gray-50); }
 
-/* ── TRADE-IN SECTION ── */
-.tradein-section {
-  padding: 60px 0;
-  background: linear-gradient(135deg, var(--navy) 0%, #0f172a 100%);
-  border-top: 6px solid var(--gray-50);
-}
-.tradein__inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-}
-.tradein__tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(249,115,22,.2);
-  color: var(--orange);
-  font-size: .8rem;
-  font-weight: 700;
-  padding: 5px 14px;
-  border-radius: 20px;
-  margin-bottom: 16px;
-  border: 1px solid rgba(249,115,22,.3);
-}
-.tradein__text h2 {
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--white);
-  line-height: 1.2;
-  margin-bottom: 14px;
-  letter-spacing: -.02em;
-}
-.tradein__text p {
-  font-size: .95rem;
-  color: rgba(255,255,255,.65);
-  line-height: 1.7;
-  margin-bottom: 28px;
-}
-.tradein__steps {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 32px;
-  flex-wrap: wrap;
-}
-.tradein__step {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: rgba(255,255,255,.85);
-  font-size: .85rem;
-  font-weight: 500;
-}
-.tradein__step-num {
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--orange);
-  color: var(--white);
-  border-radius: 50%;
-  font-size: .8rem;
-  font-weight: 800;
-  flex-shrink: 0;
-}
-.tradein__steps svg { color: rgba(255,255,255,.3); flex-shrink: 0; }
-.btn-tradein {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--orange-grad);
-  color: var(--white);
-  padding: 14px 32px;
-  border-radius: 50px;
-  font-size: .95rem;
-  font-weight: 700;
-  transition: all var(--trans);
-  box-shadow: 0 4px 20px rgba(249,115,22,.4);
-}
-.btn-tradein:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(249,115,22,.5);
-}
-.tradein__visual {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-}
-.tradein__phones {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.tradein__phone {
-  width: 100px;
-  height: 160px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: .8rem;
-  font-weight: 600;
-  text-align: center;
-}
-.tradein__phone--old {
-  background: rgba(255,255,255,.08);
-  border: 2px solid rgba(255,255,255,.15);
-  color: rgba(255,255,255,.5);
-}
-.tradein__phone--new {
-  background: var(--orange-grad);
-  border: 2px solid rgba(255,255,255,.2);
-  color: var(--white);
-  box-shadow: 0 8px 32px rgba(249,115,22,.4);
-}
-.tradein__phone-screen { padding: 16px 8px; line-height: 1.6; }
-.tradein__arrow-icon { color: rgba(255,255,255,.4); }
-.tradein__badge-wrap { text-align: center; }
-.tradein__badge {
-  background: rgba(249,115,22,.15);
-  border: 1px solid rgba(249,115,22,.3);
-  color: var(--orange);
-  padding: 8px 20px;
-  border-radius: 50px;
-  font-size: .85rem;
-  font-weight: 700;
-}
 
 /* ── APP SECTION ── */
 .app-section {
@@ -1216,7 +1085,6 @@ body { overflow-x: clip; }
   .feature { border-bottom: 1px solid var(--gray-200); }
   .feature:nth-child(2n) { border-right: none; }
   .brand-banner__content { padding: 24px 28px; gap: 20px; }
-  .tradein__inner { grid-template-columns: 1fr; gap: 32px; }
   .app-section__inner { grid-template-columns: 1fr; gap: 32px; }
   .app-section__img { display: none; }
 }
@@ -1272,10 +1140,6 @@ body { overflow-x: clip; }
   /* Brand banners */
   .brand-banner__content { flex-direction: column; text-align: center; padding: 24px; }
 
-  /* Trade-In visual */
-  .tradein__phones { flex-direction: column; gap: 12px; }
-  .tradein__arrow-icon svg { transform: rotate(90deg); }
-
   /* Footer */
   .footer__grid { grid-template-columns: 1fr; gap: 28px; }
   .footer__bottom-inner { flex-direction: column; text-align: center; }
@@ -1328,15 +1192,10 @@ body { overflow-x: clip; }
   .hero__arrow { width: 32px; height: 32px; font-size: 1.2rem; }
 
   /* Headings */
-  .tradein__text h2 { font-size: 1.4rem; }
   .app-section__text h2 { font-size: 1.4rem; }
 
   /* Payments */
   .payments__inner { flex-direction: column; align-items: flex-start; gap: 10px; }
-
-  /* Trade-In steps: stack vertically */
-  .tradein__steps { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .tradein__steps > svg { display: none; }
 
   /* Mobile menu: fit narrow screens */
   .mobile-menu { width: min(300px, 88vw); }
@@ -1350,7 +1209,7 @@ body { overflow-x: clip; }
 
   /* Section padding */
   .ps, .flash-section, .openbox-section { padding: 24px 0; }
-  .tradein-section, .app-section { padding: 32px 0; }
+  .app-section { padding: 32px 0; }
 }
 
 @media (max-width: 360px) {
