@@ -11,7 +11,7 @@ const brandUrl = id =>
   `https://admins-odoo.antmall.mn/api/webgrid/product_brand/${id}/image`;
 
 /* ─── product data ─────────────────────────────────────────── */
-const BRAND = { apple: 2, samsung: 8, cuckoo: 1, dyson: 6, dell: 4, tecno: 15 };
+const BRAND = { apple: 2, samsung: 8, cuckoo: 1, dyson: 6, dell: 4, tecno: 15, pout: 3, deerma: 14 };
 
 const PHONES = [
   { id: 3746, name: 'iPhone 17 Pro Max', brand: 'apple',   price: 6_299_000, badge: 'Шинэ' },
@@ -43,19 +43,40 @@ const WEARABLES = [
 ];
 
 const APPLIANCES = [
-  { id: 3231, name: 'Dyson Gen5 Detect',       brand: 'dyson',  price: 3_199_000, badge: 'Бест' },
-  { id: 3230, name: 'Dyson WashG1',            brand: 'dyson',  price: 2_999_000, badge: null },
-  { id: 3193, name: 'Dyson V15s Detect+',      brand: 'dyson',  price: 2_799_000, badge: null },
-  { id: 3192, name: 'Dyson V12s Detect Slim',  brand: 'dyson',  price: 2_199_000, badge: null },
-  { id: 3660, name: 'Dyson V12 Slim',          brand: 'dyson',  price: 1_799_000, badge: null },
-  { id: 3683, name: 'Dyson Purifier PH05',     brand: 'dyson',  price: 2_499_000, badge: 'Шинэ' },
-  { id: 3684, name: 'Dyson Pencil Vacuum',     brand: 'dyson',  price: 1_299_000, badge: 'Шинэ' },
-  { id: 3209, name: 'Dyson Air Wrap',          brand: 'dyson',  price: 1_899_000, badge: null },
-  { id: 3264, name: 'Cuckoo Air Fryer',        brand: 'cuckoo', price:   599_000, badge: null },
-  { id: 3553, name: 'Cuckoo Rice Cooker',      brand: 'cuckoo', price:   799_000, badge: null },
-  { id: 3112, name: 'Cuckoo Air Purifier',     brand: 'cuckoo', price: 1_099_000, badge: null },
-  { id: 3144, name: 'Cuckoo Kettle',           brand: 'cuckoo', price:   299_000, badge: null },
-  { id: 3078, name: 'Cuckoo Toaster',          brand: 'cuckoo', price:   249_000, badge: null },
+  { id: 3231, name: 'Dyson Gen5 Detect',      brand: 'dyson', price: 3_199_000, badge: 'Бест' },
+  { id: 3230, name: 'Dyson WashG1',           brand: 'dyson', price: 2_999_000, badge: null },
+  { id: 3193, name: 'Dyson V15s Detect+',     brand: 'dyson', price: 2_799_000, badge: null },
+  { id: 3192, name: 'Dyson V12s Detect Slim', brand: 'dyson', price: 2_199_000, badge: null },
+  { id: 3660, name: 'Dyson V12 Slim',         brand: 'dyson', price: 1_799_000, badge: null },
+  { id: 3683, name: 'Dyson Purifier PH05',    brand: 'dyson', price: 2_499_000, badge: 'Шинэ' },
+  { id: 3684, name: 'Dyson Pencil Vacuum',    brand: 'dyson', price: 1_299_000, badge: 'Шинэ' },
+  { id: 3209, name: 'Dyson Air Wrap',         brand: 'dyson', price: 1_899_000, badge: null },
+];
+
+const CUCKOO_PRODUCTS = [
+  { id: 3553, name: 'Cuckoo Rice Cooker',  brand: 'cuckoo', price:   799_000, badge: null },
+  { id: 3112, name: 'Cuckoo Air Purifier', brand: 'cuckoo', price: 1_099_000, badge: null },
+  { id: 3264, name: 'Cuckoo Air Fryer',    brand: 'cuckoo', price:   599_000, badge: null },
+  { id: 3144, name: 'Cuckoo Kettle',       brand: 'cuckoo', price:   299_000, badge: null },
+  { id: 3078, name: 'Cuckoo Toaster',      brand: 'cuckoo', price:   249_000, badge: null },
+];
+
+const DEERMA_PRODUCTS = [
+  { id: 3722, name: 'Deerma Robot Vacuum X90 Ultra', brand: 'deerma', price: 2_391_080, badge: 'Шинэ' },
+  { id: 3725, name: 'Deerma Robot Vacuum X80 Ultra', brand: 'deerma', price: 1_839_080, badge: 'Шинэ' },
+  { id: 3721, name: 'Deerma Cordless Vacuum Z50',    brand: 'deerma', price:   735_080, badge: null },
+  { id: 3718, name: 'Deerma Cordless Vacuum T30W',   brand: 'deerma', price:   551_080, badge: null },
+  { id: 3720, name: 'Deerma Steam Machine ZQ01',     brand: 'deerma', price:   210_680, badge: null },
+  { id: 3753, name: 'Deerma Humidifier F628W',       brand: 'deerma', price:    81_880, badge: null },
+];
+
+const POUT_PRODUCTS = [
+  { id: 3729, name: 'POUT HANDS 7 Wireless Charger', brand: 'pout', price: 105_800, badge: null },
+  { id: 3728, name: 'POUT TekDec Mat Cinnamon',       brand: 'pout', price:  69_000, badge: null },
+  { id: 3724, name: 'POUT TekDec Mat Danish Black',   brand: 'pout', price:  69_000, badge: null },
+  { id: 3709, name: 'POUT Ears 2 Headphones',         brand: 'pout', price:  90_000, badge: null },
+  { id: 3730, name: 'POUT 100W USB-C Charger',        brand: 'pout', price:  25_000, badge: null },
+  { id: 3708, name: 'POUT Magpower Ring',              brand: 'pout', price:  21_000, badge: null },
 ];
 
 const COMPUTERS = [
@@ -117,11 +138,8 @@ function renderProductCard(p) {
 <article class="pc" data-brand="${p.brand}">
   <div class="pc__media">
     ${badgeHtml}
-    <img src="${imgUrl(p.id, 512)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
     <button class="btn-wish" aria-label="Хадгалах" onclick="toggleWish(this)">${SVG_HEART}</button>
-    <div class="pc__hover-action">
-      <button class="btn-add-cart" onclick="addToCart(this,'${nameSafe}',${price})">${SVG_CART} Сагсанд нэмэх</button>
-    </div>
+    <img src="${imgUrl(p.id, 512)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
   </div>
   <div class="pc__body">
     ${brandLogoHtml}
@@ -129,7 +147,9 @@ function renderProductCard(p) {
     <div class="pc__price">
       <span class="price-now">${fmt(price)}<span class="currency">₮</span></span>
       ${orig ? `<span class="price-was">${fmt(orig)}₮</span>` : ''}
+      ${pct ? `<span class="price-save">-${pct}%</span>` : ''}
     </div>
+    <button class="btn-add-cart" onclick="addToCart(this,'${nameSafe}',${price})">${SVG_CART} Сагсанд нэмэх</button>
   </div>
 </article>`;
 }
@@ -142,11 +162,8 @@ function renderFlashCard(p) {
 <article class="pc flash-card" data-brand="${p.brand}">
   <div class="pc__media">
     <span class="badge badge-sale">-${pct}%</span>
-    <img src="${imgUrl(p.id, 512)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
     <button class="btn-wish" aria-label="Хадгалах" onclick="toggleWish(this)">${SVG_HEART}</button>
-    <div class="pc__hover-action">
-      <button class="btn-add-cart" onclick="addToCart(this,'${nameSafe}',${p.salePrice})">${SVG_CART} Сагсанд нэмэх</button>
-    </div>
+    <img src="${imgUrl(p.id, 512)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
   </div>
   <div class="pc__body">
     <h3 class="pc__name">${p.name}</h3>
@@ -158,6 +175,7 @@ function renderFlashCard(p) {
       <div class="flash-stock-bar"><div class="flash-stock-fill" style="width:${stockPct}%"></div></div>
       <span class="flash-stock-label">Үлдсэн: <strong>${p.stock}</strong></span>
     </div>
+    <button class="btn-add-cart" onclick="addToCart(this,'${nameSafe}',${p.salePrice})">${SVG_CART} Сагсанд нэмэх</button>
   </div>
 </article>`;
 }
@@ -170,19 +188,17 @@ function renderOpenBoxCard(p) {
   <div class="pc__media">
     <span class="badge badge-open">Лац задарсан</span>
     <span class="ob-grade">${p.grade}</span>
-    <img src="${imgUrl(p.id, 512)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
     <button class="btn-wish" aria-label="Хадгалах" onclick="toggleWish(this)">${SVG_HEART}</button>
-    <div class="pc__hover-action">
-      <button class="btn-add-cart" onclick="addToCart(this,'${nameSafe}',${p.salePrice})">${SVG_CART} Сагсанд нэмэх</button>
-    </div>
+    <img src="${imgUrl(p.id, 512)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
   </div>
   <div class="pc__body">
     <h3 class="pc__name">${p.name}</h3>
     <div class="pc__price">
       <span class="price-now" style="color:var(--amber)">${fmt(p.salePrice)}<span class="currency">₮</span></span>
       <span class="price-was">${fmt(p.origPrice)}₮</span>
-      <span class="badge badge-sale" style="position:static;font-size:.68rem;padding:2px 6px">-${pct}%</span>
+      <span class="price-save">-${pct}%</span>
     </div>
+    <button class="btn-add-cart btn-add-cart--amber" onclick="addToCart(this,'${nameSafe}',${p.salePrice})">${SVG_CART} Сагсанд нэмэх</button>
   </div>
 </article>`;
 }
@@ -194,8 +210,9 @@ function populateSection(containerId, data, renderer) {
   el.innerHTML = data.map(renderer).join('');
 }
 
-/* ─── hero slider (works on existing HTML slides) ──────────── */
-let heroIndex = 0, heroTimer;
+/* ─── hero slider ──────────────────────────────────────────── */
+const HERO_DURATION = 4500;
+let heroIndex = 0, heroTimer, heroPaused = false;
 
 function initHero() {
   const slider = document.getElementById('heroSlider');
@@ -204,7 +221,7 @@ function initHero() {
 
   const slides = () => $$('.hero__slide', slider);
 
-  // Build dots based on how many slides exist in HTML
+  // Build dots
   if (dotsEl) {
     dotsEl.innerHTML = slides().map((_, i) =>
       `<button class="hero-dot${i === 0 ? ' active' : ''}" data-i="${i}" aria-label="Слайд ${i + 1}"></button>`
@@ -217,6 +234,34 @@ function initHero() {
 
   document.getElementById('heroPrev')?.addEventListener('click', () => goHero(heroIndex - 1));
   document.getElementById('heroNext')?.addEventListener('click', () => goHero(heroIndex + 1));
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  goHero(heroIndex - 1);
+    if (e.key === 'ArrowRight') goHero(heroIndex + 1);
+  });
+
+  // Touch swipe
+  let touchStartX = 0;
+  slider.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  slider.addEventListener('touchend', e => {
+    const diff = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(diff) > 50) goHero(heroIndex + (diff < 0 ? 1 : -1));
+  }, { passive: true });
+
+  // Hover pause
+  slider.addEventListener('mouseenter', () => {
+    heroPaused = true;
+    clearInterval(heroTimer);
+    const bar = document.getElementById('heroProgressBar');
+    if (bar) bar.style.transition = 'none';
+  });
+  slider.addEventListener('mouseleave', () => {
+    heroPaused = false;
+    startHeroTimer();
+  });
 
   startHeroTimer();
 }
@@ -231,11 +276,21 @@ function goHero(idx) {
   heroIndex = ((idx % count) + count) % count;
   slideEls.forEach((s, i) => s.classList.toggle('active', i === heroIndex));
   dots.forEach((d, i)     => d.classList.toggle('active', i === heroIndex));
+  if (!heroPaused) startHeroTimer();
 }
 
 function startHeroTimer() {
   clearInterval(heroTimer);
-  heroTimer = setInterval(() => goHero(heroIndex + 1), 4500);
+  // Reset progress bar
+  const bar = document.getElementById('heroProgressBar');
+  if (bar) {
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    void bar.offsetWidth; // force reflow
+    bar.style.transition = `width ${HERO_DURATION}ms linear`;
+    bar.style.width = '100%';
+  }
+  heroTimer = setInterval(() => goHero(heroIndex + 1), HERO_DURATION);
 }
 
 /* ─── flash deals countdown ────────────────────────────────── */
@@ -267,6 +322,9 @@ function initScrollArrows() {
     { left: 'wearablesLeft',  right: 'wearablesRight',  grid: 'wearablesGrid' },
     { left: 'appliancesLeft', right: 'appliancesRight', grid: 'appliancesGrid' },
     { left: 'computersLeft',  right: 'computersRight',  grid: 'computersGrid' },
+    { left: 'cuckooLeft',     right: 'cuckooRight',     grid: 'cuckooGrid' },
+    { left: 'deermaLeft',     right: 'deermaRight',     grid: 'deermaGrid' },
+    { left: 'poutLeft',       right: 'poutRight',       grid: 'poutGrid' },
   ];
   sections.forEach(({ left, right, grid }) => {
     const rail = document.getElementById(grid);
@@ -453,13 +511,6 @@ function initAnchorScroll() {
 /* ─── extra CSS ────────────────────────────────────────────── */
 function injectExtraStyles() {
   const css = `
-/* hero dots */
-.hero-dot {
-  width: 8px; height: 8px; border-radius: 50%; border: none; cursor: pointer;
-  background: rgba(255,255,255,.5); padding: 0; transition: all .3s;
-}
-.hero-dot.active { background: #fff; transform: scale(1.3); }
-
 /* flash stock bar */
 .flash-stock { margin-top: 8px; display: flex; align-items: center; gap: 8px; }
 .flash-stock-bar { flex: 1; height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden; }
@@ -522,12 +573,15 @@ document.addEventListener('DOMContentLoaded', () => {
   injectBackToTop();
 
   // Render product grids
-  populateSection('flashGrid',      FLASH_DEALS, renderFlashCard);
-  populateSection('phonesGrid',     PHONES,      renderProductCard);
-  populateSection('wearablesGrid',  WEARABLES,   renderProductCard);
-  populateSection('appliancesGrid', APPLIANCES,  renderProductCard);
-  populateSection('computersGrid',  COMPUTERS,   renderProductCard);
-  populateSection('openboxGrid',    OPEN_BOX,    renderOpenBoxCard);
+  populateSection('flashGrid',      FLASH_DEALS,    renderFlashCard);
+  populateSection('phonesGrid',     PHONES,         renderProductCard);
+  populateSection('wearablesGrid',  WEARABLES,      renderProductCard);
+  populateSection('appliancesGrid', APPLIANCES,     renderProductCard);
+  populateSection('computersGrid',  COMPUTERS,      renderProductCard);
+  populateSection('cuckooGrid',     CUCKOO_PRODUCTS,renderProductCard);
+  populateSection('deermaGrid',     DEERMA_PRODUCTS,renderProductCard);
+  populateSection('poutGrid',       POUT_PRODUCTS,  renderProductCard);
+  populateSection('openboxGrid',    OPEN_BOX,       renderOpenBoxCard);
 
   // Init all features
   initHero();

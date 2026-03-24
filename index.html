@@ -164,6 +164,7 @@
   <button class="hero__arrow hero__arrow--prev" id="heroPrev">‹</button>
   <button class="hero__arrow hero__arrow--next" id="heroNext">›</button>
   <div class="hero__dots" id="heroDots"></div>
+  <div class="hero__progress"><div class="hero__progress-bar" id="heroProgressBar"></div></div>
 </section>
 
 <!-- ═══ FEATURE STRIP ═══ -->
@@ -173,7 +174,7 @@
       <div class="feature__icon">🚚</div>
       <div class="feature__text">
         <strong>Хүргэлт</strong>
-        <span>Улаанбаатар хотоор хүргэнэ</span>
+        <span>21 аймаг, Монгол орон даяар</span>
       </div>
     </div>
     <div class="feature">
@@ -362,19 +363,85 @@
   </a>
 </section>
 
-<!-- ═══ APPLIANCES ═══ -->
+<!-- ═══ DYSON APPLIANCES ═══ -->
 <section class="ps" id="appliancesSection">
   <div class="container">
     <div class="ps__header">
       <div class="ps__title-wrap">
-        <h2 class="ps__title">Гэр ахуйн цахилгаан бараа</h2>
+        <h2 class="ps__title">Dyson — Гэр ахуйн цахилгаан</h2>
       </div>
-      <a href="https://antmall.mn/products?category=9" class="btn-see-all">Бүгдийг үзэх →</a>
+      <a href="https://antmall.mn/products?brands=6" class="btn-see-all">Бүгдийг үзэх →</a>
     </div>
     <div class="ps__scroll-wrap">
       <button class="ps__arrow ps__arrow--left" id="appliancesLeft">‹</button>
       <div class="ps__grid" id="appliancesGrid"></div>
       <button class="ps__arrow ps__arrow--right" id="appliancesRight">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CUCKOO BANNER ═══ -->
+<section class="brand-banner brand-banner--cuckoo">
+  <a href="https://antmall.mn/products?brands=1" class="brand-banner__link" target="_blank">
+    <div class="brand-banner__content">
+      <div class="brand-banner__logo">
+        <img src="https://admins-odoo.antmall.mn/api/webgrid/product_brand/1/image" alt="Cuckoo" />
+      </div>
+      <div class="brand-banner__text">
+        <h3>Cuckoo — Чанартай гэр ахуй</h3>
+        <p>Цагаан будаа чанагч, агаар цэвэрлэгч, чайдан — гэрийн хэрэгцээ бүгд нэг дороос</p>
+        <span class="brand-banner__cta">Дэлгэрэнгүй харах →</span>
+      </div>
+    </div>
+  </a>
+</section>
+
+<!-- ═══ CUCKOO PRODUCTS ═══ -->
+<section class="ps" id="cuckooSection">
+  <div class="container">
+    <div class="ps__header">
+      <div class="ps__title-wrap">
+        <h2 class="ps__title">Cuckoo бүтээгдэхүүнүүд</h2>
+      </div>
+      <a href="https://antmall.mn/products?brands=1" class="btn-see-all">Бүгдийг үзэх →</a>
+    </div>
+    <div class="ps__scroll-wrap">
+      <button class="ps__arrow ps__arrow--left" id="cuckooLeft">‹</button>
+      <div class="ps__grid" id="cuckooGrid"></div>
+      <button class="ps__arrow ps__arrow--right" id="cuckooRight">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DEERMA BANNER ═══ -->
+<section class="brand-banner brand-banner--deerma">
+  <a href="https://antmall.mn/products?brands=14" class="brand-banner__link" target="_blank">
+    <div class="brand-banner__content">
+      <div class="brand-banner__logo">
+        <img src="https://admins-odoo.antmall.mn/api/webgrid/product_brand/14/image" alt="Deerma" />
+      </div>
+      <div class="brand-banner__text">
+        <h3>Deerma — Ухаалаг цэвэрлэгч</h3>
+        <p>Робот тоос сорогч, утааны цэвэрлэгч, чийгшүүлэгч — ухаалаг гэр</p>
+        <span class="brand-banner__cta">Дэлгэрэнгүй харах →</span>
+      </div>
+    </div>
+  </a>
+</section>
+
+<!-- ═══ DEERMA PRODUCTS ═══ -->
+<section class="ps" id="deermaSection">
+  <div class="container">
+    <div class="ps__header">
+      <div class="ps__title-wrap">
+        <h2 class="ps__title">Deerma бүтээгдэхүүнүүд</h2>
+      </div>
+      <a href="https://antmall.mn/products?brands=14" class="btn-see-all">Бүгдийг үзэх →</a>
+    </div>
+    <div class="ps__scroll-wrap">
+      <button class="ps__arrow ps__arrow--left" id="deermaLeft">‹</button>
+      <div class="ps__grid" id="deermaGrid"></div>
+      <button class="ps__arrow ps__arrow--right" id="deermaRight">›</button>
     </div>
   </div>
 </section>
@@ -392,6 +459,27 @@
       <button class="ps__arrow ps__arrow--left" id="computersLeft">‹</button>
       <div class="ps__grid" id="computersGrid"></div>
       <button class="ps__arrow ps__arrow--right" id="computersRight">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ POUT ACCESSORIES ═══ -->
+<section class="ps pout-section" id="poutSection">
+  <div class="container">
+    <div class="ps__header">
+      <div class="ps__title-wrap">
+        <div class="pout-header-brand">
+          <img src="https://admins-odoo.antmall.mn/api/webgrid/product_brand/3/image" alt="POUT" class="pout-logo" />
+        </div>
+        <h2 class="ps__title">POUT — Загварлаг дагалдах хэрэгсэл</h2>
+        <p class="ps__subtitle">Скандинавын дизайн, тэргүүний технологи</p>
+      </div>
+      <a href="https://antmall.mn/products?brands=3" class="btn-see-all">Бүгдийг үзэх →</a>
+    </div>
+    <div class="ps__scroll-wrap">
+      <button class="ps__arrow ps__arrow--left" id="poutLeft">‹</button>
+      <div class="ps__grid" id="poutGrid"></div>
+      <button class="ps__arrow ps__arrow--right" id="poutRight">›</button>
     </div>
   </div>
 </section>

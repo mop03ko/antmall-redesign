@@ -426,6 +426,21 @@ input { font-family: inherit; }
   width: 24px;
   border-radius: 4px;
 }
+/* hero progress bar */
+.hero__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255,255,255,.2);
+  z-index: 10;
+}
+.hero__progress-bar {
+  height: 100%;
+  background: var(--orange);
+  width: 0%;
+}
 
 /* ── FEATURES ── */
 .features {
@@ -667,34 +682,30 @@ input { font-family: inherit; }
   transition: all var(--trans);
   z-index: 2;
   box-shadow: var(--shadow);
-  opacity: 0;
+  opacity: 0.55;
 }
 .pc:hover .btn-wish { opacity: 1; }
 .btn-wish:hover { color: var(--red); background: var(--white); }
 .btn-wish.active { color: var(--red); opacity: 1; }
-.pc__hover-action {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  transform: translateY(100%);
-  transition: transform var(--trans);
-}
-.pc:hover .pc__hover-action { transform: translateY(0); }
 .btn-add-cart {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 7px;
-  padding: 10px;
+  padding: 9px 10px;
   background: var(--navy);
   color: var(--white);
-  font-size: .8rem;
+  font-size: .78rem;
   font-weight: 600;
-  transition: background var(--trans);
+  border-radius: var(--r-sm);
+  margin-top: 8px;
+  transition: background var(--trans), transform .15s;
 }
-.btn-add-cart:hover { background: var(--orange); }
+.btn-add-cart:hover { background: var(--orange); transform: translateY(-1px); }
+.btn-add-cart:active { transform: translateY(0); }
+.btn-add-cart--amber { background: var(--amber); color: #000; }
+.btn-add-cart--amber:hover { background: #e08e09; }
 .pc__body {
   padding: 10px 12px 12px;
   display: flex;
@@ -736,6 +747,10 @@ input { font-family: inherit; }
 .price-now { font-size: 1rem; font-weight: 800; color: var(--gray-900); }
 .currency { font-size: .75rem; font-weight: 600; }
 .price-was { font-size: .75rem; color: var(--gray-400); text-decoration: line-through; }
+.price-save {
+  font-size: .68rem; font-weight: 700; color: var(--white);
+  background: var(--red); padding: 1px 5px; border-radius: 3px;
+}
 
 /* ── FLASH DEALS ── */
 .flash-section {
@@ -828,6 +843,14 @@ input { font-family: inherit; }
 }
 .brand-banner--samsung .brand-banner__content {
   background: linear-gradient(135deg, #1565c0 60%, #1e88e5);
+  color: var(--white);
+}
+.brand-banner--cuckoo .brand-banner__content {
+  background: linear-gradient(135deg, #1a3a1a 60%, #2d6a2d);
+  color: var(--white);
+}
+.brand-banner--deerma .brand-banner__content {
+  background: linear-gradient(135deg, #0a3d5c 60%, #0d6b9a);
   color: var(--white);
 }
 .brand-banner__content:hover { transform: scale(1.005); box-shadow: var(--shadow-lg); }
