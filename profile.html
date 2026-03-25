@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Миний акаунт — AntMall.mn</title>
+  <meta name="description" content="AntMall.mn — Миний акаунт, захиалга, хадгалсан бараа" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="stylesheet" href="profile.css?v=1" />
+</head>
+<body>
+
+<!-- ═══ TOPBAR ═══ -->
+<div class="topbar">
+  <div class="container topbar__inner">
+    <span class="topbar__msg">AntMall.mn-д тавтай морил.</span>
+    <div class="topbar__right">
+      <a href="tel:72005588" class="topbar__link">📞 7200-5588</a>
+      <a href="mailto:info@antmall.mn" class="topbar__link">✉ info@antmall.mn</a>
+      <a href="https://www.facebook.com/AntMall.mn" target="_blank" class="topbar__social">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.887v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/antmall_official/" target="_blank" class="topbar__social">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="index.html" class="header__logo">
+      <img src="https://antmall.mn/antmall.svg" alt="AntMall" />
+    </a>
+    <form class="search-bar" id="searchForm" onsubmit="doSearch(event)">
+      <svg class="search-bar__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="search" placeholder="Бүтээгдэхүүн, брэнд хайх..." class="search-bar__input" id="searchInput" />
+      <button type="submit" class="search-bar__btn">Хайх</button>
+    </form>
+    <div class="header__actions">
+      <a href="/account/wishlists" class="hbtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span>Хадгалсан</span>
+      </a>
+      <a href="profile.html" class="hbtn hbtn--active">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Акаунт</span>
+      </a>
+      <a href="/cart" class="hbtn hbtn--cart" id="cartBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span>Сагс</span>
+        <span class="cart-badge" id="cartCount">0</span>
+      </a>
+    </div>
+    <button class="burger" id="burger" aria-label="Цэс"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- ═══ BREADCRUMB ═══ -->
+<div class="prof-breadcrumb">
+  <div class="container">
+    <a href="index.html">Нүүр</a>
+    <span class="bc-sep">›</span>
+    <span>Миний акаунт</span>
+  </div>
+</div>
+
+<!-- ═══ PROFILE LAYOUT ═══ -->
+<main class="prof-layout container">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="prof-sidebar" id="profSidebar">
+
+    <!-- User card -->
+    <div class="prof-usercard">
+      <div class="prof-avatar" id="avatarWrap" onclick="document.getElementById('avatarInput').click()">
+        <img src="" alt="Avatar" id="avatarImg" />
+        <span class="prof-avatar__initials" id="avatarInitials">ДБ</span>
+        <div class="prof-avatar__overlay">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </div>
+        <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="changeAvatar(this)" />
+      </div>
+      <div class="prof-usercard__info">
+        <span class="prof-usercard__name" id="sidebarName">Дорж Батсүх</span>
+        <span class="prof-usercard__phone" id="sidebarPhone">9900-1122</span>
+      </div>
+      <div class="prof-usercard__badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Идэвхтэй хэрэглэгч
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <nav class="prof-nav">
+      <button class="prof-nav__item active" onclick="showTab('info')" data-tab="info">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Миний мэдээлэл
+      </button>
+      <button class="prof-nav__item" onclick="showTab('orders')" data-tab="orders">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Захиалгууд
+        <span class="prof-nav__badge" id="orderBadge">3</span>
+      </button>
+      <button class="prof-nav__item" onclick="showTab('wishlist')" data-tab="wishlist">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Хадгалсан
+        <span class="prof-nav__badge" id="wishBadge">5</span>
+      </button>
+      <button class="prof-nav__item" onclick="showTab('address')" data-tab="address">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Хүргэлтийн хаяг
+      </button>
+      <button class="prof-nav__item" onclick="showTab('security')" data-tab="security">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Нууцлал, аюулгүй байдал
+      </button>
+      <div class="prof-nav__divider"></div>
+      <button class="prof-nav__item prof-nav__item--logout" onclick="handleLogout()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Гарах
+      </button>
+    </nav>
+  </aside>
+
+  <!-- ── MAIN CONTENT ── -->
+  <div class="prof-content">
+
+    <!-- ════════════════════
+         TAB: МИНИЙ МЭДЭЭЛЭЛ
+         ════════════════════ -->
+    <section class="prof-tab active" id="tab-info">
+      <div class="prof-section-head">
+        <h2 class="prof-section-title">Миний мэдээлэл</h2>
+        <p class="prof-section-sub">Хувийн мэдээллээ удирдаарай</p>
+      </div>
+
+      <!-- Avatar upload card -->
+      <div class="info-avatar-card">
+        <div class="info-avatar-preview" id="infoAvatarWrap" onclick="document.getElementById('avatarInput').click()">
+          <img src="" alt="" id="infoAvatarImg" />
+          <span class="info-avatar-initials" id="infoAvatarInitials">ДБ</span>
+          <div class="info-avatar-overlay">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <span>Зураг солих</span>
+          </div>
+        </div>
+        <div class="info-avatar-text">
+          <p class="info-avatar-hint">JPG, PNG — 5MB хүртэл</p>
+          <button class="btn-upload-avatar" onclick="document.getElementById('avatarInput').click()">Зураг оруулах</button>
+        </div>
+      </div>
+
+      <!-- Info form -->
+      <form class="info-form" onsubmit="saveInfo(event)" novalidate>
+        <div class="info-form__grid">
+          <div class="form-group2">
+            <label class="form-label2" for="infoFirst">Нэр</label>
+            <input type="text" id="infoFirst" class="form-input2" value="Дорж" />
+          </div>
+          <div class="form-group2">
+            <label class="form-label2" for="infoLast">Овог</label>
+            <input type="text" id="infoLast" class="form-input2" value="Батсүх" />
+          </div>
+          <div class="form-group2">
+            <label class="form-label2" for="infoPhone">Утасны дугаар</label>
+            <div class="input-wrap2">
+              <input type="tel" id="infoPhone" class="form-input2" value="99001122" maxlength="8" />
+              <span class="input-verified">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Баталгаажсан
+              </span>
+            </div>
+          </div>
+          <div class="form-group2">
+            <label class="form-label2" for="infoEmail">Имэйл</label>
+            <input type="email" id="infoEmail" class="form-input2" value="dorj@example.com" />
+          </div>
+          <div class="form-group2">
+            <label class="form-label2" for="infoBirth">Төрсөн огноо</label>
+            <input type="date" id="infoBirth" class="form-input2" value="1995-06-15" />
+          </div>
+          <div class="form-group2">
+            <label class="form-label2">Хүйс</label>
+            <div class="gender-btns">
+              <button type="button" class="gender-btn active" id="genderM" onclick="setGender('male')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="4"/><line x1="12" y1="9" x2="12" y2="20"/><line x1="8" y1="14" x2="16" y2="14"/></svg>
+                Эрэгтэй
+              </button>
+              <button type="button" class="gender-btn" id="genderF" onclick="setGender('female')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="5"/><line x1="12" y1="13" x2="12" y2="21"/><line x1="9" y1="18" x2="15" y2="18"/></svg>
+                Эмэгтэй
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-form__actions">
+          <button type="submit" class="btn-save" id="infoSaveBtn">
+            <span class="btn-save__text">Хадгалах</span>
+            <span class="btn-save__spinner"></span>
+          </button>
+          <div class="save-toast hidden" id="infoToast">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Амжилттай хадгалагдлаа
+          </div>
+        </div>
+      </form>
+
+      <!-- Stats strip -->
+      <div class="user-stats">
+        <div class="user-stat">
+          <span class="user-stat__val" id="statOrders">3</span>
+          <span class="user-stat__lbl">Нийт захиалга</span>
+        </div>
+        <div class="user-stat">
+          <span class="user-stat__val" id="statWish">5</span>
+          <span class="user-stat__lbl">Хадгалсан</span>
+        </div>
+        <div class="user-stat">
+          <span class="user-stat__val" id="statSpend">18,699,000₮</span>
+          <span class="user-stat__lbl">Нийт зарцуулсан</span>
+        </div>
+        <div class="user-stat">
+          <span class="user-stat__val">2025.01.10</span>
+          <span class="user-stat__lbl">Бүртгүүлсэн</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════
+         TAB: ЗАХИАЛГУУД
+         ════════════════════ -->
+    <section class="prof-tab" id="tab-orders">
+      <div class="prof-section-head">
+        <h2 class="prof-section-title">Захиалгууд</h2>
+        <p class="prof-section-sub">Таны захиалгын түүх</p>
+      </div>
+
+      <!-- Filter tabs -->
+      <div class="order-filter-tabs">
+        <button class="order-ftab active" onclick="filterOrders('all', this)">Бүгд <span>(3)</span></button>
+        <button class="order-ftab" onclick="filterOrders('processing', this)">Боловсруулж байна</button>
+        <button class="order-ftab" onclick="filterOrders('shipped', this)">Хүргэлтэд</button>
+        <button class="order-ftab" onclick="filterOrders('delivered', this)">Хүргэгдсэн</button>
+        <button class="order-ftab" onclick="filterOrders('cancelled', this)">Цуцлагдсан</button>
+      </div>
+
+      <div class="orders-list" id="ordersList"></div>
+    </section>
+
+    <!-- ════════════════════
+         TAB: ХАДГАЛСАН
+         ════════════════════ -->
+    <section class="prof-tab" id="tab-wishlist">
+      <div class="prof-section-head">
+        <h2 class="prof-section-title">Хадгалсан бараа</h2>
+        <p class="prof-section-sub">Таны хүслийн жагсаалт</p>
+      </div>
+      <div class="wish-grid" id="wishGrid"></div>
+    </section>
+
+    <!-- ════════════════════
+         TAB: ХАЯГ
+         ════════════════════ -->
+    <section class="prof-tab" id="tab-address">
+      <div class="prof-section-head">
+        <h2 class="prof-section-title">Хүргэлтийн хаяг</h2>
+        <p class="prof-section-sub">Хадгалсан хүргэлтийн хаягууд</p>
+      </div>
+
+      <div class="addr-grid" id="addrGrid"></div>
+
+      <!-- Add address form -->
+      <div class="addr-add-card" id="addrAddCard">
+        <button class="addr-add-btn" onclick="toggleAddrForm()">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          Шинэ хаяг нэмэх
+        </button>
+      </div>
+
+      <!-- Inline form -->
+      <div class="addr-form-wrap hidden" id="addrForm">
+        <h3 class="addr-form-title">Шинэ хаяг нэмэх</h3>
+        <form onsubmit="saveAddress(event)" novalidate>
+          <div class="addr-form-grid">
+            <div class="form-group2">
+              <label class="form-label2" for="addrLabel">Нэрлэх (жишээ: Гэр, Ажил)</label>
+              <input type="text" id="addrLabel" class="form-input2" placeholder="Гэр" />
+            </div>
+            <div class="form-group2">
+              <label class="form-label2" for="addrRecipient">Хүлээн авагч</label>
+              <input type="text" id="addrRecipient" class="form-input2" placeholder="Бүтэн нэр" />
+            </div>
+            <div class="form-group2">
+              <label class="form-label2" for="addrPhone">Утас</label>
+              <input type="tel" id="addrPhone" class="form-input2" placeholder="99001122" maxlength="8" />
+            </div>
+            <div class="form-group2">
+              <label class="form-label2" for="addrDistrict">Дүүрэг</label>
+              <select id="addrDistrict" class="form-input2">
+                <option value="">Сонгох...</option>
+                <option>Баянгол</option><option>Баянзүрх</option><option>Сүхбаатар</option>
+                <option>Чингэлтэй</option><option>Хан-Уул</option><option>Сонгинохайрхан</option>
+                <option>Налайх</option><option>Багануур</option><option>Багахангай</option>
+              </select>
+            </div>
+            <div class="form-group2 full-col">
+              <label class="form-label2" for="addrDetail">Дэлгэрэнгүй хаяг</label>
+              <input type="text" id="addrDetail" class="form-input2" placeholder="Хороо, байр, орц, давхар, тоот..." />
+            </div>
+          </div>
+          <div class="addr-form-actions">
+            <button type="submit" class="btn-save">Хадгалах</button>
+            <button type="button" class="btn-cancel" onclick="toggleAddrForm()">Цуцлах</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ════════════════════
+         TAB: НУУЦЛАЛ
+         ════════════════════ -->
+    <section class="prof-tab" id="tab-security">
+      <div class="prof-section-head">
+        <h2 class="prof-section-title">Нууцлал, аюулгүй байдал</h2>
+        <p class="prof-section-sub">Нууц үг болон мэдэгдлийн тохиргоо</p>
+      </div>
+
+      <!-- Change password -->
+      <div class="security-card">
+        <div class="security-card__head">
+          <div class="security-card__icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div>
+            <h3 class="security-card__title">Нууц үг солих</h3>
+            <p class="security-card__sub">Сүүлийн удаа солисон: 3 сарын өмнө</p>
+          </div>
+          <button class="btn-expand" id="passExpandBtn" onclick="togglePassForm()">Солих</button>
+        </div>
+        <form class="security-pass-form hidden" id="passChangeForm" onsubmit="changePassword(event)" novalidate>
+          <div class="form-group2">
+            <label class="form-label2">Одоогийн нууц үг</label>
+            <div class="input-wrap2">
+              <input type="password" id="scPassCurr" class="form-input2" placeholder="Одоогийн нууц үг" />
+              <button type="button" class="eye-btn2" onclick="togglePass2('scPassCurr',this)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="form-group2">
+            <label class="form-label2">Шинэ нууц үг</label>
+            <div class="input-wrap2">
+              <input type="password" id="scPassNew" class="form-input2" placeholder="Хамгийн багадаа 8 тэмдэгт" />
+              <button type="button" class="eye-btn2" onclick="togglePass2('scPassNew',this)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="form-group2">
+            <label class="form-label2">Шинэ нууц үг давтах</label>
+            <div class="input-wrap2">
+              <input type="password" id="scPassNew2" class="form-input2" placeholder="Нууц үгийг давтана уу" />
+              <button type="button" class="eye-btn2" onclick="togglePass2('scPassNew2',this)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <span class="form-error" id="scPassErr"></span>
+          <div class="addr-form-actions">
+            <button type="submit" class="btn-save">Хадгалах</button>
+            <button type="button" class="btn-cancel" onclick="togglePassForm()">Цуцлах</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Notification settings -->
+      <div class="security-card">
+        <div class="security-card__head">
+          <div class="security-card__icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          </div>
+          <div>
+            <h3 class="security-card__title">Мэдэгдлийн тохиргоо</h3>
+            <p class="security-card__sub">SMS болон имэйл мэдэгдэл</p>
+          </div>
+        </div>
+        <div class="notif-list">
+          <label class="notif-row">
+            <div class="notif-row__info">
+              <span class="notif-row__title">Захиалгын мэдэгдэл</span>
+              <span class="notif-row__sub">Захиалга баталгаажих, хүргэлтийн мэдэгдэл</span>
+            </div>
+            <div class="toggle-switch">
+              <input type="checkbox" checked onchange="saveNotif(this,'order')" />
+              <span class="toggle-slider"></span>
+            </div>
+          </label>
+          <label class="notif-row">
+            <div class="notif-row__info">
+              <span class="notif-row__title">Урамшуулал, хямдрал</span>
+              <span class="notif-row__sub">Онцгой санал, Flash sale мэдэгдэл</span>
+            </div>
+            <div class="toggle-switch">
+              <input type="checkbox" checked onchange="saveNotif(this,'promo')" />
+              <span class="toggle-slider"></span>
+            </div>
+          </label>
+          <label class="notif-row">
+            <div class="notif-row__info">
+              <span class="notif-row__title">Шинэ бүтээгдэхүүн</span>
+              <span class="notif-row__sub">Хадгалсан брэндийн шинэ бараа</span>
+            </div>
+            <div class="toggle-switch">
+              <input type="checkbox" onchange="saveNotif(this,'new')" />
+              <span class="toggle-slider"></span>
+            </div>
+          </label>
+          <label class="notif-row">
+            <div class="notif-row__info">
+              <span class="notif-row__title">Имэйл мэдэгдэл</span>
+              <span class="notif-row__sub">Бүх мэдэгдлийг имэйлээр хүлээн авах</span>
+            </div>
+            <div class="toggle-switch">
+              <input type="checkbox" checked onchange="saveNotif(this,'email')" />
+              <span class="toggle-slider"></span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Danger zone -->
+      <div class="security-card security-card--danger">
+        <div class="security-card__head">
+          <div class="security-card__icon security-card__icon--red">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          </div>
+          <div>
+            <h3 class="security-card__title security-card__title--red">Акаунт устгах</h3>
+            <p class="security-card__sub">Энэ үйлдэл буцаах боломжгүй</p>
+          </div>
+          <button class="btn-danger" onclick="confirmDelete()">Устгах</button>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /.prof-content -->
+</main>
+
+<!-- ═══ ORDER DETAIL MODAL ═══ -->
+<div class="modal-overlay hidden" id="orderModal" onclick="closeOrderModal(event)">
+  <div class="order-modal">
+    <div class="order-modal__head">
+      <h3 id="modalOrderId">Захиалга #ANT-2025-001</h3>
+      <button class="modal-close" onclick="document.getElementById('orderModal').classList.add('hidden')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="order-modal__body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div class="global-toast hidden" id="globalToast"></div>
+
+<!-- ═══ MOBILE NAV TOGGLE ═══ -->
+<button class="prof-mobile-menu-btn" id="profMobileBtn" onclick="toggleSidebar()">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  Цэс
+</button>
+
+<script src="main.js?v=3"></script>
+<script src="profile.js?v=1"></script>
+</body>
+</html>
