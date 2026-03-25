@@ -284,12 +284,14 @@
   border: 1.5px solid var(--gray-200);
   border-radius: var(--r-lg);
   margin-top: 28px;
-  overflow: hidden;
 }
 .pdp-tabs {
   display: flex;
   border-bottom: 1.5px solid var(--gray-200);
   background: var(--gray-50);
+  position: sticky;
+  top: 117px; /* 70px header + 47px main-nav */
+  z-index: 100;
 }
 .pdp-tab {
   padding: 14px 24px; font-size: .88rem; font-weight: 700;
@@ -760,6 +762,10 @@
   .specs-table th { width: 45%; font-size: .78rem; }
   .specs-table td { font-size: .78rem; }
   .reviews-summary { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+
+@media (max-width: 768px) {
+  .pdp-tabs { top: 103px; /* 56px header + 47px nav */ }
 }
 
 @media (max-width: 480px) {
