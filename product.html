@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css?v=2" />
-  <link rel="stylesheet" href="product.css?v=2" />
+  <link rel="stylesheet" href="product.css?v=3" />
 </head>
 <body>
 
@@ -256,42 +256,51 @@
       <div class="pdp-finance">
         <div class="pdp-finance__title">Төлбөрийн нөхцөл</div>
 
+        <!-- Simple Buy -->
+        <div class="pdp-finance-card pdp-finance-card--sb" onclick="openFinanceCalc('simplebuy')" style="cursor:pointer">
+          <div class="pdp-finance-card__icon">
+            <img src="https://shoppy.mn/_nuxt/img/simple-buy.svg" alt="Simple Buy" width="36" height="36" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <span class="pdp-finance-card__icon-fallback" style="display:none;width:36px;height:36px;background:#20c997;border-radius:10px;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:1rem;">S</span>
+          </div>
+          <div class="pdp-finance-card__body">
+            <strong>Одоо ав, дараа төл</strong>
+            <span>simple buy</span>
+          </div>
+          <div class="pdp-finance-card__pills">
+            <span>Урьдчилгаагүй</span><span>Шимтгэлгүй</span><span>24 хүртэл хуваа</span>
+          </div>
+          <svg class="pdp-finance-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
+        <!-- Лизинг -->
         <div class="pdp-finance-card pdp-finance-card--leasing" onclick="openFinanceCalc('leasing')" style="cursor:pointer">
           <div class="pdp-finance-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <img src="https://shoppy.mn/_nuxt/img/hdb.svg" alt="HDB" width="36" height="36" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <span class="pdp-finance-card__icon-fallback" style="display:none;width:36px;height:36px;background:#1d4ed8;border-radius:50%;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:.7rem;">HDB</span>
           </div>
           <div class="pdp-finance-card__body">
-            <strong>Лизинг</strong>
-            <span>Хан банк • 24–36 сар • Урьдчилгаагүй</span>
+            <strong>Хэрэглээний лизинг</strong>
+            <span>Худалдаа хөгжлийн банк</span>
           </div>
           <div class="pdp-finance-card__pills">
-            <span>Хүүгүй</span><span>Шимтгэлгүй</span>
+            <span>Урьдчилгаагүй</span><span>30 сар</span><span>10 сая</span>
           </div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="9 18 15 12 9 6"/></svg>
+          <svg class="pdp-finance-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
 
-        <div class="pdp-finance-card pdp-finance-card--sb" onclick="openFinanceCalc('simplebuy')" style="cursor:pointer">
-          <div class="pdp-finance-card__icon">💳</div>
-          <div class="pdp-finance-card__body">
-            <strong>Simple Buy</strong>
-            <span>Одоо ав, дараа төл • 24 хүртэл хуваа</span>
-          </div>
-          <div class="pdp-finance-card__pills">
-            <span>Урьдчилгаагүй</span><span>Шимтгэлгүй</span>
-          </div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="9 18 15 12 9 6"/></svg>
-        </div>
-
+        <!-- Storepay -->
         <div class="pdp-finance-card pdp-finance-card--store" onclick="openFinanceCalc('storepay')" style="cursor:pointer">
-          <div class="pdp-finance-card__icon">⚡</div>
+          <div class="pdp-finance-card__icon">
+            <svg viewBox="0 0 36 36" width="36" height="36"><circle cx="18" cy="18" r="18" fill="#1a2b4e"/><path d="M9 18a9 9 0 1 1 18 0A9 9 0 0 1 9 18zm9-5a5 5 0 1 0 0 10A5 5 0 0 0 18 13zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" fill="url(#spg)"/><defs><linearGradient id="spg" x1="9" y1="9" x2="27" y2="27"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient></defs></svg>
+          </div>
           <div class="pdp-finance-card__body">
-            <strong>Storepay</strong>
-            <span>Уртаар 30 сар</span>
+            <strong>storepay</strong>
+            <span></span>
           </div>
           <div class="pdp-finance-card__pills">
-            <span>Хүүгүй</span><span>Шимтгэлгүй</span>
+            <span>Хүүгүй</span><span>Шимтгэлгүй</span><span class="pill-highlight">Уртаар 30 сар 30 сар</span>
           </div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="9 18 15 12 9 6"/></svg>
+          <svg class="pdp-finance-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
       </div>
 
@@ -446,6 +455,31 @@
         </div>
       </div>
       <a class="fc-apply-btn" id="fcApplyBtn" href="#" target="_blank">Хүсэлт илгээх</a>
+    </div>
+  </div>
+</div>
+
+<!-- Storepay modal -->
+<div class="sp-modal" id="storepayModal">
+  <div class="sp-modal__backdrop" id="spBackdrop"></div>
+  <div class="sp-modal__sheet">
+    <div class="sp-modal__header">
+      <div class="sp-brand">
+        <svg viewBox="0 0 40 40" width="36" height="36"><circle cx="20" cy="20" r="20" fill="rgba(255,255,255,0.15)"/><path d="M20 8c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12S26.627 8 20 8zm0 4a8 8 0 0 1 7.93 6.9A8 8 0 0 1 20 28a8 8 0 0 1-7.93-9.1A8 8 0 0 1 20 12z" fill="white" opacity=".6"/><path d="M20 13a7 7 0 1 1 0 14A7 7 0 0 1 20 13zm-2 3v2.5l-2 1.5 2 1.5V24h4v-2.5l2-1.5-2-1.5V16h-4z" fill="white"/></svg>
+        <span>storepay</span>
+      </div>
+      <div class="sp-tagline">ОДОО АВААД<br>ДАРАА ТӨЛ</div>
+      <button class="sp-modal__close" id="spClose">✕</button>
+    </div>
+    <div class="sp-modal__body">
+      <p class="sp-intro">Үнийн дүнд санаа зоволтгүй хүссэн бүхнээ хүүгүй, шимтгэлгүй одоо аваад, дараа төлөх боломж.</p>
+      <div class="sp-section-title">Худалдан авалтын нөхцөл</div>
+      <div class="sp-terms" id="spTerms"></div>
+      <div class="sp-schedule-wrap" id="spScheduleWrap">
+        <div class="sp-schedule-title" id="spScheduleTitle"></div>
+        <div class="sp-schedule" id="spSchedule"></div>
+      </div>
+      <a class="sp-apply-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSffoQ2lsSwEwpXqkVCq2rVzPJdl4Imlt9eHZBdeTb1bOzNmUQ/viewform" target="_blank">Хүсэлт илгээх</a>
     </div>
   </div>
 </div>

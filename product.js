@@ -624,6 +624,7 @@ const FINANCE_PROVIDERS = {
 let fcActiveTerm = 12;
 
 function openFinanceCalc(type) {
+  if (type === 'storepay') { openStorepay(); return; }
   const provider = FINANCE_PROVIDERS[type];
   if (!provider) return;
 
@@ -676,18 +677,97 @@ function closeFinanceCalc() {
   document.body.style.overflow = '';
 }
 
+/* ── Storepay dedicated modal ── */
+const SP_TERMS = [
+  { period: '45 хоногт', days: 45,  count: 4,  tag: null },
+  { period: '60 хоногт', days: 60,  count: 3,  tag: null },
+  { period: '4 сард',    days: 120, count: 5,  tag: null },
+  { period: '60 хоногт', days: 60,  count: 4,  tag: null },
+  { period: '30 сард',   days: 900, count: 30, tag: 'Урьдчилгаагүй', tagColor: 'green', rainbow: true },
+  { period: '45 хоногт', days: 45,  count: 3,  tag: 'Тун удахгүй',   tagColor: 'red',   disabled: true },
+];
+let spActiveTerm = SP_TERMS[0];
+
+function openStorepay() {
+  const modal = document.getElementById('storepayModal');
+  if (!modal) return;
+  spActiveTerm = SP_TERMS[0];
+  renderSpTerms();
+  renderSpSchedule();
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeStorepay() {
+  document.getElementById('storepayModal')?.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function renderSpTerms() {
+  const el = document.getElementById('spTerms');
+  if (!el) return;
+  el.innerHTML = SP_TERMS.map((t, i) => {
+    const isActive = t === spActiveTerm;
+    const rainbow  = t.rainbow  ? ' sp-term-card--rainbow' : '';
+    const disabled = t.disabled ? ' disabled' : '';
+    const tagHtml  = t.tag ? `<span class="sp-term-tag sp-term-tag--${t.tagColor}">${t.tag}</span>` : '';
+    return `<div class="sp-term-card${isActive ? ' active' : ''}${rainbow}${disabled}" data-idx="${i}">
+  <span class="sp-term-period">${t.period}</span>
+  <span class="sp-term-badge">${t.count}</span>${tagHtml}
+</div>`;
+  }).join('');
+}
+
+function renderSpSchedule() {
+  const t = spActiveTerm;
+  const amount = Math.ceil(currentPrice / t.count);
+  const titleEl = document.getElementById('spScheduleTitle');
+  const schedEl = document.getElementById('spSchedule');
+  if (!titleEl || !schedEl) return;
+
+  titleEl.textContent = `${t.period} ${t.count} хувааж төлөх`;
+
+  const intervalDays = t.count > 1 ? Math.round(t.days / (t.count - 1)) : t.days;
+  const today = new Date();
+  schedEl.innerHTML = Array.from({ length: t.count }, (_, i) => {
+    const d = new Date(today);
+    d.setDate(today.getDate() + i * intervalDays);
+    const dateStr = i === 0 ? 'Өнөөдөр' : `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
+    const label = i === 0 ? 'Одоо төлөх' : `${i+1} дахь төлөлт`;
+    return `<div class="sp-schedule-row">
+  <div class="sp-schedule-icon">${i === 0 ? '●' : i+1}</div>
+  <div class="sp-schedule-info">
+    <div class="sp-schedule-label">${label}</div>
+    <div class="sp-schedule-date">${dateStr}</div>
+  </div>
+  <div class="sp-schedule-amount">${fmt(amount)} ₮</div>
+</div>`;
+  }).join('');
+}
+
+function initStorepay() {
+  document.getElementById('spBackdrop')?.addEventListener('click', closeStorepay);
+  document.getElementById('spClose')?.addEventListener('click', closeStorepay);
+  document.getElementById('spTerms')?.addEventListener('click', e => {
+    const card = e.target.closest('.sp-term-card');
+    if (!card || card.classList.contains('disabled')) return;
+    spActiveTerm = SP_TERMS[parseInt(card.dataset.idx, 10)];
+    renderSpTerms();
+    renderSpSchedule();
+  });
+}
+
 function initFinanceCalc() {
-  // expose opener globally so inline onclick can call it
+  // openFinanceCalc already routes storepay; expose globally
   window.openFinanceCalc = openFinanceCalc;
 
-  const modal    = document.getElementById('financeModal');
   const backdrop = document.getElementById('financeBackdrop');
   const closeBtn = document.getElementById('financeClose');
   const termsEl  = document.getElementById('fcTerms');
 
   closeBtn?.addEventListener('click', closeFinanceCalc);
   backdrop?.addEventListener('click', closeFinanceCalc);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFinanceCalc(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeFinanceCalc(); closeStorepay(); } });
 
   termsEl?.addEventListener('click', e => {
     const btn = e.target.closest('.fc-term-btn');
@@ -696,6 +776,33 @@ function initFinanceCalc() {
     termsEl.querySelectorAll('.fc-term-btn').forEach(b => b.classList.toggle('active', b === btn));
     updateFcCalc();
   });
+
+  initStorepay();
+}
+
+function openFinanceCalcGeneric(type) {
+  openFinanceCalc_inner(type);
+}
+function openFinanceCalc_inner(type) {
+  const provider = FINANCE_PROVIDERS[type];
+  if (!provider) return;
+  const modal = document.getElementById('financeModal');
+  if (!modal) return;
+  const providerEl = document.getElementById('fcProvider');
+  if (providerEl) providerEl.innerHTML = `${provider.emoji} ${provider.name} <span>${provider.sub}</span>`;
+  const img = document.getElementById('fcProductImg');
+  const name = document.getElementById('fcProductName');
+  const price = document.getElementById('fcProductPrice');
+  if (img && currentProduct) { img.src = imgUrl(currentProduct.id); img.alt = currentProduct.name; }
+  if (name && currentProduct) name.textContent = currentProduct.name;
+  if (price) price.textContent = `${fmt(currentPrice)}₮`;
+  const applyBtn = document.getElementById('fcApplyBtn');
+  if (applyBtn) applyBtn.href = provider.applyUrl;
+  fcActiveTerm = provider.defaultTerm;
+  renderFcTerms(provider);
+  updateFcCalc();
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
 }
 
 /* ── INIT ── */
