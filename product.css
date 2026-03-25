@@ -360,6 +360,82 @@
 }
 .pdp-related__grid .btn-add-cart svg { width: 12px; height: 12px; }
 
+/* ── finance calculator modal ── */
+.finance-modal { display: none; position: fixed; inset: 0; z-index: 500; align-items: flex-end; justify-content: center; }
+.finance-modal.show { display: flex; }
+.finance-modal__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.5); }
+.finance-modal__sheet {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 480px;
+  background: var(--white);
+  border-radius: 20px 20px 0 0;
+  padding: 0 0 32px;
+  animation: fcSlideUp .28s ease;
+  max-height: 90vh; overflow-y: auto;
+}
+@keyframes fcSlideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.finance-modal__header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.finance-modal__provider { font-size: 1rem; font-weight: 700; color: var(--gray-900); display: flex; align-items: center; gap: 8px; }
+.finance-modal__provider span { font-size: .8rem; font-weight: 500; color: var(--gray-500); }
+.finance-modal__close {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--gray-100); border: none; cursor: pointer;
+  font-size: .9rem; display: flex; align-items: center; justify-content: center;
+  color: var(--gray-600);
+}
+.finance-modal__product {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px;
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--gray-200);
+}
+.finance-modal__product img { width: 52px; height: 52px; object-fit: contain; border-radius: 8px; border: 1px solid var(--gray-200); background: var(--white); }
+.finance-modal__product-name { font-size: .82rem; color: var(--gray-600); margin-bottom: 2px; }
+.finance-modal__product-price { font-size: 1rem; font-weight: 800; color: var(--navy); }
+.finance-modal__body { padding: 18px 20px 0; }
+.fc-term-label { font-size: .8rem; font-weight: 600; color: var(--gray-600); margin-bottom: 10px; text-transform: uppercase; letter-spacing: .04em; }
+.fc-terms { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.fc-term-btn {
+  padding: 7px 16px; border-radius: 999px;
+  border: 1.5px solid var(--gray-300); background: var(--white);
+  font-size: .85rem; font-weight: 600; color: var(--gray-700);
+  cursor: pointer; transition: all .15s;
+}
+.fc-term-btn:hover { border-color: var(--orange); color: var(--orange); }
+.fc-term-btn.active { background: var(--orange); border-color: var(--orange); color: var(--white); }
+.fc-result { border: 1.5px solid var(--gray-200); border-radius: 14px; overflow: hidden; margin-bottom: 18px; }
+.fc-result__monthly {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, var(--navy) 0%, #1e3a6e 100%);
+  color: var(--white);
+}
+.fc-result__label { font-size: .82rem; opacity: .85; }
+.fc-result__amount { font-size: 1.4rem; font-weight: 900; }
+.fc-result__rows { padding: 4px 0; }
+.fc-result__row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 18px;
+  font-size: .83rem; color: var(--gray-700);
+  border-bottom: 1px solid var(--gray-100);
+}
+.fc-result__row:last-child { border-bottom: none; }
+.fc-result__row span:last-child { font-weight: 700; color: var(--gray-900); }
+.fc-tag-green { color: #16a34a !important; }
+.fc-apply-btn {
+  display: block; width: 100%; text-align: center;
+  padding: 13px; border-radius: 12px;
+  background: var(--orange); color: var(--white);
+  font-size: .9rem; font-weight: 700;
+  text-decoration: none;
+  transition: opacity .15s;
+}
+.fc-apply-btn:hover { opacity: .9; }
+
 /* ── sticky bar ── */
 .pdp-sticky-bar {
   position: fixed; bottom: 0; left: 0; right: 0;

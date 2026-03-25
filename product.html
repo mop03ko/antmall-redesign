@@ -256,7 +256,7 @@
       <div class="pdp-finance">
         <div class="pdp-finance__title">Төлбөрийн нөхцөл</div>
 
-        <div class="pdp-finance-card pdp-finance-card--leasing">
+        <div class="pdp-finance-card pdp-finance-card--leasing" onclick="openFinanceCalc('leasing')" style="cursor:pointer">
           <div class="pdp-finance-card__icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
           </div>
@@ -270,7 +270,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
 
-        <div class="pdp-finance-card pdp-finance-card--sb">
+        <div class="pdp-finance-card pdp-finance-card--sb" onclick="openFinanceCalc('simplebuy')" style="cursor:pointer">
           <div class="pdp-finance-card__icon">💳</div>
           <div class="pdp-finance-card__body">
             <strong>Simple Buy</strong>
@@ -282,7 +282,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
 
-        <div class="pdp-finance-card pdp-finance-card--store">
+        <div class="pdp-finance-card pdp-finance-card--store" onclick="openFinanceCalc('storepay')" style="cursor:pointer">
           <div class="pdp-finance-card__icon">⚡</div>
           <div class="pdp-finance-card__body">
             <strong>Storepay</strong>
@@ -411,6 +411,41 @@
         Сагсанд нэмэх
       </button>
       <button class="pdp-btn-buy pdp-btn-buy--sm">Одоо авах</button>
+    </div>
+  </div>
+</div>
+
+<!-- Finance calculator modal -->
+<div class="finance-modal" id="financeModal">
+  <div class="finance-modal__backdrop" id="financeBackdrop"></div>
+  <div class="finance-modal__sheet">
+    <div class="finance-modal__header">
+      <div class="finance-modal__provider" id="fcProvider"></div>
+      <button class="finance-modal__close" id="financeClose">✕</button>
+    </div>
+    <div class="finance-modal__product">
+      <img id="fcProductImg" src="" alt="" />
+      <div>
+        <div class="finance-modal__product-name" id="fcProductName"></div>
+        <div class="finance-modal__product-price" id="fcProductPrice"></div>
+      </div>
+    </div>
+    <div class="finance-modal__body">
+      <div class="fc-term-label">Хугацаа сонгох:</div>
+      <div class="fc-terms" id="fcTerms"></div>
+      <div class="fc-result">
+        <div class="fc-result__monthly">
+          <span class="fc-result__label">Сарын төлбөр</span>
+          <span class="fc-result__amount" id="fcMonthly"></span>
+        </div>
+        <div class="fc-result__rows">
+          <div class="fc-result__row"><span>Нийт дүн</span><span id="fcTotal"></span></div>
+          <div class="fc-result__row"><span>Урьдчилгаа</span><span>0₮</span></div>
+          <div class="fc-result__row"><span>Хүүгүй</span><span class="fc-tag-green">0%</span></div>
+          <div class="fc-result__row"><span>Шимтгэл</span><span class="fc-tag-green">0%</span></div>
+        </div>
+      </div>
+      <a class="fc-apply-btn" id="fcApplyBtn" href="#" target="_blank">Өргөдөл гаргах →</a>
     </div>
   </div>
 </div>

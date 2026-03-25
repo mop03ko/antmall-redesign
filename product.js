@@ -593,6 +593,111 @@ function initRelated(p) {
   next?.addEventListener('click', () => rail.scrollBy({ left:  300, behavior: 'smooth' }));
 }
 
+/* ── Finance calculator ── */
+const FINANCE_PROVIDERS = {
+  leasing: {
+    name: 'Лизинг',
+    sub: 'Худалдаа хөгжлийн банк',
+    emoji: '🏦',
+    terms: [6, 12, 18, 24, 36],
+    defaultTerm: 24,
+    applyUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSffoQ2lsSwEwpXqkVCq2rVzPJdl4Imlt9eHZBdeTb1bOzNmUQ/viewform',
+  },
+  simplebuy: {
+    name: 'Simple Buy',
+    sub: 'Одоо ав, дараа төл',
+    emoji: '💳',
+    terms: [3, 6, 12, 18, 24],
+    defaultTerm: 12,
+    applyUrl: 'https://simplebuy.mn',
+  },
+  storepay: {
+    name: 'Storepay',
+    sub: 'Хүүгүй хуваан төлөлт',
+    emoji: '⚡',
+    terms: [1, 3, 6, 12, 18, 24, 30],
+    defaultTerm: 12,
+    applyUrl: 'https://storepay.mn',
+  },
+};
+
+let fcActiveTerm = 12;
+
+function openFinanceCalc(type) {
+  const provider = FINANCE_PROVIDERS[type];
+  if (!provider) return;
+
+  const modal = document.getElementById('financeModal');
+  if (!modal) return;
+
+  // populate header
+  const providerEl = document.getElementById('fcProvider');
+  if (providerEl) providerEl.innerHTML = `${provider.emoji} ${provider.name} <span>${provider.sub}</span>`;
+
+  // populate product
+  const img = document.getElementById('fcProductImg');
+  const name = document.getElementById('fcProductName');
+  const price = document.getElementById('fcProductPrice');
+  if (img && currentProduct) { img.src = imgUrl(currentProduct.id); img.alt = currentProduct.name; }
+  if (name && currentProduct) name.textContent = currentProduct.name;
+  if (price) price.textContent = `${fmt(currentPrice)}₮`;
+
+  // apply button
+  const applyBtn = document.getElementById('fcApplyBtn');
+  if (applyBtn) applyBtn.href = provider.applyUrl;
+
+  // render terms
+  fcActiveTerm = provider.defaultTerm;
+  renderFcTerms(provider);
+  updateFcCalc();
+
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderFcTerms(provider) {
+  const termsEl = document.getElementById('fcTerms');
+  if (!termsEl) return;
+  termsEl.innerHTML = provider.terms.map(t =>
+    `<button class="fc-term-btn${t === fcActiveTerm ? ' active' : ''}" data-term="${t}">${t} сар</button>`
+  ).join('');
+}
+
+function updateFcCalc() {
+  const monthly = Math.ceil(currentPrice / fcActiveTerm);
+  const monthlyEl = document.getElementById('fcMonthly');
+  const totalEl   = document.getElementById('fcTotal');
+  if (monthlyEl) monthlyEl.textContent = `${fmt(monthly)}₮`;
+  if (totalEl)   totalEl.textContent   = `${fmt(currentPrice)}₮`;
+}
+
+function closeFinanceCalc() {
+  document.getElementById('financeModal')?.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function initFinanceCalc() {
+  // expose opener globally so inline onclick can call it
+  window.openFinanceCalc = openFinanceCalc;
+
+  const modal    = document.getElementById('financeModal');
+  const backdrop = document.getElementById('financeBackdrop');
+  const closeBtn = document.getElementById('financeClose');
+  const termsEl  = document.getElementById('fcTerms');
+
+  closeBtn?.addEventListener('click', closeFinanceCalc);
+  backdrop?.addEventListener('click', closeFinanceCalc);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFinanceCalc(); });
+
+  termsEl?.addEventListener('click', e => {
+    const btn = e.target.closest('.fc-term-btn');
+    if (!btn) return;
+    fcActiveTerm = parseInt(btn.dataset.term, 10);
+    termsEl.querySelectorAll('.fc-term-btn').forEach(b => b.classList.toggle('active', b === btn));
+    updateFcCalc();
+  });
+}
+
 /* ── INIT ── */
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(location.search);
@@ -610,6 +715,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initWish();
   initStickyBar();
   initRelated(p);
+  initFinanceCalc();
 });
 
 })();
