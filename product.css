@@ -332,9 +332,33 @@
 .review-date { margin-left: auto; font-size: .72rem; color: var(--gray-400); }
 .review-item p { font-size: .85rem; color: var(--gray-600); line-height: 1.7; margin: 0; }
 
-/* ── related products ── */
-.pdp-related { margin-top: 28px; }
-.pdp-related .ps__scroll-wrap { overflow: hidden; position: relative; }
+/* ── related products carousel ── */
+.pdp-related { margin-top: 24px; padding-bottom: 32px; }
+.pdp-related .section-head { margin-bottom: 14px; }
+.pdp-related__wrap { overflow: hidden; position: relative; padding: 0 4px; }
+
+/* smaller cards inside related rail */
+.pdp-related__grid { gap: 10px; padding-bottom: 2px; }
+.pdp-related__grid .pc {
+  flex: 0 0 160px;
+  min-width: 160px;
+}
+.pdp-related__grid .pc__media {
+  height: 140px;
+}
+.pdp-related__grid .pc__media img {
+  max-height: 110px;
+}
+.pdp-related__grid .pc__body { padding: 8px 10px 10px; }
+.pdp-related__grid .pc__name { font-size: .78rem; -webkit-line-clamp: 2; }
+.pdp-related__grid .price-now { font-size: .85rem; }
+.pdp-related__grid .pc__brand img { height: 14px; }
+.pdp-related__grid .btn-add-cart {
+  font-size: .72rem;
+  padding: 6px 8px;
+  gap: 4px;
+}
+.pdp-related__grid .btn-add-cart svg { width: 12px; height: 12px; }
 
 /* ── sticky bar ── */
 .pdp-sticky-bar {
