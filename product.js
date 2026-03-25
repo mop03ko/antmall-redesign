@@ -456,17 +456,12 @@ function populatePage(p) {
     else badge.style.display = 'none';
   }
 
-  // Gallery thumbnails — main product + up to 4 related for visual variety
+  // Gallery thumbnails — only images belonging to this product
   const thumbsEl = document.getElementById('galleryThumbs');
   if (thumbsEl) {
-    const related = ALL_PRODUCTS.filter(r => r.cat === p.cat && r.id !== p.id).slice(0, 4);
-    const thumbIds = [p.id, ...related.map(r => r.id)].slice(0, 5);
-    thumbsEl.innerHTML = thumbIds.map((tid, i) => {
-      const tsrc = imgUrl(tid);
-      return `<button class="pdp-thumb${i === 0 ? ' active' : ''}" data-src="${tsrc}">
-        <img src="${tsrc}" alt="${i === 0 ? p.name : 'View ' + (i+1)}" loading="lazy" />
-      </button>`;
-    }).join('');
+    thumbsEl.innerHTML = `<button class="pdp-thumb active" data-src="${imgSrc}">
+      <img src="${imgSrc}" alt="${p.name}" loading="lazy" />
+    </button>`;
   }
 
   // Meta strip
