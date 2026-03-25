@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Нэвтрэх — AntMall.mn</title>
+  <meta name="description" content="AntMall.mn акаунт руу нэвтрэх" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="stylesheet" href="login.css?v=1" />
+</head>
+<body class="auth-body">
+
+<!-- ═══ TOPBAR ═══ -->
+<div class="topbar">
+  <div class="container topbar__inner">
+    <span class="topbar__msg">AntMall.mn-д тавтай морил.</span>
+    <div class="topbar__right">
+      <a href="tel:72005588" class="topbar__link">📞 7200-5588</a>
+      <a href="mailto:info@antmall.mn" class="topbar__link">✉ info@antmall.mn</a>
+      <a href="https://www.facebook.com/AntMall.mn" target="_blank" class="topbar__social">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.887v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/antmall_official/" target="_blank" class="topbar__social">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ AUTH LAYOUT ═══ -->
+<main class="auth-layout">
+
+  <!-- Left panel — brand -->
+  <div class="auth-panel">
+    <a href="index.html" class="auth-panel__logo">
+      <img src="https://antmall.mn/antmall.svg" alt="AntMall" />
+    </a>
+    <div class="auth-panel__content">
+      <h2 class="auth-panel__title">Smart Lifestyle<br/>Монголын хамгийн том<br/>цахилгаан дэлгүүр</h2>
+      <p class="auth-panel__sub">196+ брэндийн бүтээгдэхүүн. Хурдан хүргэлт. Найдвартай баталгаа.</p>
+      <ul class="auth-panel__perks">
+        <li>
+          <span class="perk-icon">🎁</span>
+          <span>Онцгой санал болон хямдрал авна</span>
+        </li>
+        <li>
+          <span class="perk-icon">📦</span>
+          <span>Захиалгаа хянах боломжтой</span>
+        </li>
+        <li>
+          <span class="perk-icon">❤️</span>
+          <span>Хадгалсан бүтээгдэхүүнүүдэд хандана</span>
+        </li>
+        <li>
+          <span class="perk-icon">💳</span>
+          <span>Лизинг хүсэлт илгээх боломжтой</span>
+        </li>
+      </ul>
+    </div>
+    <!-- Decorative circles -->
+    <div class="auth-panel__deco deco-1"></div>
+    <div class="auth-panel__deco deco-2"></div>
+    <div class="auth-panel__deco deco-3"></div>
+  </div>
+
+  <!-- Right panel — form -->
+  <div class="auth-form-wrap">
+    <div class="auth-card" id="loginCard">
+
+      <!-- Logo (mobile only) -->
+      <a href="index.html" class="auth-card__logo-mobile">
+        <img src="https://antmall.mn/antmall.svg" alt="AntMall" />
+      </a>
+
+      <!-- Tab switcher -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Нэвтрэх</button>
+        <button class="auth-tab" id="tabRegister" onclick="switchTab('register')">Бүртгүүлэх</button>
+      </div>
+
+      <!-- ── LOGIN FORM ── -->
+      <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)" novalidate>
+
+        <div class="form-group" id="lgPhoneGroup">
+          <label class="form-label" for="lgPhone">Утасны дугаар / Имэйл</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <input type="text" id="lgPhone" class="form-input" placeholder="99001122 эсвэл example@mail.com" autocomplete="username" />
+          </div>
+          <span class="form-error" id="lgPhoneErr"></span>
+        </div>
+
+        <div class="form-group" id="lgPassGroup">
+          <label class="form-label" for="lgPass">
+            Нууц үг
+            <a href="#" class="form-label__link" onclick="switchTab('forgot'); return false;">Нууц үг мартсан?</a>
+          </label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <input type="password" id="lgPass" class="form-input" placeholder="Нууц үгээ оруулна уу" autocomplete="current-password" />
+            <button type="button" class="input-eye" onclick="togglePass('lgPass', this)" aria-label="Нууц үг харах">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <span class="form-error" id="lgPassErr"></span>
+        </div>
+
+        <div class="form-check-row">
+          <label class="form-check">
+            <input type="checkbox" id="lgRemember" />
+            <span class="form-check__box"></span>
+            <span class="form-check__label">Намайг санах</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn-auth" id="lgSubmit">
+          <span class="btn-auth__text">Нэвтрэх</span>
+          <span class="btn-auth__spinner" id="lgSpinner"></span>
+        </button>
+
+        <div class="auth-divider"><span>эсвэл</span></div>
+
+        <div class="social-btns">
+          <button type="button" class="btn-social btn-social--fb" onclick="socialLogin('facebook')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.887v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+            Facebook-ээр нэвтрэх
+          </button>
+          <button type="button" class="btn-social btn-social--google" onclick="socialLogin('google')">
+            <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Google-ээр нэвтрэх
+          </button>
+        </div>
+
+        <p class="auth-switch">
+          Бүртгэл байхгүй юу?
+          <a href="#" onclick="switchTab('register'); return false;">Бүртгүүлэх</a>
+        </p>
+      </form>
+
+      <!-- ── REGISTER FORM ── -->
+      <form class="auth-form hidden" id="registerForm" onsubmit="handleRegister(event)" novalidate>
+
+        <div class="form-row-2">
+          <div class="form-group" id="rgFirstGroup">
+            <label class="form-label" for="rgFirst">Нэр</label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </span>
+              <input type="text" id="rgFirst" class="form-input" placeholder="Таны нэр" autocomplete="given-name" />
+            </div>
+            <span class="form-error" id="rgFirstErr"></span>
+          </div>
+          <div class="form-group" id="rgLastGroup">
+            <label class="form-label" for="rgLast">Овог</label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </span>
+              <input type="text" id="rgLast" class="form-input" placeholder="Таны овог" autocomplete="family-name" />
+            </div>
+            <span class="form-error" id="rgLastErr"></span>
+          </div>
+        </div>
+
+        <div class="form-group" id="rgPhoneGroup">
+          <label class="form-label" for="rgPhone">Утасны дугаар</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.17h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 5.92 5.92l.97-.97a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+            </span>
+            <input type="tel" id="rgPhone" class="form-input" placeholder="99001122" autocomplete="tel" maxlength="8" />
+          </div>
+          <span class="form-error" id="rgPhoneErr"></span>
+        </div>
+
+        <div class="form-group" id="rgEmailGroup">
+          <label class="form-label" for="rgEmail">Имэйл <span class="optional">(заавал биш)</span></label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </span>
+            <input type="email" id="rgEmail" class="form-input" placeholder="example@mail.com" autocomplete="email" />
+          </div>
+          <span class="form-error" id="rgEmailErr"></span>
+        </div>
+
+        <div class="form-group" id="rgPassGroup">
+          <label class="form-label" for="rgPass">Нууц үг</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <input type="password" id="rgPass" class="form-input" placeholder="Хамгийн багадаа 8 тэмдэгт" autocomplete="new-password" />
+            <button type="button" class="input-eye" onclick="togglePass('rgPass', this)" aria-label="Нууц үг харах">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="pass-strength" id="passStrength">
+            <div class="pass-strength__bar"><div class="pass-strength__fill" id="passStrengthFill"></div></div>
+            <span class="pass-strength__label" id="passStrengthLabel"></span>
+          </div>
+          <span class="form-error" id="rgPassErr"></span>
+        </div>
+
+        <div class="form-group" id="rgPass2Group">
+          <label class="form-label" for="rgPass2">Нууц үг давтах</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <input type="password" id="rgPass2" class="form-input" placeholder="Нууц үгээ давтана уу" autocomplete="new-password" />
+            <button type="button" class="input-eye" onclick="togglePass('rgPass2', this)" aria-label="Нууц үг харах">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <span class="form-error" id="rgPass2Err"></span>
+        </div>
+
+        <label class="form-check form-check--terms">
+          <input type="checkbox" id="rgTerms" />
+          <span class="form-check__box"></span>
+          <span class="form-check__label">
+            <a href="#" class="link-orange">Үйлчилгээний нөхцөл</a> болон
+            <a href="#" class="link-orange">Нууцлалын бодлого</a>-г зөвшөөрч байна
+          </span>
+        </label>
+        <span class="form-error" id="rgTermsErr"></span>
+
+        <button type="submit" class="btn-auth" id="rgSubmit">
+          <span class="btn-auth__text">Бүртгүүлэх</span>
+          <span class="btn-auth__spinner" id="rgSpinner"></span>
+        </button>
+
+        <p class="auth-switch">
+          Бүртгэлтэй юу?
+          <a href="#" onclick="switchTab('login'); return false;">Нэвтрэх</a>
+        </p>
+      </form>
+
+      <!-- ── FORGOT PASSWORD ── -->
+      <form class="auth-form hidden" id="forgotForm" onsubmit="handleForgot(event)" novalidate>
+        <button type="button" class="auth-back" onclick="switchTab('login')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          Нэвтрэх рүү буцах
+        </button>
+
+        <div class="auth-forgot-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h2 class="auth-forgot-title">Нууц үг сэргээх</h2>
+        <p class="auth-forgot-desc">Бүртгэлтэй утасны дугаараа оруулна уу. Баталгаажуулах код илгээнэ.</p>
+
+        <div class="form-group" id="fgPhoneGroup">
+          <label class="form-label" for="fgPhone">Утасны дугаар</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.17h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 5.92 5.92l.97-.97a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+            </span>
+            <input type="tel" id="fgPhone" class="form-input" placeholder="99001122" maxlength="8" />
+          </div>
+          <span class="form-error" id="fgPhoneErr"></span>
+        </div>
+
+        <button type="submit" class="btn-auth">
+          <span class="btn-auth__text">Код илгээх</span>
+        </button>
+
+        <p class="auth-switch">
+          Нууц үгээ санасан уу?
+          <a href="#" onclick="switchTab('login'); return false;">Нэвтрэх</a>
+        </p>
+      </form>
+
+      <!-- Success message -->
+      <div class="auth-success hidden" id="authSuccess">
+        <div class="auth-success__icon">✓</div>
+        <h3 class="auth-success__title" id="successTitle">Амжилттай нэвтэрлээ!</h3>
+        <p class="auth-success__msg" id="successMsg">Таныг нүүр хуудас руу шилжүүлж байна...</p>
+        <a href="index.html" class="btn-auth" style="margin-top:8px">Нүүр хуудас руу буцах</a>
+      </div>
+
+    </div>
+
+    <!-- Back to shop -->
+    <a href="index.html" class="auth-back-shop">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Дэлгүүр рүү буцах
+    </a>
+  </div>
+</main>
+
+<script>
+/* ═══════════════════════════════════
+   AUTH PAGE — login.js (inline)
+   ═══════════════════════════════════ */
+
+let currentTab = 'login';
+
+/* ── Tab switcher ── */
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
+  document.getElementById('registerForm').classList.toggle('hidden', tab !== 'register');
+  document.getElementById('forgotForm').classList.toggle('hidden', tab !== 'forgot');
+  document.getElementById('authSuccess').classList.add('hidden');
+
+  const tabsWrap = document.querySelector('.auth-tabs');
+  if (tabsWrap) tabsWrap.style.display = tab === 'forgot' ? 'none' : '';
+
+  const tabLogin    = document.getElementById('tabLogin');
+  const tabRegister = document.getElementById('tabRegister');
+  if (tabLogin)    tabLogin.classList.toggle('active', tab === 'login');
+  if (tabRegister) tabRegister.classList.toggle('active', tab === 'register');
+
+  clearErrors();
+}
+
+/* ── Password visibility toggle ── */
+function togglePass(inputId, btn) {
+  const inp = document.getElementById(inputId);
+  const isHidden = inp.type === 'password';
+  inp.type = isHidden ? 'text' : 'password';
+  btn.innerHTML = isHidden
+    ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`
+    : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+}
+
+/* ── Password strength ── */
+document.getElementById('rgPass')?.addEventListener('input', function() {
+  const val = this.value;
+  const fill  = document.getElementById('passStrengthFill');
+  const label = document.getElementById('passStrengthLabel');
+  if (!val) { fill.style.width = '0'; fill.className = 'pass-strength__fill'; label.textContent = ''; return; }
+  let score = 0;
+  if (val.length >= 8)  score++;
+  if (/[A-Z]/.test(val)) score++;
+  if (/[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+  const levels = ['', 'Сул', 'Дунд', 'Сайн', 'Маш сайн'];
+  const cls    = ['', 'weak', 'fair', 'good', 'strong'];
+  fill.style.width = (score * 25) + '%';
+  fill.className = 'pass-strength__fill ' + (cls[score] || '');
+  label.textContent = levels[score] || '';
+});
+
+/* ── Validation helpers ── */
+function setError(groupId, errId, msg) {
+  document.getElementById(groupId)?.classList.toggle('has-error', !!msg);
+  const err = document.getElementById(errId);
+  if (err) err.textContent = msg || '';
+}
+function clearErrors() {
+  document.querySelectorAll('.form-group.has-error').forEach(g => g.classList.remove('has-error'));
+  document.querySelectorAll('.form-error').forEach(e => e.textContent = '');
+}
+function isPhone(v) { return /^[0-9]{8}$/.test(v.trim()); }
+function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
+
+/* ── Login submit ── */
+function handleLogin(e) {
+  e.preventDefault();
+  clearErrors();
+  const phone = document.getElementById('lgPhone').value.trim();
+  const pass  = document.getElementById('lgPass').value;
+  let ok = true;
+
+  if (!phone) { setError('lgPhoneGroup','lgPhoneErr','Утасны дугаар эсвэл имэйл оруулна уу'); ok = false; }
+  else if (!isPhone(phone) && !isEmail(phone)) { setError('lgPhoneGroup','lgPhoneErr','Зөв утасны дугаар эсвэл имэйл оруулна уу'); ok = false; }
+
+  if (!pass) { setError('lgPassGroup','lgPassErr','Нууц үг оруулна уу'); ok = false; }
+  else if (pass.length < 6) { setError('lgPassGroup','lgPassErr','Нууц үг хамгийн багадаа 6 тэмдэгт байх ёстой'); ok = false; }
+
+  if (!ok) return;
+
+  setLoading('lgSubmit', 'lgSpinner', true);
+  setTimeout(() => {
+    setLoading('lgSubmit', 'lgSpinner', false);
+    showSuccess('Амжилттай нэвтэрлээ!', 'Таныг нүүр хуудас руу шилжүүлж байна...');
+    setTimeout(() => { window.location.href = 'index.html'; }, 1800);
+  }, 1200);
+}
+
+/* ── Register submit ── */
+function handleRegister(e) {
+  e.preventDefault();
+  clearErrors();
+  const first  = document.getElementById('rgFirst').value.trim();
+  const last   = document.getElementById('rgLast').value.trim();
+  const phone  = document.getElementById('rgPhone').value.trim();
+  const email  = document.getElementById('rgEmail').value.trim();
+  const pass   = document.getElementById('rgPass').value;
+  const pass2  = document.getElementById('rgPass2').value;
+  const terms  = document.getElementById('rgTerms').checked;
+  let ok = true;
+
+  if (!first)  { setError('rgFirstGroup','rgFirstErr','Нэрээ оруулна уу'); ok = false; }
+  if (!last)   { setError('rgLastGroup','rgLastErr','Овогоо оруулна уу'); ok = false; }
+  if (!phone)  { setError('rgPhoneGroup','rgPhoneErr','Утасны дугаар оруулна уу'); ok = false; }
+  else if (!isPhone(phone)) { setError('rgPhoneGroup','rgPhoneErr','8 оронтой тоо оруулна уу'); ok = false; }
+  if (email && !isEmail(email)) { setError('rgEmailGroup','rgEmailErr','Зөв имэйл хаяг оруулна уу'); ok = false; }
+  if (!pass)   { setError('rgPassGroup','rgPassErr','Нууц үг оруулна уу'); ok = false; }
+  else if (pass.length < 8) { setError('rgPassGroup','rgPassErr','Нууц үг хамгийн багадаа 8 тэмдэгт байх ёстой'); ok = false; }
+  if (!pass2)  { setError('rgPass2Group','rgPass2Err','Нууц үгээ давтана уу'); ok = false; }
+  else if (pass !== pass2) { setError('rgPass2Group','rgPass2Err','Нууц үг таарахгүй байна'); ok = false; }
+  if (!terms)  { document.getElementById('rgTermsErr').textContent = 'Үйлчилгээний нөхцөлийг зөвшөөрнө үү'; ok = false; }
+
+  if (!ok) return;
+
+  setLoading('rgSubmit', 'rgSpinner', true);
+  setTimeout(() => {
+    setLoading('rgSubmit', 'rgSpinner', false);
+    showSuccess('Бүртгэл амжилттай!', 'Тавтай морил ' + first + '! Нэвтэрч байна...');
+    setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+  }, 1400);
+}
+
+/* ── Forgot password submit ── */
+function handleForgot(e) {
+  e.preventDefault();
+  clearErrors();
+  const phone = document.getElementById('fgPhone').value.trim();
+  if (!phone) { setError('fgPhoneGroup','fgPhoneErr','Утасны дугаар оруулна уу'); return; }
+  if (!isPhone(phone)) { setError('fgPhoneGroup','fgPhoneErr','8 оронтой тоо оруулна уу'); return; }
+
+  showSuccess('Код илгээгдлээ!', phone + ' дугаарт баталгаажуулах код илгээлээ.');
+}
+
+/* ── Social login ── */
+function socialLogin(provider) {
+  const btn = document.querySelector('.btn-social--' + (provider === 'facebook' ? 'fb' : 'google'));
+  if (btn) { btn.style.opacity = '.6'; btn.style.pointerEvents = 'none'; }
+  setTimeout(() => {
+    showSuccess(provider === 'facebook' ? 'Facebook-ээр нэвтэрлээ!' : 'Google-ээр нэвтэрлээ!', 'Таныг нүүр хуудас руу шилжүүлж байна...');
+    setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+  }, 1000);
+}
+
+/* ── Helpers ── */
+function setLoading(btnId, spinnerId, state) {
+  const btn     = document.getElementById(btnId);
+  const spinner = document.getElementById(spinnerId);
+  if (!btn) return;
+  btn.disabled = state;
+  if (spinner) spinner.style.display = state ? 'inline-block' : 'none';
+}
+
+function showSuccess(title, msg) {
+  document.getElementById('loginForm').classList.add('hidden');
+  document.getElementById('registerForm').classList.add('hidden');
+  document.getElementById('forgotForm').classList.add('hidden');
+  const tabs = document.querySelector('.auth-tabs');
+  if (tabs) tabs.style.display = 'none';
+  document.getElementById('successTitle').textContent = title;
+  document.getElementById('successMsg').textContent   = msg;
+  document.getElementById('authSuccess').classList.remove('hidden');
+}
+
+/* ── Phone input: digits only ── */
+['rgPhone','fgPhone'].forEach(id => {
+  document.getElementById(id)?.addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g, '').slice(0, 8);
+  });
+});
+
+/* ── Enter key on inputs ── */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    if (currentTab === 'login')    document.getElementById('loginForm')?.requestSubmit();
+    if (currentTab === 'register') document.getElementById('registerForm')?.requestSubmit();
+    if (currentTab === 'forgot')   document.getElementById('forgotForm')?.requestSubmit();
+  }
+});
+</script>
+
+</body>
+</html>
