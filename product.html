@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css?v=2" />
-  <link rel="stylesheet" href="product.css?v=4" />
+  <link rel="stylesheet" href="product.css?v=5" />
 </head>
 <body>
 
@@ -458,6 +458,31 @@
   </div>
 </div>
 
+<!-- Simple Buy modal -->
+<div class="sb-modal" id="simplebuyModal">
+  <div class="sb-modal__backdrop" id="sbBackdrop"></div>
+  <div class="sb-modal__sheet">
+    <div class="sb-modal__header">
+      <div class="sb-brand">
+        <img src="https://shoppy.mn/_nuxt/img/simple-buy.svg" alt="Simple Buy" width="32" height="32" onerror="this.style.display='none'">
+        <span>simple buy</span>
+      </div>
+      <div class="sb-tagline">ОДОО АВ,<br>ДАРАА ТӨЛ</div>
+      <button class="sb-modal__close" id="sbClose">✕</button>
+    </div>
+    <div class="sb-modal__body">
+      <p class="sb-intro">Шимтгэлгүй, хүүгүй, урьдчилгаагүйгээр хүссэн бүтээгдэхүүнээ одоо аваад, дараа төлөх боломж.</p>
+      <div class="sb-section-title">Хугацаа сонгох</div>
+      <div class="sb-terms" id="sbTerms"></div>
+      <div class="sb-schedule-wrap" id="sbScheduleWrap">
+        <div class="sb-schedule-title" id="sbScheduleTitle"></div>
+        <div class="sb-schedule" id="sbSchedule"></div>
+      </div>
+      <a class="sb-apply-btn" id="sbApplyBtn" href="https://docs.google.com/forms/d/e/1FAIpQLSffoQ2lsSwEwpXqkVCq2rVzPJdl4Imlt9eHZBdeTb1bOzNmUQ/viewform" target="_blank">Хүсэлт илгээх</a>
+    </div>
+  </div>
+</div>
+
 <!-- Storepay modal -->
 <div class="sp-modal" id="storepayModal">
   <div class="sp-modal__backdrop" id="spBackdrop"></div>
@@ -538,6 +563,6 @@
 </div>
 
 <script src="main.js"></script>
-<script src="product.js"></script>
+<script src="product.js?v=2"></script>
 </body>
 </html>

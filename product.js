@@ -625,6 +625,7 @@ let fcActiveTerm = 12;
 
 function openFinanceCalc(type) {
   if (type === 'storepay') { openStorepay(); return; }
+  if (type === 'simplebuy') { openSimpleBuy(); return; }
   const provider = FINANCE_PROVIDERS[type];
   if (!provider) return;
 
@@ -757,8 +758,89 @@ function initStorepay() {
   });
 }
 
+/* ── Simple Buy dedicated modal ── */
+const SB_TERMS = [
+  { months: 3 },
+  { months: 6 },
+  { months: 12, tag: 'Хамгийн их' },
+  { months: 18 },
+  { months: 24, tag: 'Урьдчилгаагүй' },
+];
+let sbActiveTerm = SB_TERMS[2];
+
+function openSimpleBuy() {
+  const modal = document.getElementById('simplebuyModal');
+  if (!modal) return;
+  sbActiveTerm = SB_TERMS[2];
+  renderSbTerms();
+  renderSbSchedule();
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSimpleBuy() {
+  document.getElementById('simplebuyModal')?.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function renderSbTerms() {
+  const el = document.getElementById('sbTerms');
+  if (!el) return;
+  el.innerHTML = SB_TERMS.map((t, i) => {
+    const isActive = t === sbActiveTerm;
+    return `<div class="sb-term-card${isActive ? ' active' : ''}" data-idx="${i}">
+      <span class="sb-term-period">${t.months} сар</span>
+      <span class="sb-term-badge">${t.months}</span>
+      ${t.tag ? `<span class="sb-term-tag sb-term-tag--green">${t.tag}</span>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function renderSbSchedule() {
+  const t = sbActiveTerm;
+  const monthly = Math.ceil(currentPrice / t.months);
+  const titleEl = document.getElementById('sbScheduleTitle');
+  const schedEl = document.getElementById('sbSchedule');
+  if (!titleEl || !schedEl) return;
+
+  titleEl.textContent = `${t.months} сар хуваан төлөх`;
+
+  const today = new Date();
+  let rows = '';
+  for (let i = 0; i < t.months; i++) {
+    const d = new Date(today);
+    d.setMonth(d.getMonth() + i);
+    const dateStr = `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
+    const label = i === 0 ? 'Одоо төлөх' : `${i+1} дахь төлөлт`;
+    rows += `<div class="sb-schedule-row">
+      <div class="sb-schedule-icon">${i === 0 ? '●' : i+1}</div>
+      <div class="sb-schedule-info">
+        <div class="sb-schedule-label">${label}</div>
+        <div class="sb-schedule-date">${dateStr}</div>
+      </div>
+      <div class="sb-schedule-amount">${fmt(monthly)}₮</div>
+    </div>`;
+  }
+  schedEl.innerHTML = rows;
+}
+
+function initSimpleBuy() {
+  const backdrop = document.getElementById('sbBackdrop');
+  const closeBtn = document.getElementById('sbClose');
+  backdrop?.addEventListener('click', closeSimpleBuy);
+  closeBtn?.addEventListener('click', closeSimpleBuy);
+
+  document.getElementById('sbTerms')?.addEventListener('click', e => {
+    const card = e.target.closest('.sb-term-card');
+    if (!card) return;
+    sbActiveTerm = SB_TERMS[parseInt(card.dataset.idx, 10)];
+    renderSbTerms();
+    renderSbSchedule();
+  });
+}
+
 function initFinanceCalc() {
-  // openFinanceCalc already routes storepay; expose globally
+  // openFinanceCalc already routes storepay/simplebuy; expose globally
   window.openFinanceCalc = openFinanceCalc;
 
   const backdrop = document.getElementById('financeBackdrop');
@@ -767,7 +849,7 @@ function initFinanceCalc() {
 
   closeBtn?.addEventListener('click', closeFinanceCalc);
   backdrop?.addEventListener('click', closeFinanceCalc);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeFinanceCalc(); closeStorepay(); } });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeFinanceCalc(); closeStorepay(); closeSimpleBuy(); } });
 
   termsEl?.addEventListener('click', e => {
     const btn = e.target.closest('.fc-term-btn');
@@ -778,6 +860,7 @@ function initFinanceCalc() {
   });
 
   initStorepay();
+  initSimpleBuy();
 }
 
 function openFinanceCalcGeneric(type) {
