@@ -609,7 +609,7 @@ const FINANCE_PROVIDERS = {
     emoji: '💳',
     terms: [3, 6, 12, 18, 24],
     defaultTerm: 12,
-    applyUrl: 'https://simplebuy.mn',
+    applyUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSffoQ2lsSwEwpXqkVCq2rVzPJdl4Imlt9eHZBdeTb1bOzNmUQ/viewform',
   },
   storepay: {
     name: 'Storepay',
@@ -617,7 +617,7 @@ const FINANCE_PROVIDERS = {
     emoji: '⚡',
     terms: [1, 3, 6, 12, 18, 24, 30],
     defaultTerm: 12,
-    applyUrl: 'https://storepay.mn',
+    applyUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSffoQ2lsSwEwpXqkVCq2rVzPJdl4Imlt9eHZBdeTb1bOzNmUQ/viewform',
   },
 };
 
