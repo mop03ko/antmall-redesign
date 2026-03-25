@@ -162,10 +162,10 @@ function renderCard(p) {
     ? `<span class="pc__brand"><img src="${brandUrl(BRAND_IDS[p.brand])}" alt="${p.brand}" loading="lazy" onerror="this.parentElement.style.display='none'"></span>`
     : '';
 
-  return `<article class="pc" data-brand="${p.brand}" data-cat="${p.cat}">
+  return `<article class="pc" data-brand="${p.brand}" data-cat="${p.cat}" onclick="location.href='product.html?id=${p.id}'" style="cursor:pointer">
   <div class="pc__media">
     ${badgeHtml}
-    <button class="btn-wish" aria-label="Хадгалах" onclick="toggleWish(this)">${SVG_HEART}</button>
+    <button class="btn-wish" aria-label="Хадгалах" onclick="event.stopPropagation();toggleWish(this)">${SVG_HEART}</button>
     <img src="${imgUrl(p.id, 512)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
   </div>
   <div class="pc__body">
@@ -176,7 +176,7 @@ function renderCard(p) {
       ${orig ? `<span class="price-was">${pfmt(orig)}₮</span>` : ''}
       ${pct  ? `<span class="price-save">-${pct}%</span>` : ''}
     </div>
-    <button class="btn-add-cart" onclick="addToCart(this,'${ns}',${price})">${SVG_CART} Сагсанд нэмэх</button>
+    <button class="btn-add-cart" onclick="event.stopPropagation();addToCart(this,'${ns}',${price})">${SVG_CART} Сагсанд нэмэх</button>
   </div>
 </article>`;
 }

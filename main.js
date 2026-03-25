@@ -135,10 +135,10 @@ function renderProductCard(p) {
     : '';
 
   return `
-<article class="pc" data-brand="${p.brand}">
+<article class="pc" data-brand="${p.brand}" onclick="location.href='product.html?id=${p.id}'" style="cursor:pointer">
   <div class="pc__media">
     ${badgeHtml}
-    <button class="btn-wish" aria-label="Хадгалах" onclick="toggleWish(this)">${SVG_HEART}</button>
+    <button class="btn-wish" aria-label="Хадгалах" onclick="event.stopPropagation();toggleWish(this)">${SVG_HEART}</button>
     <img src="${imgUrl(p.id, 512)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
   </div>
   <div class="pc__body">
@@ -149,7 +149,7 @@ function renderProductCard(p) {
       ${orig ? `<span class="price-was">${fmt(orig)}₮</span>` : ''}
       ${pct ? `<span class="price-save">-${pct}%</span>` : ''}
     </div>
-    <button class="btn-add-cart" onclick="addToCart(this,'${nameSafe}',${price})">${SVG_CART} Сагсанд нэмэх</button>
+    <button class="btn-add-cart" onclick="event.stopPropagation();addToCart(this,'${nameSafe}',${price})">${SVG_CART} Сагсанд нэмэх</button>
   </div>
 </article>`;
 }
@@ -159,10 +159,10 @@ function renderFlashCard(p) {
   const stockPct = Math.min(96, Math.round((1 - p.stock / 30) * 100));
   const nameSafe = p.name.replace(/'/g, "\\'");
   return `
-<article class="pc flash-card" data-brand="${p.brand}">
+<article class="pc flash-card" data-brand="${p.brand}" onclick="location.href='product.html?id=${p.id}'" style="cursor:pointer">
   <div class="pc__media">
     <span class="badge badge-sale">-${pct}%</span>
-    <button class="btn-wish" aria-label="Хадгалах" onclick="toggleWish(this)">${SVG_HEART}</button>
+    <button class="btn-wish" aria-label="Хадгалах" onclick="event.stopPropagation();toggleWish(this)">${SVG_HEART}</button>
     <img src="${imgUrl(p.id, 512)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
   </div>
   <div class="pc__body">
@@ -175,7 +175,7 @@ function renderFlashCard(p) {
       <div class="flash-stock-bar"><div class="flash-stock-fill" style="width:${stockPct}%"></div></div>
       <span class="flash-stock-label">Үлдсэн: <strong>${p.stock}</strong></span>
     </div>
-    <button class="btn-add-cart" onclick="addToCart(this,'${nameSafe}',${p.salePrice})">${SVG_CART} Сагсанд нэмэх</button>
+    <button class="btn-add-cart" onclick="event.stopPropagation();addToCart(this,'${nameSafe}',${p.salePrice})">${SVG_CART} Сагсанд нэмэх</button>
   </div>
 </article>`;
 }
@@ -184,11 +184,11 @@ function renderOpenBoxCard(p) {
   const pct      = Math.round((1 - p.salePrice / p.origPrice) * 100);
   const nameSafe = p.name.replace(/'/g, "\\'");
   return `
-<article class="pc ob-card" data-brand="${p.brand}">
+<article class="pc ob-card" data-brand="${p.brand}" onclick="location.href='product.html?id=${p.id}'" style="cursor:pointer">
   <div class="pc__media">
     <span class="badge badge-open">Лац задарсан</span>
     <span class="ob-grade">${p.grade}</span>
-    <button class="btn-wish" aria-label="Хадгалах" onclick="toggleWish(this)">${SVG_HEART}</button>
+    <button class="btn-wish" aria-label="Хадгалах" onclick="event.stopPropagation();toggleWish(this)">${SVG_HEART}</button>
     <img src="${imgUrl(p.id, 512)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
   </div>
   <div class="pc__body">
@@ -198,7 +198,7 @@ function renderOpenBoxCard(p) {
       <span class="price-was">${fmt(p.origPrice)}₮</span>
       <span class="price-save">-${pct}%</span>
     </div>
-    <button class="btn-add-cart btn-add-cart--amber" onclick="addToCart(this,'${nameSafe}',${p.salePrice})">${SVG_CART} Сагсанд нэмэх</button>
+    <button class="btn-add-cart btn-add-cart--amber" onclick="event.stopPropagation();addToCart(this,'${nameSafe}',${p.salePrice})">${SVG_CART} Сагсанд нэмэх</button>
   </div>
 </article>`;
 }
