@@ -5,110 +5,113 @@
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 const fmt = n => n.toLocaleString('mn-MN');
-const imgUrl = (attrId, size = 512) =>
-  `https://admins-odoo.antmall.mn/web/image/product.product/${attrId}/image_${size}`;
+const imgUrl = id =>
+  `https://admins-odoo.antmall.mn/web/image/product.template/${id}/image_1920`;
 const brandUrl = id =>
   `https://admins-odoo.antmall.mn/api/webgrid/product_brand/${id}/image`;
 
 /* ─── product data ─────────────────────────────────────────── */
-const BRAND = { apple: 2, samsung: 8, cuckoo: 1, dyson: 6, dell: 4, tecno: 15, pout: 3, deerma: 14 };
+const BRAND = { apple:2, samsung:8, cuckoo:1, dyson:6, dell:4, tecno:15, pout:3, deerma:14, dji:7, sony:12, aima:11, luyuan:10 };
 
 const PHONES = [
-  { id: 3746, name: 'iPhone 17 Pro Max', brand: 'apple',   price: 6_299_000, badge: 'Шинэ' },
-  { id: 3752, name: 'iPhone 17 Pro',     brand: 'apple',   price: 5_499_000, badge: 'Шинэ' },
-  { id: 3656, name: 'iPhone 17',         brand: 'apple',   price: 4_199_000, badge: 'Шинэ' },
-  { id: 3658, name: 'iPhone 17 Air',     brand: 'apple',   price: 4_699_000, badge: 'Шинэ' },
-  { id: 3471, name: 'iPhone 16 Pro Max', brand: 'apple',   price: 5_599_000, badge: null },
-  { id: 3461, name: 'iPhone 16 Pro',     brand: 'apple',   price: 4_799_000, badge: null },
-  { id: 3549, name: 'iPhone 16',         brand: 'apple',   price: 3_499_000, badge: null },
-  { id: 3469, name: 'iPhone 16 Plus',    brand: 'apple',   price: 3_899_000, badge: null },
-  { id: 3612, name: 'Galaxy S25 Ultra',  brand: 'samsung', price: 5_299_000, badge: 'Шинэ' },
-  { id: 3613, name: 'Galaxy S25',        brand: 'samsung', price: 3_299_000, badge: 'Шинэ' },
-  { id: 3607, name: 'Galaxy Z Fold 7',   brand: 'samsung', price: 6_799_000, badge: 'Шинэ' },
-  { id: 3594, name: 'Galaxy Z Flip 7',   brand: 'samsung', price: 4_199_000, badge: 'Шинэ' },
-  { id: 3769, name: 'TECNO CAMON 40',    brand: 'tecno',   price: 1_299_000, badge: 'Шинэ' },
-  { id: 3770, name: 'TECNO POVA 7',      brand: 'tecno',   price:   899_000, badge: 'Шинэ' },
-  { id: 3771, name: 'TECNO SPARK 30',    brand: 'tecno',   price:   699_000, badge: null },
+  { id: 1757, name: 'iPhone 17 Pro Max',    brand: 'apple',   price: 8599000, badge: 'Шинэ' },
+  { id: 1758, name: 'iPhone 17 Pro',        brand: 'apple',   price: 6899000, badge: 'Шинэ' },
+  { id: 1762, name: 'iPhone 17',            brand: 'apple',   price: 4199000, badge: 'Шинэ' },
+  { id: 1763, name: 'iPhone 17 Air',        brand: 'apple',   price: 4799000, badge: 'Шинэ' },
+  { id: 1697, name: 'iPhone 16 Pro Max',    brand: 'apple',   price: 6699000 },
+  { id: 1698, name: 'iPhone 16 Pro',        brand: 'apple',   price: 5199000 },
+  { id: 1699, name: 'iPhone 16',            brand: 'apple',   price: 3899000 },
+  { id: 1700, name: 'iPhone 16 Plus',       brand: 'apple',   price: 4299000 },
+  { id: 1720, name: 'Galaxy S25 Ultra',     brand: 'samsung', price: 3999000, badge: 'Хямдрал' },
+  { id: 1721, name: 'Galaxy S25',           brand: 'samsung', price: 3850000 },
+  { id: 1690, name: 'Samsung Galaxy Fold 7',brand: 'samsung', price: 6299000 },
+  { id: 1689, name: 'Samsung Galaxy Flip 7',brand: 'samsung', price: 3999000 },
+  { id: 1824, name: 'TECNO CAMON 40 PRO 5G',brand: 'tecno',  price: 1549900, badge: 'Шинэ' },
+  { id: 1825, name: 'TECNO POVA 7 PRO 5G',  brand: 'tecno',  price: 1469900, badge: 'Шинэ' },
+  { id: 1826, name: 'TECNO SPARK 30',        brand: 'tecno',  price: 799900 },
 ];
 
 const WEARABLES = [
-  { id: 3681, name: 'AirPods Pro 3',         brand: 'apple', price:   699_000, badge: 'Шинэ' },
-  { id: 3679, name: 'Apple Watch Ultra 11',  brand: 'apple', price: 2_199_000, badge: 'Шинэ' },
-  { id: 3513, name: 'Apple Watch Series 10', brand: 'apple', price: 1_299_000, badge: null },
-  { id: 3620, name: 'AirPods Gen 4',         brand: 'apple', price:   499_000, badge: null },
-  { id: 3530, name: 'AirPods Max USB-C',     brand: 'apple', price: 1_199_000, badge: null },
-  { id: 3491, name: 'AirPods Max',           brand: 'apple', price: 1_099_000, badge: null },
-  { id: 3145, name: 'AirPods Pro 2',         brand: 'apple', price:   599_000, badge: null },
-  { id: 3772, name: 'TECNO Buds',            brand: 'tecno', price:   149_000, badge: 'Шинэ' },
+  { id: 1778, name: 'AirPods Pro (3rd gen)',   brand: 'apple', price: 1350000, badge: 'Шинэ' },
+  { id: 1782, name: 'Apple Watch Ultra 3',     brand: 'apple', price: 3650000, badge: 'Шинэ' },
+  { id: 1777, name: 'Apple Watch Series 11',   brand: 'apple', price: 1950000 },
+  { id: 1738, name: 'AirPods Gen 4',           brand: 'apple', price: 650000 },
+  { id: 1714, name: 'AirPods Max (USB-C)',      brand: 'apple', price: 2450000 },
+  { id: 1706, name: 'AirPods Max',              brand: 'apple', price: 2200000 },
+  { id: 1606, name: 'AirPods Pro (2nd gen)',    brand: 'apple', price: 950000 },
+  { id: 1828, name: 'TECNO TWS Buds 4',         brand: 'tecno', price: 99900, badge: 'Шинэ' },
+  { id: 1702, name: 'Sony WF-1000XM5',          brand: 'sony',  price: 1000000 },
+  { id: 1701, name: 'Sony WH-1000XM6',          brand: 'sony',  price: 1850000 },
 ];
 
 const APPLIANCES = [
-  { id: 3231, name: 'Dyson Gen5 Detect',      brand: 'dyson', price: 3_199_000, badge: 'Бест' },
-  { id: 3230, name: 'Dyson WashG1',           brand: 'dyson', price: 2_999_000, badge: null },
-  { id: 3193, name: 'Dyson V15s Detect+',     brand: 'dyson', price: 2_799_000, badge: null },
-  { id: 3192, name: 'Dyson V12s Detect Slim', brand: 'dyson', price: 2_199_000, badge: null },
-  { id: 3660, name: 'Dyson V12 Slim',         brand: 'dyson', price: 1_799_000, badge: null },
-  { id: 3683, name: 'Dyson Purifier PH05',    brand: 'dyson', price: 2_499_000, badge: 'Шинэ' },
-  { id: 3684, name: 'Dyson Pencil Vacuum',    brand: 'dyson', price: 1_299_000, badge: 'Шинэ' },
-  { id: 3209, name: 'Dyson Air Wrap',         brand: 'dyson', price: 1_899_000, badge: null },
+  { id: 1692, name: 'Dyson Gen5detect Complete', brand: 'dyson', price: 3400000, badge: 'Бест' },
+  { id: 1691, name: 'Dyson WashG1',              brand: 'dyson', price: 2500000 },
+  { id: 1654, name: 'Dyson V15s Detect Submarine',brand: 'dyson', price: 3900000 },
+  { id: 1653, name: 'Dyson V12s Detect Slim',    brand: 'dyson', price: 3300000 },
+  { id: 1764, name: 'Dyson V12 Detect Slim',     brand: 'dyson', price: 2700000 },
+  { id: 1780, name: 'Dyson Purifier PH05',       brand: 'dyson', price: 3500000 },
+  { id: 1781, name: 'Dyson PencilVac',           brand: 'dyson', price: 2950000, badge: 'Шинэ' },
+  { id: 1667, name: 'Dyson Airwrap Straight+Wavy', brand: 'dyson', price: 2350000 },
 ];
 
 const CUCKOO_PRODUCTS = [
-  { id: 3553, name: 'Cuckoo Rice Cooker',  brand: 'cuckoo', price:   799_000, badge: null },
-  { id: 3112, name: 'Cuckoo Air Purifier', brand: 'cuckoo', price: 1_099_000, badge: null },
-  { id: 3264, name: 'Cuckoo Air Fryer',    brand: 'cuckoo', price:   599_000, badge: null },
-  { id: 3144, name: 'Cuckoo Kettle',       brand: 'cuckoo', price:   299_000, badge: null },
-  { id: 3078, name: 'Cuckoo Toaster',      brand: 'cuckoo', price:   249_000, badge: null },
+  { id: 1779, name: 'Cuckoo Будаа агшаагч',      brand: 'cuckoo', price: 570400 },
+  { id: 1573, name: 'Cuckoo Агаар цэвэршүүлэгч', brand: 'cuckoo', price: 1150000 },
+  { id: 1725, name: 'Cuckoo Тосгүй шарагч',      brand: 'cuckoo', price: 349600 },
+  { id: 1749, name: 'Cuckoo Dishwasher',          brand: 'cuckoo', price: 749900 },
+  { id: 1595, name: 'Cuckoo Талх шарагч',         brand: 'cuckoo', price: 133400 },
+  { id: 1594, name: 'Cuckoo Ус буцалгагч',        brand: 'cuckoo', price: 142600 },
 ];
 
 const DEERMA_PRODUCTS = [
-  { id: 3722, name: 'Deerma Robot Vacuum X90 Ultra', brand: 'deerma', price: 2_391_080, badge: 'Шинэ' },
-  { id: 3725, name: 'Deerma Robot Vacuum X80 Ultra', brand: 'deerma', price: 1_839_080, badge: 'Шинэ' },
-  { id: 3721, name: 'Deerma Cordless Vacuum Z50',    brand: 'deerma', price:   735_080, badge: null },
-  { id: 3718, name: 'Deerma Cordless Vacuum T30W',   brand: 'deerma', price:   551_080, badge: null },
-  { id: 3720, name: 'Deerma Steam Machine ZQ01',     brand: 'deerma', price:   210_680, badge: null },
-  { id: 3753, name: 'Deerma Humidifier F628W',       brand: 'deerma', price:    81_880, badge: null },
+  { id: 1804, name: 'Deerma Robot Vacuum X90 Ultra', brand: 'deerma', price: 2391080, badge: 'Шинэ' },
+  { id: 1805, name: 'Deerma Robot Vacuum X80 Ultra', brand: 'deerma', price: 1839080, badge: 'Шинэ' },
+  { id: 1803, name: 'Deerma Cordless Vacuum Z50',    brand: 'deerma', price: 735080 },
+  { id: 1800, name: 'Deerma Cordless Vacuum T30W',   brand: 'deerma', price: 551080 },
+  { id: 1802, name: 'Deerma Steam Machine ZQ01',     brand: 'deerma', price: 210680 },
+  { id: 1817, name: 'Deerma Humidifier F628W',       brand: 'deerma', price: 81880 },
 ];
 
 const POUT_PRODUCTS = [
-  { id: 3729, name: 'POUT HANDS 7 Wireless Charger', brand: 'pout', price: 105_800, badge: null },
-  { id: 3728, name: 'POUT TekDec Mat Cinnamon',       brand: 'pout', price:  69_000, badge: null },
-  { id: 3724, name: 'POUT TekDec Mat Danish Black',   brand: 'pout', price:  69_000, badge: null },
-  { id: 3709, name: 'POUT Ears 2 Headphones',         brand: 'pout', price:  90_000, badge: null },
-  { id: 3730, name: 'POUT 100W USB-C Charger',        brand: 'pout', price:  25_000, badge: null },
-  { id: 3708, name: 'POUT Magpower Ring',              brand: 'pout', price:  21_000, badge: null },
+  { id: 1808, name: 'POUT HANDS 7 (Samsung)',       brand: 'pout', price: 105800 },
+  { id: 1807, name: 'POUT TekDec Mat Cinnamon',      brand: 'pout', price: 69000 },
+  { id: 1792, name: 'POUT TekDec Mat Danish Black',  brand: 'pout', price: 69000 },
+  { id: 1791, name: 'POUT Ears 2',                   brand: 'pout', price: 90000 },
+  { id: 1809, name: 'POUT 100W USB-C',               brand: 'pout', price: 25000 },
+  { id: 1790, name: 'POUT Magpower Ring',             brand: 'pout', price: 21000 },
 ];
 
 const COMPUTERS = [
-  { id: 3795, name: 'MacBook Air M4 15"',    brand: 'apple', price: 4_199_000, badge: 'Шинэ' },
-  { id: 3270, name: 'MacBook Pro 14" M4',    brand: 'apple', price: 5_299_000, badge: null },
-  { id: 3587, name: 'MacBook Pro 16" M4',    brand: 'apple', price: 6_899_000, badge: null },
-  { id: 3162, name: 'MacBook Pro 13" M4',    brand: 'apple', price: 3_999_000, badge: null },
-  { id: 3344, name: 'MacBook Air 15"',       brand: 'apple', price: 3_699_000, badge: null },
-  { id: 3110, name: 'Dell G15 Gaming',       brand: 'dell',  price: 2_499_000, badge: null },
-  { id: 3108, name: 'Dell Inspiron i7 3530', brand: 'dell',  price: 1_999_000, badge: null },
-  { id: 3130, name: 'Dell Inspiron i7 3520', brand: 'dell',  price: 1_799_000, badge: null },
-  { id: 3242, name: 'Dell Vostro 3440',      brand: 'dell',  price: 1_499_000, badge: null },
+  { id: 1588, name: "MacBook Air M4 13''",     brand: 'apple', price: 4199000, badge: 'Шинэ' },
+  { id: 1587, name: "MacBook Air M4 15''",     brand: 'apple', price: 5199000 },
+  { id: 1742, name: "MacBook Pro M4 16''",     brand: 'apple', price: 10550000 },
+  { id: 1548, name: "MacBook Pro M4 14''",     brand: 'apple', price: 6999000 },
+  { id: 1623, name: "MacBook Pro M4 13''",     brand: 'apple', price: 4750000 },
+  { id: 1571, name: 'Dell Gaming G15 i7',      brand: 'dell',  price: 5950000 },
+  { id: 1570, name: 'Dell Inspiron 16 i7',     brand: 'dell',  price: 3850000 },
+  { id: 1569, name: 'Dell Inspiron 15 3530 i7',brand: 'dell',  price: 3550000 },
+  { id: 1546, name: 'Dell Inspiron 15 3511',   brand: 'dell',  price: 2150000 },
 ];
 
 const FLASH_DEALS = [
-  { id: 3461, name: 'iPhone 16 Pro 128GB',    brand: 'apple',  origPrice: 4_799_000, salePrice: 4_299_000, stock: 12 },
-  { id: 3193, name: 'Dyson V15s Detect+',     brand: 'dyson',  origPrice: 2_799_000, salePrice: 2_399_000, stock: 5 },
-  { id: 3344, name: 'MacBook Air 15"',         brand: 'apple',  origPrice: 3_699_000, salePrice: 3_299_000, stock: 8 },
-  { id: 3613, name: 'Galaxy S25 256GB',        brand: 'samsung',origPrice: 3_299_000, salePrice: 2_899_000, stock: 15 },
-  { id: 3112, name: 'Cuckoo Air Purifier',     brand: 'cuckoo', origPrice: 1_099_000, salePrice:   899_000, stock: 20 },
-  { id: 3530, name: 'AirPods Max USB-C',       brand: 'apple',  origPrice: 1_199_000, salePrice:   999_000, stock: 7 },
-  { id: 3110, name: 'Dell G15 Gaming',         brand: 'dell',   origPrice: 2_499_000, salePrice: 2_099_000, stock: 4 },
-  { id: 3209, name: 'Dyson Air Wrap',          brand: 'dyson',  origPrice: 1_899_000, salePrice: 1_599_000, stock: 6 },
+  { id: 1698, name: 'iPhone 16 Pro',           brand: 'apple',  origPrice: 5499000, salePrice: 5199000, stock: 8 },
+  { id: 1691, name: 'Dyson WashG1',            brand: 'dyson',  origPrice: 2900000, salePrice: 2500000, stock: 5 },
+  { id: 1588, name: "MacBook Air M4 13''",     brand: 'apple',  origPrice: 4750000, salePrice: 4199000, stock: 12 },
+  { id: 1720, name: 'Galaxy S25 Ultra 256GB',  brand: 'samsung',origPrice: 5299000, salePrice: 3999000, stock: 7 },
+  { id: 1573, name: 'Cuckoo Агаар цэвэршүүлэгч',brand: 'cuckoo',origPrice: 1250000, salePrice: 1150000, stock: 15 },
+  { id: 1714, name: 'AirPods Max (USB-C)',      brand: 'apple',  origPrice: 2700000, salePrice: 2450000, stock: 6 },
+  { id: 1838, name: 'CUCKOO Кофе машин',       brand: 'cuckoo', origPrice: 1250000, salePrice: 1150000, stock: 20 },
+  { id: 1667, name: 'Dyson Airwrap',            brand: 'dyson',  origPrice: 2600000, salePrice: 2350000, stock: 4 },
 ];
 
 const OPEN_BOX = [
-  { id: 3471, name: 'iPhone 16 Pro Max',  brand: 'apple',   origPrice: 5_599_000, salePrice: 4_799_000, grade: 'A+' },
-  { id: 3230, name: 'Dyson WashG1',       brand: 'dyson',   origPrice: 2_999_000, salePrice: 2_499_000, grade: 'A' },
-  { id: 3270, name: 'MacBook Pro 14" M4', brand: 'apple',   origPrice: 5_299_000, salePrice: 4_599_000, grade: 'A+' },
-  { id: 3612, name: 'Galaxy S25 Ultra',   brand: 'samsung', origPrice: 5_299_000, salePrice: 4_599_000, grade: 'A' },
-  { id: 3231, name: 'Dyson Gen5 Detect',  brand: 'dyson',   origPrice: 3_199_000, salePrice: 2_699_000, grade: 'A' },
-  { id: 3587, name: 'MacBook Pro 16" M4', brand: 'apple',   origPrice: 6_899_000, salePrice: 5_999_000, grade: 'A+' },
+  { id: 1697, name: 'iPhone 16 Pro Max',       brand: 'apple',   origPrice: 6699000, salePrice: 5999000, grade: 'A+' },
+  { id: 1691, name: 'Dyson WashG1',            brand: 'dyson',   origPrice: 2900000, salePrice: 2400000, grade: 'A' },
+  { id: 1742, name: "MacBook Pro M4 16''",     brand: 'apple',   origPrice: 10550000, salePrice: 9500000, grade: 'A+' },
+  { id: 1720, name: 'Galaxy S25 Ultra',        brand: 'samsung', origPrice: 5299000, salePrice: 4599000, grade: 'A' },
+  { id: 1692, name: 'Dyson Gen5detect',        brand: 'dyson',   origPrice: 3400000, salePrice: 2900000, grade: 'A' },
+  { id: 1587, name: "MacBook Air M4 15''",     brand: 'apple',   origPrice: 5199000, salePrice: 4599000, grade: 'A+' },
 ];
 
 /* ─── SVG icons ────────────────────────────────────────────── */
@@ -139,7 +142,7 @@ function renderProductCard(p) {
   <div class="pc__media">
     ${badgeHtml}
     <button class="btn-wish" aria-label="Хадгалах" onclick="event.stopPropagation();toggleWish(this)">${SVG_HEART}</button>
-    <img src="${imgUrl(p.id, 512)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
+    <img src="${imgUrl(p.id)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
   </div>
   <div class="pc__body">
     ${brandLogoHtml}
@@ -163,7 +166,7 @@ function renderFlashCard(p) {
   <div class="pc__media">
     <span class="badge badge-sale">-${pct}%</span>
     <button class="btn-wish" aria-label="Хадгалах" onclick="event.stopPropagation();toggleWish(this)">${SVG_HEART}</button>
-    <img src="${imgUrl(p.id, 512)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
+    <img src="${imgUrl(p.id)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
   </div>
   <div class="pc__body">
     <h3 class="pc__name">${p.name}</h3>
@@ -189,7 +192,7 @@ function renderOpenBoxCard(p) {
     <span class="badge badge-open">Лац задарсан</span>
     <span class="ob-grade">${p.grade}</span>
     <button class="btn-wish" aria-label="Хадгалах" onclick="event.stopPropagation();toggleWish(this)">${SVG_HEART}</button>
-    <img src="${imgUrl(p.id, 512)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
+    <img src="${imgUrl(p.id)}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
   </div>
   <div class="pc__body">
     <h3 class="pc__name">${p.name}</h3>
