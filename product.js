@@ -719,6 +719,31 @@ function renderSpTerms() {
   }).join('');
 }
 
+function spProgressIcon(i, count) {
+  const pct = count <= 1 ? 1 : i / (count - 1);
+  const r = 14, cx = 18, cy = 18, stroke = 3;
+  const circ = 2 * Math.PI * r;
+  const dash = circ * pct;
+  const gap  = circ - dash;
+  // rotate so arc starts at top
+  const rotate = -90;
+  return `<svg width="36" height="36" viewBox="0 0 36 36" class="sp-prog-svg">
+    <defs>
+      <linearGradient id="spg${i}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#3b82f6"/>
+        <stop offset="100%" stop-color="#06b6d4"/>
+      </linearGradient>
+    </defs>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#e5e7eb" stroke-width="${stroke}"/>
+    ${pct > 0 ? `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none"
+      stroke="url(#spg${i})" stroke-width="${stroke}"
+      stroke-dasharray="${dash} ${gap}"
+      stroke-linecap="round"
+      transform="rotate(${rotate} ${cx} ${cy})"/>` : ''}
+    ${i === 0 ? `<circle cx="${cx}" cy="${cy}" r="4" fill="#3b82f6"/>` : ''}
+  </svg>`;
+}
+
 function renderSpSchedule() {
   const t = spActiveTerm;
   const amount = Math.ceil(currentPrice / t.count);
@@ -730,13 +755,13 @@ function renderSpSchedule() {
 
   const intervalDays = t.count > 1 ? Math.round(t.days / (t.count - 1)) : t.days;
   const today = new Date();
-  schedEl.innerHTML = Array.from({ length: t.count }, (_, i) => {
+  const rows = Array.from({ length: t.count }, (_, i) => {
     const d = new Date(today);
     d.setDate(today.getDate() + i * intervalDays);
     const dateStr = i === 0 ? 'Өнөөдөр' : `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
     const label = i === 0 ? 'Одоо төлөх' : `${i+1} дахь төлөлт`;
-    return `<div class="sp-schedule-row">
-  <div class="sp-schedule-icon">${i === 0 ? '●' : i+1}</div>
+    return `<div class="sp-schedule-row${i === 0 ? ' sp-schedule-row--first' : ''}">
+  <div class="sp-schedule-icon">${spProgressIcon(i, t.count)}</div>
   <div class="sp-schedule-info">
     <div class="sp-schedule-label">${label}</div>
     <div class="sp-schedule-date">${dateStr}</div>
@@ -744,6 +769,22 @@ function renderSpSchedule() {
   <div class="sp-schedule-amount">${fmt(amount)} ₮</div>
 </div>`;
   }).join('');
+
+  const bonusRow = `<div class="sp-schedule-row sp-schedule-bonus">
+  <div class="sp-schedule-info"><div class="sp-schedule-label">Танд олгогдох</div></div>
+  <div class="sp-bonus-badge"><svg viewBox="0 0 20 20" width="16" height="16"><circle cx="10" cy="10" r="10" fill="#0a1628"/><text x="10" y="14" text-anchor="middle" fill="white" font-size="9" font-weight="bold">SPC</text></svg> SPC Бонус &nbsp;<strong>+Infinity SPC</strong></div>
+</div>`;
+
+  const zaavar = `<div class="sp-zaavar">
+  <div class="sp-zaavar__title">Заавар</div>
+  <ol class="sp-zaavar__list">
+    <li>Бараануудаа сагсанда нэмнэ.</li>
+    <li>Төлбөрийн нөхцөл дээрээс Сторпэй-г сонгоно.</li>
+    <li>Сторпэй аппликейшнд нэхэмжлэх ирж, эхний төлөлтөө баталгаажуулна.</li>
+  </ol>
+</div>`;
+
+  schedEl.innerHTML = rows + bonusRow + zaavar;
 }
 
 function initStorepay() {

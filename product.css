@@ -548,19 +548,53 @@
   padding:12px 14px; border-radius:12px;
   border:1px solid #f3f4f6;
 }
-.sp-schedule-row:first-child { border-color:#e5e7eb; background:#f9fafb; }
+.sp-schedule-row--first { border-color:#e5e7eb; background:#f9fafb; }
 .sp-schedule-icon {
   width:36px; height:36px; border-radius:50%; flex-shrink:0;
   border:3px solid #e5e7eb; background:#fff;
   display:flex; align-items:center; justify-content:center;
   font-size:.65rem; font-weight:800; color:#3b82f6;
 }
-.sp-schedule-row:first-child .sp-schedule-icon { border-color:#3b82f6; background:#eff6ff; }
+.sp-schedule-row--first .sp-schedule-icon { border-color:#3b82f6; background:#eff6ff; }
 .sp-schedule-info { flex:1; }
 .sp-schedule-label { font-size:.82rem; font-weight:700; color:#111; }
 .sp-schedule-date  { font-size:.72rem; color:#888; margin-top:1px; }
 .sp-schedule-amount { font-size:.9rem; font-weight:800; color:#111; }
-.sp-schedule-row:first-child .sp-schedule-amount { font-size:1rem; }
+.sp-schedule-row--first .sp-schedule-amount { font-size:1rem; }
+.sp-prog-svg { display:block; }
+.sp-schedule-icon { padding:0; border:none; background:none; }
+
+/* bonus row */
+.sp-schedule-bonus { background:#f8faff; border-color:#e5e7eb; }
+.sp-bonus-badge {
+  display:flex; align-items:center; gap:5px;
+  font-size:.75rem; font-weight:600; color:#111;
+  background:#fff; border:1.5px solid #e5e7eb;
+  border-radius:999px; padding:4px 10px;
+  white-space:nowrap;
+}
+.sp-bonus-badge strong { color:#1d4ed8; }
+
+/* instructions */
+.sp-zaavar { margin-top:18px; padding-top:16px; border-top:1px solid #f0f0f0; }
+.sp-zaavar__title { font-size:.88rem; font-weight:700; color:#111; margin-bottom:10px; }
+.sp-zaavar__list {
+  margin:0; padding:0; list-style:none;
+  display:flex; flex-direction:column; gap:8px; counter-reset:zaavar;
+}
+.sp-zaavar__list li {
+  display:flex; align-items:flex-start; gap:10px;
+  font-size:.8rem; color:#444; line-height:1.5;
+  counter-increment:zaavar;
+}
+.sp-zaavar__list li::before {
+  content:counter(zaavar);
+  flex-shrink:0; width:22px; height:22px; border-radius:50%;
+  background:#f1f5f9; color:#555;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.72rem; font-weight:700; margin-top:1px;
+}
+
 .sp-apply-btn {
   display:block; width:100%; text-align:center;
   padding:14px; border-radius:12px;
