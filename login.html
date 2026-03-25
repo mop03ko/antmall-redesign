@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css?v=2" />
   <link rel="stylesheet" href="login.css?v=1" />
+  <script src="auth.js?v=1"></script>
 </head>
 <body class="auth-body">
 
@@ -298,8 +299,14 @@
 
 <script>
 /* ═══════════════════════════════════
-   AUTH PAGE — login.js (inline)
+   AUTH PAGE — login.js (inline) v2
+   Auth module (auth.js) load хийгдсэн байна
    ═══════════════════════════════════ */
+
+/* Аль хэдийн нэвтэрсэн бол profile рүү redirect */
+if (typeof Auth !== 'undefined' && Auth.isLoggedIn()) {
+  window.location.replace(Auth.getReturnUrl('profile.html'));
+}
 
 let currentTab = 'login';
 
@@ -310,15 +317,10 @@ function switchTab(tab) {
   document.getElementById('registerForm').classList.toggle('hidden', tab !== 'register');
   document.getElementById('forgotForm').classList.toggle('hidden', tab !== 'forgot');
   document.getElementById('authSuccess').classList.add('hidden');
-
   const tabsWrap = document.querySelector('.auth-tabs');
   if (tabsWrap) tabsWrap.style.display = tab === 'forgot' ? 'none' : '';
-
-  const tabLogin    = document.getElementById('tabLogin');
-  const tabRegister = document.getElementById('tabRegister');
-  if (tabLogin)    tabLogin.classList.toggle('active', tab === 'login');
-  if (tabRegister) tabRegister.classList.toggle('active', tab === 'register');
-
+  document.getElementById('tabLogin')?.classList.toggle('active', tab === 'login');
+  document.getElementById('tabRegister')?.classList.toggle('active', tab === 'register');
   clearErrors();
 }
 
@@ -337,16 +339,16 @@ document.getElementById('rgPass')?.addEventListener('input', function() {
   const val = this.value;
   const fill  = document.getElementById('passStrengthFill');
   const label = document.getElementById('passStrengthLabel');
-  if (!val) { fill.style.width = '0'; fill.className = 'pass-strength__fill'; label.textContent = ''; return; }
+  if (!val) { fill.style.width='0'; fill.className='pass-strength__fill'; label.textContent=''; return; }
   let score = 0;
-  if (val.length >= 8)  score++;
-  if (/[A-Z]/.test(val)) score++;
-  if (/[0-9]/.test(val)) score++;
-  if (/[^A-Za-z0-9]/.test(val)) score++;
-  const levels = ['', 'Сул', 'Дунд', 'Сайн', 'Маш сайн'];
-  const cls    = ['', 'weak', 'fair', 'good', 'strong'];
+  if (val.length >= 8)           score++;
+  if (/[A-Z]/.test(val))         score++;
+  if (/[0-9]/.test(val))         score++;
+  if (/[^A-Za-z0-9]/.test(val))  score++;
+  const levels = ['','Сул','Дунд','Сайн','Маш сайн'];
+  const cls    = ['','weak','fair','good','strong'];
   fill.style.width = (score * 25) + '%';
-  fill.className = 'pass-strength__fill ' + (cls[score] || '');
+  fill.className   = 'pass-strength__fill ' + (cls[score] || '');
   label.textContent = levels[score] || '';
 });
 
@@ -373,31 +375,38 @@ function handleLogin(e) {
 
   if (!phone) { setError('lgPhoneGroup','lgPhoneErr','Утасны дугаар эсвэл имэйл оруулна уу'); ok = false; }
   else if (!isPhone(phone) && !isEmail(phone)) { setError('lgPhoneGroup','lgPhoneErr','Зөв утасны дугаар эсвэл имэйл оруулна уу'); ok = false; }
-
   if (!pass) { setError('lgPassGroup','lgPassErr','Нууц үг оруулна уу'); ok = false; }
   else if (pass.length < 6) { setError('lgPassGroup','lgPassErr','Нууц үг хамгийн багадаа 6 тэмдэгт байх ёстой'); ok = false; }
-
   if (!ok) return;
 
-  setLoading('lgSubmit', 'lgSpinner', true);
+  setLoading('lgSubmit','lgSpinner',true);
   setTimeout(() => {
-    setLoading('lgSubmit', 'lgSpinner', false);
-    showSuccess('Амжилттай нэвтэрлээ!', 'Таныг нүүр хуудас руу шилжүүлж байна...');
-    setTimeout(() => { window.location.href = 'index.html'; }, 1800);
-  }, 1200);
+    /* ── LocalStorage-д хэрэглэгч хадгална ── */
+    const user = {
+      first:  isPhone(phone) ? phone : phone.split('@')[0],
+      last:   '',
+      phone:  isPhone(phone) ? phone : '',
+      email:  isEmail(phone) ? phone : '',
+      gender: 'male'
+    };
+    Auth.login(user, false);
+    setLoading('lgSubmit','lgSpinner',false);
+    showSuccess('Амжилттай нэвтэрлээ!', 'Таныг шилжүүлж байна...');
+    setTimeout(() => { window.location.href = Auth.getReturnUrl('profile.html'); }, 1200);
+  }, 1000);
 }
 
 /* ── Register submit ── */
 function handleRegister(e) {
   e.preventDefault();
   clearErrors();
-  const first  = document.getElementById('rgFirst').value.trim();
-  const last   = document.getElementById('rgLast').value.trim();
-  const phone  = document.getElementById('rgPhone').value.trim();
-  const email  = document.getElementById('rgEmail').value.trim();
-  const pass   = document.getElementById('rgPass').value;
-  const pass2  = document.getElementById('rgPass2').value;
-  const terms  = document.getElementById('rgTerms').checked;
+  const first = document.getElementById('rgFirst').value.trim();
+  const last  = document.getElementById('rgLast').value.trim();
+  const phone = document.getElementById('rgPhone').value.trim();
+  const email = document.getElementById('rgEmail').value.trim();
+  const pass  = document.getElementById('rgPass').value;
+  const pass2 = document.getElementById('rgPass2').value;
+  const terms = document.getElementById('rgTerms').checked;
   let ok = true;
 
   if (!first)  { setError('rgFirstGroup','rgFirstErr','Нэрээ оруулна уу'); ok = false; }
@@ -405,20 +414,21 @@ function handleRegister(e) {
   if (!phone)  { setError('rgPhoneGroup','rgPhoneErr','Утасны дугаар оруулна уу'); ok = false; }
   else if (!isPhone(phone)) { setError('rgPhoneGroup','rgPhoneErr','8 оронтой тоо оруулна уу'); ok = false; }
   if (email && !isEmail(email)) { setError('rgEmailGroup','rgEmailErr','Зөв имэйл хаяг оруулна уу'); ok = false; }
-  if (!pass)   { setError('rgPassGroup','rgPassErr','Нууц үг оруулна уу'); ok = false; }
+  if (!pass)  { setError('rgPassGroup','rgPassErr','Нууц үг оруулна уу'); ok = false; }
   else if (pass.length < 8) { setError('rgPassGroup','rgPassErr','Нууц үг хамгийн багадаа 8 тэмдэгт байх ёстой'); ok = false; }
-  if (!pass2)  { setError('rgPass2Group','rgPass2Err','Нууц үгээ давтана уу'); ok = false; }
+  if (!pass2) { setError('rgPass2Group','rgPass2Err','Нууц үгээ давтана уу'); ok = false; }
   else if (pass !== pass2) { setError('rgPass2Group','rgPass2Err','Нууц үг таарахгүй байна'); ok = false; }
-  if (!terms)  { document.getElementById('rgTermsErr').textContent = 'Үйлчилгээний нөхцөлийг зөвшөөрнө үү'; ok = false; }
-
+  if (!terms) { document.getElementById('rgTermsErr').textContent = 'Үйлчилгээний нөхцөлийг зөвшөөрнө үү'; ok = false; }
   if (!ok) return;
 
-  setLoading('rgSubmit', 'rgSpinner', true);
+  setLoading('rgSubmit','rgSpinner',true);
   setTimeout(() => {
-    setLoading('rgSubmit', 'rgSpinner', false);
-    showSuccess('Бүртгэл амжилттай!', 'Тавтай морил ' + first + '! Нэвтэрч байна...');
-    setTimeout(() => { window.location.href = 'index.html'; }, 2000);
-  }, 1400);
+    /* ── Шинэ хэрэглэгч хадгална ── */
+    Auth.login({ first, last, phone, email, gender: 'male' }, true);
+    setLoading('rgSubmit','rgSpinner',false);
+    showSuccess('Бүртгэл амжилттай!', 'Тавтай морил ' + first + '! Шилжүүлж байна...');
+    setTimeout(() => { window.location.href = Auth.getReturnUrl('profile.html'); }, 1200);
+  }, 1000);
 }
 
 /* ── Forgot password submit ── */
@@ -428,18 +438,20 @@ function handleForgot(e) {
   const phone = document.getElementById('fgPhone').value.trim();
   if (!phone) { setError('fgPhoneGroup','fgPhoneErr','Утасны дугаар оруулна уу'); return; }
   if (!isPhone(phone)) { setError('fgPhoneGroup','fgPhoneErr','8 оронтой тоо оруулна уу'); return; }
-
   showSuccess('Код илгээгдлээ!', phone + ' дугаарт баталгаажуулах код илгээлээ.');
 }
 
 /* ── Social login ── */
 function socialLogin(provider) {
-  const btn = document.querySelector('.btn-social--' + (provider === 'facebook' ? 'fb' : 'google'));
+  const sel = '.btn-social--' + (provider === 'facebook' ? 'fb' : 'google');
+  const btn = document.querySelector(sel);
   if (btn) { btn.style.opacity = '.6'; btn.style.pointerEvents = 'none'; }
   setTimeout(() => {
-    showSuccess(provider === 'facebook' ? 'Facebook-ээр нэвтэрлээ!' : 'Google-ээр нэвтэрлээ!', 'Таныг нүүр хуудас руу шилжүүлж байна...');
-    setTimeout(() => { window.location.href = 'index.html'; }, 1500);
-  }, 1000);
+    const name = provider === 'facebook' ? 'Facebook' : 'Google';
+    Auth.login({ first: name + ' Хэрэглэгч', last: '', phone: '', email: '', gender: 'male' }, false);
+    showSuccess(name + '-ээр нэвтэрлээ!', 'Шилжүүлж байна...');
+    setTimeout(() => { window.location.href = Auth.getReturnUrl('profile.html'); }, 1000);
+  }, 900);
 }
 
 /* ── Helpers ── */
@@ -452,9 +464,8 @@ function setLoading(btnId, spinnerId, state) {
 }
 
 function showSuccess(title, msg) {
-  document.getElementById('loginForm').classList.add('hidden');
-  document.getElementById('registerForm').classList.add('hidden');
-  document.getElementById('forgotForm').classList.add('hidden');
+  ['loginForm','registerForm','forgotForm'].forEach(id =>
+    document.getElementById(id)?.classList.add('hidden'));
   const tabs = document.querySelector('.auth-tabs');
   if (tabs) tabs.style.display = 'none';
   document.getElementById('successTitle').textContent = title;
@@ -465,17 +476,16 @@ function showSuccess(title, msg) {
 /* ── Phone input: digits only ── */
 ['rgPhone','fgPhone'].forEach(id => {
   document.getElementById(id)?.addEventListener('input', function() {
-    this.value = this.value.replace(/\D/g, '').slice(0, 8);
+    this.value = this.value.replace(/\D/g,'').slice(0,8);
   });
 });
 
-/* ── Enter key on inputs ── */
+/* ── Enter key ── */
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') {
-    if (currentTab === 'login')    document.getElementById('loginForm')?.requestSubmit();
-    if (currentTab === 'register') document.getElementById('registerForm')?.requestSubmit();
-    if (currentTab === 'forgot')   document.getElementById('forgotForm')?.requestSubmit();
-  }
+  if (e.key !== 'Enter') return;
+  if (currentTab === 'login')    document.getElementById('loginForm')?.requestSubmit();
+  if (currentTab === 'register') document.getElementById('registerForm')?.requestSubmit();
+  if (currentTab === 'forgot')   document.getElementById('forgotForm')?.requestSubmit();
 });
 </script>
 

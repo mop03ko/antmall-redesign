@@ -149,6 +149,35 @@ input { font-family: inherit; }
 }
 .hbtn:hover { color: var(--orange); background: var(--orange-light); }
 .hbtn--cart { position: relative; }
+
+/* ── Logged-in header avatar button ── */
+.hbtn--logged { color: var(--orange) !important; }
+.hbtn--logged:hover { background: var(--orange-light); }
+.hbtn-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--orange);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--orange);
+}
+.hbtn-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.hbtn-avatar-init {
+  font-size: .65rem;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1;
+  text-transform: uppercase;
+}
 .cart-badge {
   position: absolute;
   top: 2px;

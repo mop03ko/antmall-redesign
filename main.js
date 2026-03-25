@@ -599,4 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initial cart badge
   updateCartBadge();
+
+  // Auth — header button
+  if (typeof Auth !== 'undefined') Auth.updateHeader();
 });
