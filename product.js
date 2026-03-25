@@ -353,6 +353,13 @@ function populatePage(p) {
   // Price
   updatePriceDisplay();
 
+  // Stock (pseudo-random but deterministic per product id)
+  const stockEl = document.getElementById('pdpStock');
+  if (stockEl) {
+    const stock = 3 + ((p.id * 17 + 11) % 23); // deterministic 3–25 range
+    stockEl.textContent = `${stock} ширхэг байна`;
+  }
+
   // Color + storage variants
   renderVariants(p);
 
