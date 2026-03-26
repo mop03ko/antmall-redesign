@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Antmall — Админ Панел</title>
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="admin.css?v=1" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     LOGIN SCREEN
+══════════════════════════════════ -->
+<div id="adminLoginScreen" class="admin-login">
+  <div class="admin-login__card">
+    <div class="admin-login__logo">
+      <img src="logo.svg" alt="Antmall" />
+      <span>Antmall</span>
+      <small>ADMIN</small>
+    </div>
+    <form onsubmit="adminLogin(event)">
+      <div class="al-group">
+        <label>Нэвтрэх нэр</label>
+        <input type="text" id="alUser" placeholder="admin" autocomplete="username" />
+      </div>
+      <div class="al-group">
+        <label>Нууц үг</label>
+        <input type="password" id="alPass" placeholder="••••••••" autocomplete="current-password" />
+      </div>
+      <span class="al-error" id="alError"></span>
+      <button type="submit" class="al-btn">Нэвтрэх</button>
+    </form>
+    <p class="al-hint">Demo: нэвтрэх нэр <code>admin</code> / нууц үг <code>admin2025</code></p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     ADMIN PANEL
+══════════════════════════════════ -->
+<div id="adminPanel" class="admin-panel hidden">
+
+  <!-- ── Sidebar ── -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="as-logo">
+      <img src="logo.svg" alt="Antmall" />
+      <span>Antmall</span>
+      <small>ADMIN</small>
+    </div>
+
+    <nav class="as-nav">
+      <p class="as-section-label">Үндсэн</p>
+      <a class="as-nav__item active" onclick="showSection('dashboard',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Хянах самбар
+      </a>
+      <a class="as-nav__item" onclick="showSection('products',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Бүтээгдэхүүн
+        <span class="as-nav__badge" id="navProdCount">0</span>
+      </a>
+      <a class="as-nav__item" onclick="showSection('orders',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg>
+        Захиалга
+        <span class="as-nav__badge" id="navOrderCount">0</span>
+      </a>
+      <a class="as-nav__item" onclick="showSection('users',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Хэрэглэгчид
+        <span class="as-nav__badge" id="navUserCount">0</span>
+      </a>
+      <p class="as-section-label" style="margin-top:8px">Тохиргоо</p>
+      <a class="as-nav__item" onclick="showSection('settings',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Тохиргоо
+      </a>
+    </nav>
+
+    <div class="as-foot">
+      <div class="as-foot-avatar">A</div>
+      <div class="as-foot-info">
+        <div class="as-foot-name">Administrator</div>
+        <div class="as-foot-role">Super Admin</div>
+      </div>
+      <button class="as-logout" onclick="adminLogout()" title="Гарах">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ── Main ── -->
+  <div class="admin-main">
+
+    <!-- Header -->
+    <header class="admin-header">
+      <button class="ah-menu" onclick="toggleAdminSidebar()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <h1 class="ah-title" id="adminPageTitle">Хянах самбар</h1>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span class="ah-date" id="adminDateTime"></span>
+        <a href="index.html" target="_blank" class="ah-view-site">Сайт харах ↗</a>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="admin-content">
+
+      <!-- ══════════════ DASHBOARD ══════════════ -->
+      <section id="sec-dashboard" class="admin-section active">
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--orange">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="stat-card__body">
+              <div class="stat-card__label">Нийт орлого</div>
+              <div class="stat-card__value" id="statRevenue">—</div>
+              <div class="stat-card__sub">↑ 12.4% өнгөрсөн сараас</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--blue">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg>
+            </div>
+            <div class="stat-card__body">
+              <div class="stat-card__label">Нийт захиалга</div>
+              <div class="stat-card__value" id="statOrders">—</div>
+              <div class="stat-card__sub">↑ 8.1% өнгөрсөн сараас</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--green">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            </div>
+            <div class="stat-card__body">
+              <div class="stat-card__label">Бүтээгдэхүүн</div>
+              <div class="stat-card__value" id="statProducts">—</div>
+              <div class="stat-card__sub">9 ангилалд</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--purple">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="stat-card__body">
+              <div class="stat-card__label">Хэрэглэгчид</div>
+              <div class="stat-card__value" id="statUsers">—</div>
+              <div class="stat-card__sub">↑ 3 энэ сард нэмэгдсэн</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-grid">
+          <!-- Recent orders -->
+          <div class="dash-card">
+            <div class="dash-card__title">Сүүлийн захиалгууд</div>
+            <table class="mini-table" id="dashOrders">
+              <thead>
+                <tr>
+                  <th>Захиалга #</th>
+                  <th>Хэрэглэгч</th>
+                  <th>Дүн</th>
+                  <th>Статус</th>
+                </tr>
+              </thead>
+              <tbody id="dashOrdersBody"></tbody>
+            </table>
+          </div>
+
+          <!-- Category breakdown -->
+          <div class="dash-card">
+            <div class="dash-card__title">Ангилал тархалт</div>
+            <div class="cat-list" id="dashCatList"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════ PRODUCTS ══════════════ -->
+      <section id="sec-products" class="admin-section">
+        <div class="sec-header">
+          <div class="sec-header__title">Бүтээгдэхүүн удирдлага</div>
+          <div class="sec-header__tools">
+            <button class="btn-export" onclick="exportProducts()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Татах
+            </button>
+            <button class="btn-add" onclick="openAddProduct()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Нэмэх
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-row">
+          <div class="filter-search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="prodSearch" placeholder="Нэрээр хайх..." oninput="filterProducts()" />
+          </div>
+          <select class="filter-select" id="prodCatFilter" onchange="filterProducts()">
+            <option value="">Бүх ангилал</option>
+            <option value="phones">Гар утас</option>
+            <option value="wearables">Ухаалаг цаг / Чихэвч</option>
+            <option value="computers">Компьютер</option>
+            <option value="appliances">Гэр ахуй</option>
+            <option value="accessories">Дагалдах хэрэгсэл</option>
+            <option value="drones">Дрон</option>
+            <option value="cameras">Камер</option>
+            <option value="ebike">Цахилгаан дугуй</option>
+            <option value="beauty">Гоо сайхан</option>
+          </select>
+          <select class="filter-select" id="prodBrandFilter" onchange="filterProducts()">
+            <option value="">Бүх брэнд</option>
+            <option value="apple">Apple</option>
+            <option value="samsung">Samsung</option>
+            <option value="dyson">Dyson</option>
+            <option value="dji">DJI</option>
+            <option value="cuckoo">Cuckoo</option>
+            <option value="deerma">Deerma</option>
+            <option value="pout">POUT</option>
+            <option value="sony">Sony</option>
+            <option value="dell">Dell</option>
+            <option value="tecno">TECNO</option>
+            <option value="aima">AIMA</option>
+            <option value="luyuan">LUYUAN</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Зураг</th>
+                <th>Бүтээгдэхүүн</th>
+                <th>Ангилал</th>
+                <th>Үнэ</th>
+                <th>Хямдрал</th>
+                <th>Үйлдэл</th>
+              </tr>
+            </thead>
+            <tbody id="prodTableBody"></tbody>
+          </table>
+          <div class="pagination" id="prodPagination">
+            <span id="prodPageInfo"></span>
+            <div class="pag-btns" id="prodPageBtns"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════ ORDERS ══════════════ -->
+      <section id="sec-orders" class="admin-section">
+        <div class="sec-header">
+          <div class="sec-header__title">Захиалга удирдлага</div>
+          <div class="sec-header__tools">
+            <button class="btn-export" onclick="exportOrders()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Татах
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-row">
+          <div class="filter-search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="orderSearch" placeholder="Захиалгын дугаар, хэрэглэгчийн нэрээр..." oninput="filterOrders()" />
+          </div>
+          <select class="filter-select" id="orderStatusFilter" onchange="filterOrders()">
+            <option value="">Бүх статус</option>
+            <option value="processing">Боловсруулж байна</option>
+            <option value="shipped">Хүргэлтэд</option>
+            <option value="delivered">Хүргэгдсэн</option>
+            <option value="cancelled">Цуцлагдсан</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Захиалга #</th>
+                <th>Огноо</th>
+                <th>Хэрэглэгч</th>
+                <th>Бүтээгдэхүүн</th>
+                <th>Дүн</th>
+                <th>Статус</th>
+                <th>Үйлдэл</th>
+              </tr>
+            </thead>
+            <tbody id="orderTableBody"></tbody>
+          </table>
+          <div class="pagination" id="orderPagination">
+            <span id="orderPageInfo"></span>
+            <div class="pag-btns" id="orderPageBtns"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════ USERS ══════════════ -->
+      <section id="sec-users" class="admin-section">
+        <div class="sec-header">
+          <div class="sec-header__title">Хэрэглэгчид</div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="userSearch" placeholder="Нэр, утас, имэйлээр хайх..." oninput="filterUsers()" />
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Хэрэглэгч</th>
+                <th>Утас</th>
+                <th>Имэйл</th>
+                <th>Бүртгүүлсэн</th>
+                <th>Захиалга</th>
+                <th>Нийт зарцуулсан</th>
+                <th>Статус</th>
+              </tr>
+            </thead>
+            <tbody id="userTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ══════════════ SETTINGS ══════════════ -->
+      <section id="sec-settings" class="admin-section">
+        <div class="sec-header">
+          <div class="sec-header__title">Тохиргоо</div>
+        </div>
+        <div class="settings-grid">
+          <div class="settings-card">
+            <h3>Ерөнхий тохиргоо</h3>
+            <div class="form-row"><label>Сайтын нэр</label><input type="text" value="Antmall" id="siteName" /></div>
+            <div class="form-row"><label>Холбоо барих имэйл</label><input type="email" value="info@antmall.mn" id="contactEmail" /></div>
+            <div class="form-row"><label>Утасны дугаар</label><input type="text" value="+976 7777-8888" id="contactPhone" /></div>
+            <div class="form-row"><label>Хаяг</label><input type="text" value="Улаанбаатар, Монгол" id="siteAddr" /></div>
+            <button class="btn-primary" onclick="saveSettings()">Хадгалах</button>
+          </div>
+          <div class="settings-card">
+            <h3>Мэдэгдэл тохиргоо</h3>
+            <div class="toggle-row">
+              <div><div class="toggle-row__label">Шинэ захиалга</div><div class="toggle-row__sub">Шинэ захиалга ирэхэд имэйл илгээх</div></div>
+              <label class="toggle-switch"><input type="checkbox" checked onchange="saveNotifSettings(this,'orders')" /><span class="toggle-slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div><div class="toggle-row__label">Шинэ бүртгэл</div><div class="toggle-row__sub">Шинэ хэрэглэгч бүртгүүлэхэд мэдэгдэх</div></div>
+              <label class="toggle-switch"><input type="checkbox" checked onchange="saveNotifSettings(this,'users')" /><span class="toggle-slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div><div class="toggle-row__label">Нөөц дуусах</div><div class="toggle-row__sub">Барааны нөөц 5-аас доош буухад мэдэгдэх</div></div>
+              <label class="toggle-switch"><input type="checkbox" onchange="saveNotifSettings(this,'stock')" /><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+          <div class="settings-card">
+            <h3>Аюулгүй байдал</h3>
+            <div class="form-row"><label>Одоогийн нууц үг</label><input type="password" id="curPass" /></div>
+            <div class="form-grid-2">
+              <div class="form-row"><label>Шинэ нууц үг</label><input type="password" id="newPass" /></div>
+              <div class="form-row"><label>Давтах</label><input type="password" id="newPass2" /></div>
+            </div>
+            <button class="btn-primary" onclick="changeAdminPass()">Нууц үг солих</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div><!-- /admin-main -->
+</div><!-- /adminPanel -->
+
+<!-- ══════════════ PRODUCT MODAL ══════════════ -->
+<div class="modal-overlay hidden" id="prodModal" onclick="closeProdModal(event)">
+  <div class="modal-box modal-box--wide">
+    <div class="modal-head">
+      <h3 id="prodModalTitle">Бүтээгдэхүүн засах</h3>
+      <button class="modal-close" onclick="document.getElementById('prodModal').classList.add('hidden')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <div>
+          <img id="prodModalImg" class="prod-img-preview" src="" alt="" />
+        </div>
+        <div style="flex:1;min-width:220px">
+          <div class="form-row"><label>ID (antmall template)</label><input type="number" id="pmId" readonly style="background:#f8fafc" /></div>
+          <div class="form-row"><label>Бүтээгдэхүүний нэр</label><input type="text" id="pmName" /></div>
+          <div class="form-grid-2">
+            <div class="form-row">
+              <label>Ангилал</label>
+              <select id="pmCat">
+                <option value="phones">Гар утас</option>
+                <option value="wearables">Ухаалаг цаг / Чихэвч</option>
+                <option value="computers">Компьютер</option>
+                <option value="appliances">Гэр ахуй</option>
+                <option value="accessories">Дагалдах хэрэгсэл</option>
+                <option value="drones">Дрон</option>
+                <option value="cameras">Камер</option>
+                <option value="ebike">Цахилгаан дугуй</option>
+                <option value="beauty">Гоо сайхан</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Брэнд</label>
+              <select id="pmBrand">
+                <option value="apple">Apple</option>
+                <option value="samsung">Samsung</option>
+                <option value="dyson">Dyson</option>
+                <option value="dji">DJI</option>
+                <option value="cuckoo">Cuckoo</option>
+                <option value="deerma">Deerma</option>
+                <option value="pout">POUT</option>
+                <option value="sony">Sony</option>
+                <option value="dell">Dell</option>
+                <option value="tecno">TECNO</option>
+                <option value="aima">AIMA</option>
+                <option value="luyuan">LUYUAN</option>
+                <option value="bodylabs">BodyLabs</option>
+                <option value="unknown">Бусад</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-row"><label>Үнэ (₮)</label><input type="number" id="pmPrice" /></div>
+            <div class="form-row"><label>Эх үнэ (₮)</label><input type="number" id="pmOrigPrice" placeholder="Хямдралгүй бол хоосон" /></div>
+          </div>
+          <div class="form-row"><label>Тайлбар</label><textarea id="pmDesc" placeholder="Бүтээгдэхүүний тайлбар..."></textarea></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-secondary" onclick="document.getElementById('prodModal').classList.add('hidden')">Болих</button>
+      <button class="btn-primary" onclick="saveProdModal()">Хадгалах</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ ORDER DETAIL MODAL ══════════════ -->
+<div class="modal-overlay hidden" id="orderModal" onclick="closeOrderModal(event)">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="orderModalTitle">Захиалгын дэлгэрэнгүй</h3>
+      <button class="modal-close" onclick="document.getElementById('orderModal').classList.add('hidden')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="orderModalBody"></div>
+    <div class="modal-foot">
+      <select class="status-select" id="orderModalStatus" onchange="updateOrderStatus()">
+        <option value="processing">Боловсруулж байна</option>
+        <option value="shipped">Хүргэлтэд</option>
+        <option value="delivered">Хүргэгдсэн</option>
+        <option value="cancelled">Цуцлагдсан</option>
+      </select>
+      <button class="btn-primary" onclick="document.getElementById('orderModal').classList.add('hidden')">Хаах</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="admin-toast" id="adminToast"></div>
+
+<script src="admin.js?v=1"></script>
+</body>
+</html>
