@@ -356,11 +356,19 @@ function getUsers() {
    NAVIGATION
 ══════════════════════════════════════ */
 const SECTION_TITLES = {
-  dashboard: 'Хянах самбар',
-  products:  'Бүтээгдэхүүн',
-  orders:    'Захиалга',
-  users:     'Хэрэглэгчид',
-  settings:  'Тохиргоо'
+  dashboard:  'Хянах самбар',
+  products:   'Бүтээгдэхүүн',
+  orders:     'Захиалга',
+  users:      'Хэрэглэгчид',
+  analytics:  'График & Аналитик',
+  promos:     'Хямдрал / Промо',
+  banners:    'Баннер удирдлага',
+  categories: 'Ангилал удирдлага',
+  messages:   'Мессеж / Санал хүсэлт',
+  stock:      'Агуулахын нөөц',
+  couriers:   'Хүргэлтийн ажилтан',
+  reports:    'Тайлан',
+  settings:   'Тохиргоо'
 };
 
 function showSection(name, el) {
@@ -371,9 +379,17 @@ function showSection(name, el) {
   document.getElementById('adminPageTitle').textContent = SECTION_TITLES[name] || name;
   if (window.innerWidth < 800) document.getElementById('adminSidebar').classList.remove('open');
 
-  if (name === 'products') renderProducts();
-  if (name === 'orders')   renderOrders();
-  if (name === 'users')    renderUsers();
+  if (name === 'products')   renderProducts();
+  if (name === 'orders')     renderOrders();
+  if (name === 'users')      renderUsers();
+  if (name === 'analytics')  renderAnalytics();
+  if (name === 'promos')     renderPromos();
+  if (name === 'banners')    renderBanners();
+  if (name === 'categories') renderCategories();
+  if (name === 'messages')   renderMessages();
+  if (name === 'stock')      renderStock();
+  if (name === 'couriers')   renderCouriers();
+  if (name === 'reports')    renderReports();
 }
 window.showSection = showSection;
 
@@ -840,6 +856,680 @@ function changeAdminPass() {
 window.changeAdminPass = changeAdminPass;
 
 /* ══════════════════════════════════════
+   ANALYTICS
+══════════════════════════════════════ */
+const MONTHLY_DATA = [
+  {m:'1-р сар',  rev:42500000, ord:21},
+  {m:'2-р сар',  rev:51200000, ord:26},
+  {m:'3-р сар',  rev:48900000, ord:24},
+  {m:'4-р сар',  rev:63400000, ord:32},
+  {m:'5-р сар',  rev:71800000, ord:38},
+  {m:'6-р сар',  rev:58300000, ord:29},
+  {m:'7-р сар',  rev:82100000, ord:43},
+  {m:'8-р сар',  rev:76500000, ord:40},
+  {m:'9-р сар',  rev:69200000, ord:35},
+  {m:'10-р сар', rev:94500000, ord:48},
+  {m:'11-р сар', rev:88300000, ord:45},
+  {m:'12-р сар', rev:105700000, ord:56},
+];
+
+function renderBarChart(containerId, data, valueKey, labelKey, color, formatter) {
+  const max = Math.max(...data.map(d => d[valueKey]));
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = data.map(d => `
+    <div class="bar-item">
+      <div class="bar-label">${d[labelKey]}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${max ? Math.round(d[valueKey]/max*100) : 0}%;background:${color}"></div>
+      </div>
+      <div class="bar-value">${formatter(d[valueKey])}</div>
+    </div>`).join('');
+}
+
+function renderAnalytics() {
+  renderBarChart('revenueChart', MONTHLY_DATA, 'rev', 'm', '#f97316', v => (v/1000000).toFixed(1) + 'M₮');
+  renderBarChart('ordersChart',  MONTHLY_DATA, 'ord', 'm', '#3b82f6', v => v + ' з');
+  const TOP_COUNTS = [48, 37, 29, 23, 18];
+  const prods = getProducts().filter(p => !getDeletedIds().includes(p.id)).slice(0, 5);
+  document.getElementById('topProductsList').innerHTML = prods.map((p, i) => `
+    <div class="top-prod-item">
+      <div class="top-prod-rank">${i + 1}</div>
+      <img class="top-prod-img" src="${imgUrl(p.id)}" alt="${p.name}" onerror="this.src='${PLACEHOLDER}'" />
+      <div class="top-prod-info">
+        <div class="top-prod-name">${p.name}</div>
+        <div class="top-prod-sub">${fmt(p.price)}₮</div>
+      </div>
+      <div class="top-prod-val">${TOP_COUNTS[i]} ш</div>
+    </div>`).join('');
+}
+window.renderAnalytics = renderAnalytics;
+
+/* ══════════════════════════════════════
+   COUPONS / PROMOS
+══════════════════════════════════════ */
+const COUPONS_KEY = 'antmall_coupons';
+const COUPONS_SEED = [
+  {id:1, code:'WELCOME10', discount:10, minOrder:50000,  used:23,  expiry:'2026-12-31', active:true},
+  {id:2, code:'SUMMER20',  discount:20, minOrder:100000, used:5,   expiry:'2026-08-31', active:true},
+  {id:3, code:'FLASH50',   discount:50, minOrder:500000, used:100, expiry:'2026-03-31', active:false},
+  {id:4, code:'NEW5',      discount:5,  minOrder:0,      used:142, expiry:'2026-06-30', active:true},
+  {id:5, code:'APPLE15',   discount:15, minOrder:200000, used:8,   expiry:'2026-09-30', active:true},
+];
+
+function getCoupons() {
+  try { return JSON.parse(localStorage.getItem(COUPONS_KEY)) || COUPONS_SEED; }
+  catch(e) { return COUPONS_SEED; }
+}
+function saveCoupons(c) { localStorage.setItem(COUPONS_KEY, JSON.stringify(c)); }
+
+function renderPromos() {
+  renderCouponTable(getCoupons());
+  const flash = JSON.parse(localStorage.getItem('antmall_flash_sale') || 'false');
+  const el = document.getElementById('flashSaleToggle');
+  if (el) el.checked = flash;
+}
+
+function renderCouponTable(coupons) {
+  const today = new Date().toISOString().slice(0, 10);
+  document.getElementById('couponTableBody').innerHTML = coupons.map(c => `
+    <tr class="${!c.active ? 'row-inactive' : ''}">
+      <td><code class="coupon-code">${c.code}</code></td>
+      <td><strong style="color:#ef4444">${c.discount}%</strong></td>
+      <td>${c.minOrder ? fmt(c.minOrder) + '₮' : '—'}</td>
+      <td>${c.used}</td>
+      <td style="font-size:.82rem;color:${c.expiry < today ? '#ef4444' : '#64748b'}">${c.expiry}</td>
+      <td>
+        <label class="toggle-switch toggle-switch--sm">
+          <input type="checkbox" ${c.active ? 'checked' : ''} onchange="toggleCoupon(${c.id},this.checked)" />
+          <span class="toggle-slider"></span>
+        </label>
+      </td>
+      <td>
+        <button class="btn-icon btn-icon--del" onclick="deleteCoupon(${c.id})" title="Устгах">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+        </button>
+      </td>
+    </tr>`).join('');
+}
+
+let nextCouponId = 100;
+
+function openAddCoupon() {
+  const code = prompt('Купон код (латин үсэг):');
+  if (!code) return;
+  const discount = parseInt(prompt('Хямдралын хувь (%):') || '0');
+  if (!discount || discount < 1 || discount > 100) { showAdminToast('Буруу хувь оруулсан'); return; }
+  const minOrder = parseInt(prompt('Хамгийн бага захиалга ₮ (0 = хязгааргүй):') || '0');
+  const expiry = prompt('Хүчинтэй хүртэл (ЖЖЖЖ-СС-ӨӨ):', '2026-12-31');
+  const coupons = getCoupons();
+  coupons.push({id: nextCouponId++, code: code.toUpperCase(), discount, minOrder: minOrder || 0, used: 0, expiry: expiry || '2026-12-31', active: true});
+  saveCoupons(coupons);
+  renderCouponTable(coupons);
+  showAdminToast('✅ Купон нэмэгдлээ: ' + code.toUpperCase());
+}
+window.openAddCoupon = openAddCoupon;
+
+function toggleCoupon(id, active) {
+  const coupons = getCoupons();
+  const c = coupons.find(x => x.id === id);
+  if (c) { c.active = active; saveCoupons(coupons); }
+  showAdminToast(active ? 'Купон идэвхжүүлэгдлээ' : 'Купон идэвхгүй болгогдлоо');
+}
+window.toggleCoupon = toggleCoupon;
+
+function deleteCoupon(id) {
+  if (!confirm('Энэ купоныг устгах уу?')) return;
+  const coupons = getCoupons().filter(c => c.id !== id);
+  saveCoupons(coupons);
+  renderCouponTable(coupons);
+  showAdminToast('Купон устгагдлаа');
+}
+window.deleteCoupon = deleteCoupon;
+
+function toggleFlashSale(cb) {
+  localStorage.setItem('antmall_flash_sale', JSON.stringify(cb.checked));
+  showAdminToast(cb.checked ? '⚡ Flash sale идэвхжлаа!' : 'Flash sale унтраагдлаа');
+}
+window.toggleFlashSale = toggleFlashSale;
+
+/* ══════════════════════════════════════
+   BANNERS
+══════════════════════════════════════ */
+const BANNERS_KEY = 'antmall_banners';
+const BANNERS_SEED = [
+  {id:1, title:'iPhone 17 Pro Max', subtitle:'Гайхалтай камер, хурдан процессор', link:'products.html?cat=phones', img:imgUrl(1757), active:true},
+  {id:2, title:'DJI Neo 2 — Нислэгийн мэдрэмж', subtitle:'Хамгийн хөнгөн, ухаалаг дрон', link:'products.html?cat=drones', img:imgUrl(1845), active:true},
+  {id:3, title:'Dyson V16 Piston Animal', subtitle:'Хамгийн хүчирхэг гар вакуум', link:'products.html?cat=appliances', img:imgUrl(1806), active:false},
+];
+
+function getBanners() {
+  try { return JSON.parse(localStorage.getItem(BANNERS_KEY)) || BANNERS_SEED; }
+  catch(e) { return BANNERS_SEED; }
+}
+function saveBanners(b) { localStorage.setItem(BANNERS_KEY, JSON.stringify(b)); }
+
+function renderBanners() {
+  const banners = getBanners();
+  document.getElementById('bannerList').innerHTML = banners.map(b => `
+    <div class="banner-card ${b.active ? '' : 'banner-card--inactive'}">
+      <div class="banner-card__preview">
+        <img src="${b.img}" alt="${b.title}" onerror="this.src='${PLACEHOLDER}'" />
+        ${b.active ? '' : '<div class="banner-inactive-tag">Идэвхгүй</div>'}
+      </div>
+      <div class="banner-card__info">
+        <div class="banner-card__title">${b.title}</div>
+        <div class="banner-card__sub">${b.subtitle}</div>
+        <div class="banner-card__link">${b.link}</div>
+      </div>
+      <div class="banner-card__actions">
+        <label class="toggle-switch toggle-switch--sm">
+          <input type="checkbox" ${b.active ? 'checked' : ''} onchange="toggleBanner(${b.id},this.checked)" />
+          <span class="toggle-slider"></span>
+        </label>
+        <button class="btn-icon" onclick="editBanner(${b.id})" title="Засах">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+        <button class="btn-icon btn-icon--del" onclick="deleteBanner(${b.id})" title="Устгах">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+        </button>
+      </div>
+    </div>`).join('');
+}
+
+function toggleBanner(id, active) {
+  const banners = getBanners();
+  const b = banners.find(x => x.id === id);
+  if (b) { b.active = active; saveBanners(banners); renderBanners(); }
+  showAdminToast(active ? 'Баннер идэвхжүүлэгдлээ' : 'Баннер идэвхгүй болгогдлоо');
+}
+window.toggleBanner = toggleBanner;
+
+let nextBannerId = 100;
+function openAddBanner() {
+  const title = prompt('Гарчиг:');
+  if (!title) return;
+  const subtitle = prompt('Дэд гарчиг:') || '';
+  const link     = prompt('Линк (жишээ: products.html?cat=phones):') || '#';
+  const img      = prompt('Зургийн URL:') || PLACEHOLDER;
+  const banners  = getBanners();
+  banners.push({id: nextBannerId++, title, subtitle, link, img, active: true});
+  saveBanners(banners);
+  renderBanners();
+  showAdminToast('✅ Баннер нэмэгдлээ');
+}
+window.openAddBanner = openAddBanner;
+
+function editBanner(id) {
+  const banners = getBanners();
+  const b = banners.find(x => x.id === id);
+  if (!b) return;
+  const title = prompt('Гарчиг:', b.title);
+  if (!title) return;
+  b.title    = title;
+  b.subtitle = prompt('Дэд гарчиг:', b.subtitle) || b.subtitle;
+  b.link     = prompt('Линк:', b.link) || b.link;
+  saveBanners(banners);
+  renderBanners();
+  showAdminToast('✅ Баннер шинэчлэгдлээ');
+}
+window.editBanner = editBanner;
+
+function deleteBanner(id) {
+  if (!confirm('Энэ баннерыг устгах уу?')) return;
+  saveBanners(getBanners().filter(b => b.id !== id));
+  renderBanners();
+  showAdminToast('Баннер устгагдлаа');
+}
+window.deleteBanner = deleteBanner;
+
+/* ══════════════════════════════════════
+   CATEGORIES
+══════════════════════════════════════ */
+const CATS_ACTIVE_KEY = 'antmall_cats_active';
+
+function getCatActive() {
+  try { return JSON.parse(localStorage.getItem(CATS_ACTIVE_KEY)) || {}; }
+  catch(e) { return {}; }
+}
+
+function renderCategories() {
+  const prods  = getProducts().filter(p => !getDeletedIds().includes(p.id));
+  const active = getCatActive();
+  const counts = {};
+  prods.forEach(p => { counts[p.cat] = (counts[p.cat] || 0) + 1; });
+
+  document.getElementById('catTableBody').innerHTML = Object.entries(CAT_LABELS).map(([key, name]) => {
+    const isActive = active[key] !== false;
+    return `<tr>
+      <td><div class="cat-dot" style="background:${CAT_COLORS[key] || '#94a3b8'}"></div></td>
+      <td><strong>${name}</strong></td>
+      <td><strong>${counts[key] || 0}</strong></td>
+      <td><span class="badge ${isActive ? 'badge--active' : 'badge--inactive'}">${isActive ? 'Идэвхтэй' : 'Идэвхгүй'}</span></td>
+      <td>
+        <label class="toggle-switch toggle-switch--sm">
+          <input type="checkbox" ${isActive ? 'checked' : ''} onchange="toggleCat('${key}',this.checked)" />
+          <span class="toggle-slider"></span>
+        </label>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function toggleCat(key, active) {
+  const cats = getCatActive();
+  cats[key] = active;
+  localStorage.setItem(CATS_ACTIVE_KEY, JSON.stringify(cats));
+  renderCategories();
+  showAdminToast((active ? '✅ ' : '') + '"' + CAT_LABELS[key] + '" ' + (active ? 'идэвхжүүлэгдлээ' : 'идэвхгүй болгогдлоо'));
+}
+window.toggleCat = toggleCat;
+
+/* ══════════════════════════════════════
+   MESSAGES / FEEDBACK
+══════════════════════════════════════ */
+const MESSAGES_KEY = 'antmall_messages';
+const MESSAGES_SEED = [
+  {id:1, name:'Болд Цэрэндорж',    email:'bold@gmail.com',     subject:'Хүргэлтийн хугацаа',   body:'Миний захиалга хэзээ ирэх вэ? 3 хоног болоод байна. Захиалгын дугаар #ANT-2026-085.',   date:'2026-03-20', status:'unread'},
+  {id:2, name:'Мөнхзул Батсүх',   email:'munkhzul@yahoo.com', subject:'Бараа гэмтсэн ирсэн',  body:'Надад ирсэн iPhone-ийн хайрцаг гэмтсэн байлаа. Шинэчлэх боломжтой юу?',               date:'2026-03-21', status:'unread'},
+  {id:3, name:'Даваасүрэн Ганбат', email:'davaa@gmail.com',    subject:'Буцаах хүсэлт',        body:'Захиалгаасаа татгалзахыг хүсэж байна. Буруу хэмжээтэй бараа ирсэн.',                  date:'2026-03-22', status:'read'},
+  {id:4, name:'Оюунцэцэг Дорж',   email:'oyun@mail.mn',       subject:'Үйлчилгээний магтаал', body:'Маш сайн үйлчилгээ! Бараа маш хурдан ирсэн, чанартай байлаа. Дахин захиална!',        date:'2026-03-23', status:'read'},
+  {id:5, name:'Ганбаатар Лхагва',  email:'ganbaatar@gmail.com',subject:'Хөнгөлөлт асуух',      body:'Их хэмжээний захиалга хийхэд хөнгөлөлт авах боломжтой юу?',                         date:'2026-03-24', status:'unread'},
+  {id:6, name:'Цэцэгсүрэн Намдаг', email:'tsetseg2@gmail.com', subject:'Бүтээгдэхүүн асуух',  body:'Dyson V16-ын нөөц байна уу? Хэзээ ирэх вэ? Урьдчилан захиалах боломжтой юу?',        date:'2026-03-25', status:'unread'},
+];
+
+function getMessages() {
+  try { return JSON.parse(localStorage.getItem(MESSAGES_KEY)) || MESSAGES_SEED; }
+  catch(e) { return MESSAGES_SEED; }
+}
+function saveMessages(m) { localStorage.setItem(MESSAGES_KEY, JSON.stringify(m)); }
+
+let allMessages = [];
+
+function filterMessages() {
+  const filter   = document.getElementById('msgFilter').value;
+  const filtered = filter ? allMessages.filter(m => m.status === filter) : allMessages;
+  renderMessageList(filtered);
+}
+window.filterMessages = filterMessages;
+
+function renderMessages() {
+  allMessages = getMessages();
+  const unread = allMessages.filter(m => m.status === 'unread').length;
+  const badge  = document.getElementById('navMsgCount');
+  if (badge) { badge.textContent = unread; badge.style.display = unread ? '' : 'none'; }
+  filterMessages();
+}
+
+function renderMessageList(messages) {
+  if (!messages.length) {
+    document.getElementById('messagesList').innerHTML =
+      `<div class="empty-state-admin"><div class="empty-state-admin__icon">💬</div><div class="empty-state-admin__text">Мессеж олдсонгүй</div></div>`;
+    return;
+  }
+  document.getElementById('messagesList').innerHTML = messages.map(m => `
+    <div class="msg-card ${m.status === 'unread' ? 'msg-card--unread' : ''}">
+      <div class="msg-avatar">${m.name.charAt(0)}</div>
+      <div class="msg-card__body">
+        <div class="msg-card__header">
+          <div><strong>${m.name}</strong> <span class="msg-email">${m.email}</span></div>
+          <div class="msg-meta">
+            <span class="msg-date">${m.date}</span>
+            ${m.status === 'unread' ? '<span class="badge badge--processing" style="font-size:.68rem;padding:2px 6px">Уншаагүй</span>' : ''}
+          </div>
+        </div>
+        <div class="msg-subject">${m.subject}</div>
+        <div class="msg-body">${m.body}</div>
+        <div class="msg-actions">
+          ${m.status === 'unread' ? `<button class="btn-secondary-sm" onclick="markRead(${m.id})">Уншсан болгох</button>` : ''}
+          <a class="btn-secondary-sm" href="mailto:${m.email}?subject=Re: ${encodeURIComponent(m.subject)}">Хариу өгөх</a>
+          <button class="btn-secondary-sm btn-del-sm" onclick="deleteMessage(${m.id})">Устгах</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function markRead(id) {
+  const msgs = getMessages();
+  const m = msgs.find(x => x.id === id);
+  if (m) { m.status = 'read'; saveMessages(msgs); }
+  allMessages = msgs;
+  filterMessages();
+  const unread = msgs.filter(m => m.status === 'unread').length;
+  const badge  = document.getElementById('navMsgCount');
+  if (badge) { badge.textContent = unread; badge.style.display = unread ? '' : 'none'; }
+  showAdminToast('Уншсан болсон');
+}
+window.markRead = markRead;
+
+function markAllRead() {
+  const msgs = getMessages().map(m => ({...m, status: 'read'}));
+  saveMessages(msgs);
+  allMessages = msgs;
+  filterMessages();
+  const badge = document.getElementById('navMsgCount');
+  if (badge) badge.style.display = 'none';
+  showAdminToast('Бүгд уншсан болсон');
+}
+window.markAllRead = markAllRead;
+
+function deleteMessage(id) {
+  if (!confirm('Энэ мессежийг устгах уу?')) return;
+  const msgs = getMessages().filter(m => m.id !== id);
+  saveMessages(msgs);
+  allMessages = msgs;
+  filterMessages();
+  showAdminToast('Мессеж устгагдлаа');
+}
+window.deleteMessage = deleteMessage;
+
+/* ══════════════════════════════════════
+   STOCK
+══════════════════════════════════════ */
+const STOCK_KEY = 'antmall_stock';
+const STOCK_SEED = {
+  1845:3,  1844:7,  1843:15, 1838:42, 1837:28, 1836:0,  1835:5,  1832:2,
+  1831:19, 1829:8,  1828:35, 1826:44, 1825:0,  1824:12, 1823:6,  1822:9,
+  1817:55, 1806:4,  1805:11, 1804:7,  1763:3,  1762:18, 1761:22, 1760:6,
+  1759:9,  1758:5,  1757:8,  1782:14, 1781:6,  1780:21,
+};
+
+function getStockMap() {
+  const saved = JSON.parse(localStorage.getItem(STOCK_KEY) || '{}');
+  const result = {};
+  getProducts().forEach(p => {
+    if (saved[p.id] !== undefined)      result[p.id] = saved[p.id];
+    else if (STOCK_SEED[p.id] !== undefined) result[p.id] = STOCK_SEED[p.id];
+    else result[p.id] = ((p.id * 7 + 13) % 60) + 10;
+  });
+  return result;
+}
+
+function saveStockVal(id, qty) {
+  const map = JSON.parse(localStorage.getItem(STOCK_KEY) || '{}');
+  map[id] = qty;
+  localStorage.setItem(STOCK_KEY, JSON.stringify(map));
+}
+
+let stockPage = 1;
+const STOCK_PER_PAGE = 20;
+let filteredStock = [];
+
+function filterStock() {
+  const q      = (document.getElementById('stockSearch').value || '').toLowerCase();
+  const level  = document.getElementById('stockLevelFilter').value;
+  const smap   = getStockMap();
+  const prods  = getProducts().filter(p => !getDeletedIds().includes(p.id));
+  filteredStock = prods.filter(p => {
+    if (q && !p.name.toLowerCase().includes(q)) return false;
+    const qty = smap[p.id] ?? 0;
+    if (level === 'out'    && qty !== 0)               return false;
+    if (level === 'low'    && (qty < 1 || qty >= 10))  return false;
+    if (level === 'medium' && (qty < 10 || qty >= 30)) return false;
+    if (level === 'ok'     && qty < 30)                return false;
+    return true;
+  }).map(p => ({...p, qty: smap[p.id] ?? 0}));
+  stockPage = 1;
+  renderStockTable();
+}
+window.filterStock = filterStock;
+
+function renderStock() {
+  const smap    = getStockMap();
+  const prods   = getProducts().filter(p => !getDeletedIds().includes(p.id));
+  const lowCnt  = prods.filter(p => (smap[p.id] ?? 0) < 10).length;
+  const badge   = document.getElementById('navStockAlert');
+  if (badge) { badge.textContent = lowCnt; badge.style.display = lowCnt ? '' : 'none'; }
+  filterStock();
+}
+
+function renderStockTable() {
+  const start = (stockPage - 1) * STOCK_PER_PAGE;
+  const page  = filteredStock.slice(start, start + STOCK_PER_PAGE);
+  const total = filteredStock.length;
+  const pages = Math.ceil(total / STOCK_PER_PAGE);
+
+  document.getElementById('stockTableBody').innerHTML = page.map(p => {
+    const qty = p.qty;
+    let sc = 'badge--active', sl = 'Хангалттай';
+    if (qty === 0)       { sc = 'badge--cancelled';  sl = 'Дууссан'; }
+    else if (qty < 10)   { sc = 'badge--processing'; sl = 'Хомс'; }
+    else if (qty < 30)   { sc = 'badge--shipped';    sl = 'Дунд'; }
+    return `<tr>
+      <td><img class="td-img" src="${imgUrl(p.id)}" loading="lazy" onerror="this.src='${PLACEHOLDER}'" /></td>
+      <td>
+        <div class="td-name">${p.name}</div>
+        <div class="td-sub">${p.brand.toUpperCase()}</div>
+      </td>
+      <td><span class="badge badge--orange">${CAT_LABELS[p.cat] || p.cat}</span></td>
+      <td>
+        <div class="stock-qty-cell">
+          <input type="number" class="stock-qty-input" value="${qty}" min="0"
+            onchange="updateStock(${p.id},this.value)" />
+          <span class="stock-unit">ш</span>
+        </div>
+      </td>
+      <td><span class="badge ${sc}">${sl}</span></td>
+      <td class="td-actions">
+        <button class="btn-icon" title="0 болгох" onclick="setStockQuick(${p.id},0)">0</button>
+        <button class="btn-icon" title="+50 нэмэх" onclick="setStockQuick(${p.id},${qty+50})">+50</button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  const si = document.getElementById('stockPageInfo');
+  if (si) si.textContent = total ? `${start+1}–${Math.min(stockPage*STOCK_PER_PAGE,total)} / ${total}` : 'Бараа олдсонгүй';
+  let btns = `<button class="pag-btn" onclick="stockGoPage(${stockPage-1})" ${stockPage===1?'disabled':''}>‹</button>`;
+  pagRange(stockPage, pages).forEach(p => {
+    if (p === '…') btns += `<span class="pag-btn" style="border:none;pointer-events:none">…</span>`;
+    else btns += `<button class="pag-btn ${p===stockPage?'active':''}" onclick="stockGoPage(${p})">${p}</button>`;
+  });
+  btns += `<button class="pag-btn" onclick="stockGoPage(${stockPage+1})" ${stockPage===pages||!pages?'disabled':''}>›</button>`;
+  const pb = document.getElementById('stockPageBtns');
+  if (pb) pb.innerHTML = btns;
+}
+
+function stockGoPage(p) {
+  const pages = Math.ceil(filteredStock.length / STOCK_PER_PAGE);
+  if (p < 1 || p > pages) return;
+  stockPage = p;
+  renderStockTable();
+}
+window.stockGoPage = stockGoPage;
+
+function updateStock(id, val) {
+  const qty = parseInt(val);
+  if (isNaN(qty) || qty < 0) return;
+  saveStockVal(id, qty);
+  showAdminToast('Нөөц шинэчлэгдлээ: ' + qty + ' ш');
+}
+window.updateStock = updateStock;
+
+function setStockQuick(id, qty) {
+  saveStockVal(id, qty);
+  filterStock();
+}
+window.setStockQuick = setStockQuick;
+
+function exportStock() {
+  const rows = [['ID','Нэр','Ангилал','Брэнд','Нөөц']];
+  const smap = getStockMap();
+  getProducts().filter(p => !getDeletedIds().includes(p.id))
+    .forEach(p => rows.push([p.id, p.name, CAT_LABELS[p.cat]||p.cat, p.brand, smap[p.id]??0]));
+  downloadCSV(rows, 'antmall_stock.csv');
+}
+window.exportStock = exportStock;
+
+/* ══════════════════════════════════════
+   COURIERS
+══════════════════════════════════════ */
+const COURIER_DEFS = [
+  {id:'D001', name:'Дорж Батбаяр',     phone:'+976 9911-2233', active:true},
+  {id:'D002', name:'Мөнх Эрдэнэ',      phone:'+976 9922-3344', active:true},
+  {id:'D003', name:'Энхбаяр Гантулга', phone:'+976 9933-4455', active:false},
+];
+
+function renderCouriers() {
+  const orders = getAdminOrders();
+  const stats  = {};
+  COURIER_DEFS.forEach(c => { stats[c.id] = {pending:0, delivering:0, delivered:0, failed:0}; });
+  orders.forEach(o => {
+    if (!o.courierId || !stats[o.courierId]) return;
+    if (o.status === 'shipped')    stats[o.courierId].pending++;
+    if (o.status === 'delivering') stats[o.courierId].delivering++;
+    if (o.status === 'delivered')  stats[o.courierId].delivered++;
+    if (o.status === 'failed')     stats[o.courierId].failed++;
+  });
+
+  document.getElementById('courierGrid').innerHTML = COURIER_DEFS.map(c => {
+    const s     = stats[c.id];
+    const total = s.delivered + s.failed;
+    const rate  = total ? Math.round(s.delivered / total * 100) : 100;
+    const ini   = c.name.split(' ').map(w => w[0]).join('');
+    return `<div class="courier-stat-card">
+      <div class="courier-stat-card__top">
+        <div class="courier-avatar">${ini}</div>
+        <div style="flex:1">
+          <div class="courier-name">${c.name}</div>
+          <code class="courier-id-badge">${c.id}</code>
+        </div>
+        <span class="badge ${c.active?'badge--active':'badge--inactive'}">${c.active?'Идэвхтэй':'Амрах'}</span>
+      </div>
+      <div class="courier-stat-row">
+        <div class="courier-mini-stat"><div class="cmsv" style="color:#f97316">${s.pending}</div><div class="cmsl">Хүлээж</div></div>
+        <div class="courier-mini-stat"><div class="cmsv" style="color:#3b82f6">${s.delivering}</div><div class="cmsl">Замд</div></div>
+        <div class="courier-mini-stat"><div class="cmsv" style="color:#22c55e">${s.delivered}</div><div class="cmsl">Хүргэсэн</div></div>
+        <div class="courier-mini-stat"><div class="cmsv" style="color:#ef4444">${s.failed}</div><div class="cmsl">Амжилтгүй</div></div>
+      </div>
+      <div class="courier-rate-wrap">
+        <div class="courier-rate-bar-bg"><div class="courier-rate-bar-fill" style="width:${rate}%"></div></div>
+        <span class="courier-rate-label">${rate}%</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('courierTableBody').innerHTML = COURIER_DEFS.map(c => {
+    const s     = stats[c.id];
+    const total = s.delivered + s.failed;
+    const rate  = total ? Math.round(s.delivered / total * 100) : 100;
+    return `<tr>
+      <td>
+        <div class="user-cell">
+          <div class="user-avatar">${c.name.split(' ').map(w=>w[0]).join('')}</div>
+          <div class="user-cell__name">${c.name}</div>
+        </div>
+      </td>
+      <td><code style="background:#f1f5f9;padding:2px 8px;border-radius:6px;font-weight:700">${c.id}</code></td>
+      <td style="font-size:.82rem">${c.phone}</td>
+      <td style="color:#f97316;font-weight:700;text-align:center">${s.pending}</td>
+      <td style="color:#3b82f6;font-weight:700;text-align:center">${s.delivering}</td>
+      <td style="color:#22c55e;font-weight:700;text-align:center">${s.delivered}</td>
+      <td style="color:#ef4444;font-weight:700;text-align:center">${s.failed}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="flex:1;background:#f1f5f9;border-radius:4px;height:6px;min-width:60px">
+            <div style="height:100%;width:${rate}%;background:#22c55e;border-radius:4px"></div>
+          </div>
+          <span style="font-size:.82rem;font-weight:700">${rate}%</span>
+        </div>
+      </td>
+      <td><span class="badge ${c.active?'badge--active':'badge--inactive'}">${c.active?'Идэвхтэй':'Амрах'}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+/* ══════════════════════════════════════
+   REPORTS
+══════════════════════════════════════ */
+function renderReports() {
+  const today = new Date();
+  const from  = new Date(today);
+  from.setDate(from.getDate() - 30);
+  document.getElementById('reportFrom').value = from.toISOString().slice(0, 10);
+  document.getElementById('reportTo').value   = today.toISOString().slice(0, 10);
+  generateReport();
+}
+
+function generateReport() {
+  const from = document.getElementById('reportFrom').value;
+  const to   = document.getElementById('reportTo').value;
+  if (!from || !to) { showAdminToast('Огноо сонгоно уу'); return; }
+
+  const orders    = getAdminOrders().filter(o => {
+    const d = (o.date || '').replace(/\./g, '-');
+    return d >= from && d <= to;
+  });
+  const revenue   = orders.filter(o => o.status !== 'cancelled').reduce((s, o) => s + o.total, 0);
+  const delivered = orders.filter(o => o.status === 'delivered').length;
+  const cancelled = orders.filter(o => o.status === 'cancelled').length;
+  const avg       = orders.length ? Math.round(revenue / orders.length) : 0;
+
+  const STAT_ICON = {
+    rev:   `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+    ord:   `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg>`,
+    rate:  `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>`,
+    avg:   `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+  };
+  document.getElementById('reportStats').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-card__icon stat-card__icon--orange">${STAT_ICON.rev}</div>
+      <div class="stat-card__body">
+        <div class="stat-card__label">Нийт орлого</div>
+        <div class="stat-card__value">${fmt(revenue)}₮</div>
+        <div class="stat-card__sub">${from} — ${to}</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card__icon stat-card__icon--blue">${STAT_ICON.ord}</div>
+      <div class="stat-card__body">
+        <div class="stat-card__label">Захиалгын тоо</div>
+        <div class="stat-card__value">${orders.length}</div>
+        <div class="stat-card__sub">${delivered} хүргэгдсэн · ${cancelled} цуцлагдсан</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card__icon stat-card__icon--green">${STAT_ICON.rate}</div>
+      <div class="stat-card__body">
+        <div class="stat-card__label">Хүргэлтийн амжилт</div>
+        <div class="stat-card__value">${orders.length ? Math.round(delivered/orders.length*100) : 0}%</div>
+        <div class="stat-card__sub">Нийт ${orders.length} захиалгаас</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card__icon stat-card__icon--purple">${STAT_ICON.avg}</div>
+      <div class="stat-card__body">
+        <div class="stat-card__label">Дундаж захиалга</div>
+        <div class="stat-card__value">${fmt(avg)}₮</div>
+        <div class="stat-card__sub">Нэг захиалгаар</div>
+      </div>
+    </div>`;
+
+  document.getElementById('reportTableBody').innerHTML = orders.length
+    ? orders.map(o => `<tr>
+        <td><strong style="font-size:.82rem;color:var(--orange);cursor:pointer" onclick="showSection('orders',null);setTimeout(()=>openOrderDetail('${o.id}'),100)">${o.id}</strong></td>
+        <td style="font-size:.82rem">${o.date}</td>
+        <td style="font-size:.82rem">${o.customer}</td>
+        <td style="font-weight:700">${fmt(o.total)}₮</td>
+        <td><span class="badge ${ORDER_BADGE[o.status]||''}">${ORDER_LABEL[o.status]||o.status}</span></td>
+      </tr>`).join('')
+    : `<tr><td colspan="5"><div class="empty-state-admin"><div class="empty-state-admin__icon">📊</div><div class="empty-state-admin__text">Энэ хугацаанд захиалга байхгүй байна</div></div></td></tr>`;
+}
+window.generateReport = generateReport;
+
+function exportReport() {
+  const from = document.getElementById('reportFrom').value;
+  const to   = document.getElementById('reportTo').value;
+  const orders = getAdminOrders().filter(o => {
+    const d = (o.date || '').replace(/\./g, '-');
+    return d >= from && d <= to;
+  });
+  const rows = [['Захиалга #','Огноо','Хэрэглэгч','Утас','Нийт дүн','Статус']];
+  orders.forEach(o => rows.push([o.id, o.date, o.customer, o.phone||'', o.total, ORDER_LABEL[o.status]||o.status]));
+  downloadCSV(rows, `antmall_report_${from}_${to}.csv`);
+}
+window.exportReport = exportReport;
+
+/* ══════════════════════════════════════
    TOAST
 ══════════════════════════════════════ */
 let toastTimer;
@@ -882,6 +1572,14 @@ function initAdmin() {
   renderDashboard();
   updateClock();
   setInterval(updateClock, 30000);
+  /* Update sidebar badges */
+  const unread   = getMessages().filter(m => m.status === 'unread').length;
+  const msgBadge = document.getElementById('navMsgCount');
+  if (msgBadge) { msgBadge.textContent = unread; msgBadge.style.display = unread ? '' : 'none'; }
+  const smap     = getStockMap();
+  const lowCnt   = getProducts().filter(p => !getDeletedIds().includes(p.id) && (smap[p.id]??0) < 10).length;
+  const stockBadge = document.getElementById('navStockAlert');
+  if (stockBadge) { stockBadge.textContent = lowCnt; stockBadge.style.display = lowCnt ? '' : 'none'; }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

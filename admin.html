@@ -69,6 +69,42 @@
         Хэрэглэгчид
         <span class="as-nav__badge" id="navUserCount">0</span>
       </a>
+      <p class="as-section-label" style="margin-top:8px">Маркетинг</p>
+      <a class="as-nav__item" onclick="showSection('analytics',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        График
+      </a>
+      <a class="as-nav__item" onclick="showSection('promos',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        Хямдрал / Промо
+      </a>
+      <a class="as-nav__item" onclick="showSection('banners',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        Баннер
+      </a>
+      <a class="as-nav__item" onclick="showSection('categories',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Ангилал
+      </a>
+      <p class="as-section-label" style="margin-top:8px">Дэмжлэг</p>
+      <a class="as-nav__item" onclick="showSection('messages',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Мессеж / Санал
+        <span class="as-nav__badge as-nav__badge--red" id="navMsgCount" style="display:none">0</span>
+      </a>
+      <a class="as-nav__item" onclick="showSection('stock',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        Агуулахын нөөц
+        <span class="as-nav__badge as-nav__badge--red" id="navStockAlert" style="display:none">0</span>
+      </a>
+      <a class="as-nav__item" onclick="showSection('couriers',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Хүргэлтийн ажилтан
+      </a>
+      <a class="as-nav__item" onclick="showSection('reports',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Тайлан
+      </a>
       <p class="as-section-label" style="margin-top:8px">Тохиргоо</p>
       <a class="as-nav__item" onclick="showSection('settings',this)">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -363,6 +399,182 @@
             </div>
             <button class="btn-primary" onclick="changeAdminPass()">Нууц үг солих</button>
           </div>
+        </div>
+      </section>
+
+      <!-- ══════════════ ANALYTICS ══════════════ -->
+      <section id="sec-analytics" class="admin-section">
+        <div class="sec-header">
+          <div class="sec-header__title">График & Аналитик</div>
+        </div>
+        <div class="analytics-grid">
+          <div class="chart-card chart-card--full">
+            <div class="chart-card__title">Сарын орлого (₮)</div>
+            <div class="bar-chart" id="revenueChart"></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card__title">Сарын захиалга</div>
+            <div class="bar-chart bar-chart--sm" id="ordersChart"></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card__title">Шилдэг 5 бүтээгдэхүүн</div>
+            <div id="topProductsList"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════ PROMOS ══════════════ -->
+      <section id="sec-promos" class="admin-section">
+        <div class="sec-header">
+          <div class="sec-header__title">Хямдрал / Промо</div>
+          <div class="sec-header__tools">
+            <button class="btn-add" onclick="openAddCoupon()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Купон нэмэх
+            </button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="admin-table">
+            <thead><tr><th>Код</th><th>Хямдрал</th><th>Мин захиалга</th><th>Ашиглалт</th><th>Хүчинтэй хүртэл</th><th>Идэвхтэй</th><th>Устгах</th></tr></thead>
+            <tbody id="couponTableBody"></tbody>
+          </table>
+        </div>
+        <div class="flash-card">
+          <div class="flash-card__left">
+            <div class="flash-card__title">⚡ Flash Sale</div>
+            <div class="flash-card__sub">Бүх хямдралт бүтээгдэхүүнд нэмэлт 5% хямдрал нэмэгдэнэ</div>
+          </div>
+          <label class="toggle-switch"><input type="checkbox" id="flashSaleToggle" onchange="toggleFlashSale(this)" /><span class="toggle-slider"></span></label>
+        </div>
+      </section>
+
+      <!-- ══════════════ BANNERS ══════════════ -->
+      <section id="sec-banners" class="admin-section">
+        <div class="sec-header">
+          <div class="sec-header__title">Баннер удирдлага</div>
+          <div class="sec-header__tools">
+            <button class="btn-add" onclick="openAddBanner()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Баннер нэмэх
+            </button>
+          </div>
+        </div>
+        <div class="banner-list" id="bannerList"></div>
+      </section>
+
+      <!-- ══════════════ CATEGORIES ══════════════ -->
+      <section id="sec-categories" class="admin-section">
+        <div class="sec-header">
+          <div class="sec-header__title">Ангилал удирдлага</div>
+        </div>
+        <div class="table-wrap">
+          <table class="admin-table">
+            <thead><tr><th>Өнгө</th><th>Ангилалын нэр</th><th>Бүтээгдэхүүн</th><th>Статус</th><th>Идэвхжүүлэх</th></tr></thead>
+            <tbody id="catTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ══════════════ MESSAGES ══════════════ -->
+      <section id="sec-messages" class="admin-section">
+        <div class="sec-header">
+          <div class="sec-header__title">Мессеж / Санал хүсэлт</div>
+          <div class="sec-header__tools">
+            <button class="btn-secondary-sm" onclick="markAllRead()">Бүгдийг уншсан болгох</button>
+          </div>
+        </div>
+        <div class="filter-row">
+          <select class="filter-select" id="msgFilter" onchange="filterMessages()">
+            <option value="">Бүгд</option>
+            <option value="unread">Уншаагүй</option>
+            <option value="read">Уншсан</option>
+          </select>
+        </div>
+        <div id="messagesList"></div>
+      </section>
+
+      <!-- ══════════════ STOCK ══════════════ -->
+      <section id="sec-stock" class="admin-section">
+        <div class="sec-header">
+          <div class="sec-header__title">Агуулахын нөөц</div>
+          <div class="sec-header__tools">
+            <button class="btn-export" onclick="exportStock()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Татах
+            </button>
+          </div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="stockSearch" placeholder="Бүтээгдэхүүн хайх..." oninput="filterStock()" />
+          </div>
+          <select class="filter-select" id="stockLevelFilter" onchange="filterStock()">
+            <option value="">Бүх нөөц</option>
+            <option value="out">Дууссан (0)</option>
+            <option value="low">Хомс (1–9)</option>
+            <option value="medium">Дунд (10–29)</option>
+            <option value="ok">Хангалттай (30+)</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="admin-table">
+            <thead><tr><th>Зураг</th><th>Бүтээгдэхүүн</th><th>Ангилал</th><th>Нөөц (ш)</th><th>Статус</th><th>Засах</th></tr></thead>
+            <tbody id="stockTableBody"></tbody>
+          </table>
+          <div class="pagination" id="stockPagination">
+            <span id="stockPageInfo"></span>
+            <div class="pag-btns" id="stockPageBtns"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════ COURIERS ══════════════ -->
+      <section id="sec-couriers" class="admin-section">
+        <div class="sec-header">
+          <div class="sec-header__title">Хүргэлтийн ажилтан</div>
+          <div class="sec-header__tools">
+            <a href="delivery.html" target="_blank" class="btn-export">Delivery App ↗</a>
+          </div>
+        </div>
+        <div class="courier-grid" id="courierGrid"></div>
+        <div class="table-wrap" style="margin-top:20px">
+          <table class="admin-table">
+            <thead><tr><th>Ажилтан</th><th>Код</th><th>Утас</th><th>Хүлээж</th><th>Замд</th><th>Хүргэсэн</th><th>Амжилтгүй</th><th>Амжилт %</th><th>Статус</th></tr></thead>
+            <tbody id="courierTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ══════════════ REPORTS ══════════════ -->
+      <section id="sec-reports" class="admin-section">
+        <div class="sec-header">
+          <div class="sec-header__title">Тайлан</div>
+          <div class="sec-header__tools">
+            <button class="btn-export" onclick="exportReport()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              CSV татах
+            </button>
+          </div>
+        </div>
+        <div class="report-filters">
+          <div class="form-row" style="flex:0 0 auto">
+            <label>Эхний огноо</label>
+            <input type="date" id="reportFrom" />
+          </div>
+          <div class="form-row" style="flex:0 0 auto">
+            <label>Дуусах огноо</label>
+            <input type="date" id="reportTo" />
+          </div>
+          <button class="btn-primary" onclick="generateReport()">Тайлан гаргах</button>
+        </div>
+        <div class="stat-grid" id="reportStats" style="margin-top:20px"></div>
+        <div class="table-wrap" style="margin-top:16px">
+          <table class="admin-table">
+            <thead><tr><th>Захиалга #</th><th>Огноо</th><th>Хэрэглэгч</th><th>Дүн</th><th>Статус</th></tr></thead>
+            <tbody id="reportTableBody"></tbody>
+          </table>
         </div>
       </section>
 
