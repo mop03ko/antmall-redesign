@@ -444,6 +444,13 @@ function renderDashboard() {
       </div>
       <span class="cat-row__count">${cnt}</span>
     </div>`).join('');
+
+  /* Revenue & orders charts */
+  renderVChart('dashRevChart', MONTHLY_DATA, 'rev', v => (v/1000000).toFixed(0)+'M', '#f97316');
+  renderVChart('dashOrdChart', MONTHLY_DATA, 'ord', v => String(v), '#3b82f6');
+  const totalAnnual = MONTHLY_DATA.reduce((s, d) => s + d.rev, 0);
+  const hint = document.getElementById('dashRevHint');
+  if (hint) hint.textContent = '· Нийт ' + (totalAnnual/1000000).toFixed(0) + 'M₮';
 }
 
 /* ══════════════════════════════════════
@@ -555,13 +562,24 @@ function openEditProduct(id) {
   if (!p) return;
   editingProdId = id;
   document.getElementById('prodModalTitle').textContent = 'Бүтээгдэхүүн засах';
-  document.getElementById('pmId').value       = p.id;
-  document.getElementById('pmName').value     = p.name;
-  document.getElementById('pmCat').value      = p.cat;
-  document.getElementById('pmBrand').value    = p.brand;
-  document.getElementById('pmPrice').value    = p.price;
-  document.getElementById('pmOrigPrice').value = p.origPrice || '';
-  document.getElementById('pmDesc').value     = p.desc || '';
+  document.getElementById('pmId').value    = p.id;
+  document.getElementById('pmName').value  = p.name;
+  document.getElementById('pmCat').value   = p.cat;
+  document.getElementById('pmBrand').value = p.brand;
+  document.getElementById('pmDesc').value  = p.desc || '';
+  /* Price model: pmPrice = base/original price; pmOrigPrice = discounted price (or empty) */
+  document.getElementById('pmPrice').value    = p.origPrice || p.price;
+  document.getElementById('pmOrigPrice').value = p.origPrice ? p.price : '';
+  document.getElementById('discCalcHint').textContent = '';
+  /* Extra images */
+  const extras = p.extraImages || [];
+  for (let i = 0; i < 4; i++) {
+    const val = extras[i] || '';
+    document.getElementById('pmExtraImg' + i).value = val;
+    const prev = document.getElementById('pmExtraPrev' + i);
+    if (val) { prev.src = val; prev.style.display = 'block'; }
+    else prev.style.display = 'none';
+  }
   const img = document.getElementById('prodModalImg');
   img.src = imgUrl(id);
   img.onerror = () => img.src = PLACEHOLDER;
@@ -577,28 +595,60 @@ function openAddProduct() {
   });
   document.getElementById('pmCat').value   = 'phones';
   document.getElementById('pmBrand').value = 'apple';
+  document.getElementById('discCalcHint').textContent = '';
+  for (let i = 0; i < 4; i++) {
+    document.getElementById('pmExtraImg' + i).value = '';
+    const prev = document.getElementById('pmExtraPrev' + i);
+    prev.style.display = 'none';
+  }
   document.getElementById('prodModalImg').src = PLACEHOLDER;
   document.getElementById('prodModal').classList.remove('hidden');
 }
 window.openAddProduct = openAddProduct;
 
 function saveProdModal() {
-  const name      = document.getElementById('pmName').value.trim();
-  const cat       = document.getElementById('pmCat').value;
-  const brand     = document.getElementById('pmBrand').value;
-  const price     = parseInt(document.getElementById('pmPrice').value, 10);
-  const origPrice = parseInt(document.getElementById('pmOrigPrice').value, 10) || null;
+  const name       = document.getElementById('pmName').value.trim();
+  const cat        = document.getElementById('pmCat').value;
+  const brand      = document.getElementById('pmBrand').value;
+  const desc       = document.getElementById('pmDesc').value.trim();
+  const baseVal    = parseInt(document.getElementById('pmPrice').value, 10);
+  const discInput  = document.getElementById('pmOrigPrice').value.trim();
 
-  if (!name || !price) { showAdminToast('Нэр болон үнийг бөглөнө үү'); return; }
+  if (!name || !baseVal) { showAdminToast('Нэр болон үндсэн үнийг бөглөнө үү'); return; }
+
+  /* Resolve price & origPrice from the new model:
+     pmPrice    = base/original price (always ₮)
+     pmOrigPrice = discounted price — can be a ₮ amount or a % string like "20%"
+     Result stored in data: origPrice = base (for strikethrough), price = selling price */
+  let price, origPrice;
+  if (!discInput) {
+    price = baseVal; origPrice = null;
+  } else if (discInput.endsWith('%')) {
+    const pct = parseFloat(discInput);
+    if (isNaN(pct) || pct <= 0 || pct >= 100) { showAdminToast('Хувийн утга буруу (1–99%)'); return; }
+    price     = Math.round(baseVal * (1 - pct / 100));
+    origPrice = baseVal;
+  } else {
+    price = parseInt(discInput, 10);
+    if (isNaN(price) || price <= 0) { showAdminToast('Үнийн утга буруу'); return; }
+    if (price >= baseVal) { showAdminToast('Хямдарсан үнэ нь үндсэн үнээс бага байх ёстой'); return; }
+    origPrice = baseVal;
+  }
+
+  /* Extra images */
+  const extraImages = [0,1,2,3]
+    .map(i => document.getElementById('pmExtraImg' + i).value.trim())
+    .filter(Boolean);
+
+  const patch = { name, cat, brand, price, origPrice, desc, extraImages };
 
   if (editingProdId) {
-    saveProdOverride(editingProdId, { name, cat, brand, price, origPrice });
+    saveProdOverride(editingProdId, patch);
     showAdminToast('✅ Бүтээгдэхүүн шинэчлэгдлээ');
   } else {
-    /* Add as a new entry in overrides with a temporary negative id */
     const newId = Date.now();
     const ov    = JSON.parse(localStorage.getItem('antmall_admin_prods') || '{}');
-    ov['_new_' + newId] = { id: newId, name, cat, brand, price, origPrice, isNew: true };
+    ov['_new_' + newId] = { id: newId, ...patch, isNew: true };
     localStorage.setItem('antmall_admin_prods', JSON.stringify(ov));
     showAdminToast('✅ Шинэ бүтээгдэхүүн нэмэгдлээ');
   }
@@ -607,6 +657,53 @@ function saveProdModal() {
   renderDashboard();
 }
 window.saveProdModal = saveProdModal;
+
+function calcDiscount() {
+  const baseVal   = parseInt(document.getElementById('pmPrice').value, 10);
+  const discInput = document.getElementById('pmOrigPrice').value.trim();
+  const hint      = document.getElementById('discCalcHint');
+  if (!hint) return;
+  if (!discInput || !baseVal) { hint.textContent = ''; hint.className = 'disc-hint'; return; }
+  if (discInput.endsWith('%')) {
+    const pct = parseFloat(discInput);
+    if (!isNaN(pct) && pct > 0 && pct < 100) {
+      const result = Math.round(baseVal * (1 - pct / 100));
+      hint.innerHTML = `= <strong>${fmt(result)}₮</strong> &nbsp;(${fmt(baseVal - result)}₮ хямдрал)`;
+      hint.className = 'disc-hint disc-hint--ok';
+    } else {
+      hint.textContent = '1–99% хооронд байх ёстой';
+      hint.className = 'disc-hint disc-hint--err';
+    }
+  } else {
+    const price = parseInt(discInput, 10);
+    if (!isNaN(price) && price > 0 && price < baseVal) {
+      const pct = Math.round((1 - price / baseVal) * 100);
+      hint.innerHTML = `= <strong>${pct}%</strong> хямдрал &nbsp;(${fmt(baseVal - price)}₮ хэмнэлт)`;
+      hint.className = 'disc-hint disc-hint--ok';
+    } else if (!isNaN(price) && price >= baseVal) {
+      hint.textContent = 'Үндсэн үнээс бага байх ёстой';
+      hint.className = 'disc-hint disc-hint--err';
+    } else {
+      hint.textContent = '';
+      hint.className = 'disc-hint';
+    }
+  }
+}
+window.calcDiscount = calcDiscount;
+
+function previewExtraImg(idx) {
+  const url  = document.getElementById('pmExtraImg' + idx).value.trim();
+  const prev = document.getElementById('pmExtraPrev' + idx);
+  if (!prev) return;
+  if (url) {
+    prev.src           = url;
+    prev.style.display = 'block';
+    prev.onerror       = () => { prev.style.display = 'none'; };
+  } else {
+    prev.style.display = 'none';
+  }
+}
+window.previewExtraImg = previewExtraImg;
 
 function deleteProduct(id, name) {
   if (!confirm(`"${name}" -ийг устгах уу?`)) return;
@@ -872,6 +969,24 @@ const MONTHLY_DATA = [
   {m:'11-р сар', rev:88300000, ord:45},
   {m:'12-р сар', rev:105700000, ord:56},
 ];
+
+function renderVChart(containerId, data, valueKey, formatter, color) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const max    = Math.max(...data.map(d => d[valueKey]));
+  const curM   = new Date().getMonth(); // 0-based
+  el.innerHTML = '<div class="vchart-bars">' +
+    data.map((d, i) => {
+      const pct    = max ? Math.round(d[valueKey] / max * 100) : 0;
+      const active = i === curM;
+      return `<div class="vchart-col" title="${d.m}: ${formatter(d[valueKey])}">
+        <div class="vchart-val">${(active || pct >= 80) ? formatter(d[valueKey]) : ''}</div>
+        <div class="vchart-bar" style="height:${Math.max(pct,3)}%;background:${active ? color : color + '55'}"></div>
+        <div class="vchart-lbl" style="color:${active ? color : ''}">${i + 1}</div>
+      </div>`;
+    }).join('') +
+  '</div>';
+}
 
 function renderBarChart(containerId, data, valueKey, labelKey, color, formatter) {
   const max = Math.max(...data.map(d => d[valueKey]));

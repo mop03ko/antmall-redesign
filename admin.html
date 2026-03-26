@@ -187,6 +187,21 @@
           </div>
         </div>
 
+        <!-- Charts row -->
+        <div class="dash-charts-row">
+          <div class="dash-card">
+            <div class="dash-card__title">
+              Орлогын чиг хандлага — 2026
+              <span class="chart-hint" id="dashRevHint"></span>
+            </div>
+            <div class="vchart-root" id="dashRevChart"></div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card__title">Сарын захиалга</div>
+            <div class="vchart-root vchart-root--sm" id="dashOrdChart"></div>
+          </div>
+        </div>
+
         <div class="dash-grid">
           <!-- Recent orders -->
           <div class="dash-card">
@@ -635,10 +650,35 @@
             </div>
           </div>
           <div class="form-grid-2">
-            <div class="form-row"><label>Үнэ (₮)</label><input type="number" id="pmPrice" /></div>
-            <div class="form-row"><label>Эх үнэ (₮)</label><input type="number" id="pmOrigPrice" placeholder="Хямдралгүй бол хоосон" /></div>
+            <div class="form-row"><label>Үндсэн үнэ (₮)</label><input type="number" id="pmPrice" oninput="calcDiscount()" /></div>
+            <div class="form-row">
+              <label>Хямдарсан үнэ</label>
+              <input type="text" id="pmOrigPrice" placeholder="80000 эсвэл 20%" oninput="calcDiscount()" />
+              <div class="disc-hint" id="discCalcHint"></div>
+            </div>
           </div>
           <div class="form-row"><label>Тайлбар</label><textarea id="pmDesc" placeholder="Бүтээгдэхүүний тайлбар..."></textarea></div>
+          <div class="form-row">
+            <label>Нэмэлт зурагнууд (URL)</label>
+            <div class="extra-imgs-grid">
+              <div class="extra-img-item">
+                <img class="extra-img-prev" id="pmExtraPrev0" src="" onerror="this.style.display='none'" style="display:none" />
+                <input type="url" id="pmExtraImg0" placeholder="https://..." oninput="previewExtraImg(0)" />
+              </div>
+              <div class="extra-img-item">
+                <img class="extra-img-prev" id="pmExtraPrev1" src="" onerror="this.style.display='none'" style="display:none" />
+                <input type="url" id="pmExtraImg1" placeholder="https://..." oninput="previewExtraImg(1)" />
+              </div>
+              <div class="extra-img-item">
+                <img class="extra-img-prev" id="pmExtraPrev2" src="" onerror="this.style.display='none'" style="display:none" />
+                <input type="url" id="pmExtraImg2" placeholder="https://..." oninput="previewExtraImg(2)" />
+              </div>
+              <div class="extra-img-item">
+                <img class="extra-img-prev" id="pmExtraPrev3" src="" onerror="this.style.display='none'" style="display:none" />
+                <input type="url" id="pmExtraImg3" placeholder="https://..." oninput="previewExtraImg(3)" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
